@@ -1,5 +1,6 @@
 #pragma once
 #include <BWAPI.h>
+#include <list>
 
 // Remember not to use "Broodwar" in any global class constructor!
 
@@ -25,5 +26,12 @@ public:
   virtual void onSaveGame(std::string gameName);
   virtual void onUnitComplete(BWAPI::Unit unit);
   // Everything below this line is safe to modify.
+
+  bool checkStateUnit(BWAPI::Unit unit);
+
+private:
+	std::list<BWAPI::Unit> *listeWorker;
+	std::list<BWAPI::Unit> *listeCommandCenter;
+	std::list<BWAPI::Unit> *listeAttacker;
 
 };

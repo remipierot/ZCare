@@ -7,17 +7,11 @@ using namespace Filter;
 void ZCareAI::onStart()
 {
   // Hello World!
-  Broodwar->sendText("Hello world!");
-
-  // Print the map name.
-  // BWAPI returns std::string when retrieving a string, don't forget to add .c_str() when printing!
-  Broodwar << "The map is " << Broodwar->mapName() << "!" << std::endl;
+  Broodwar->sendText("Préparez vous à mourir!");
 
   // Enable the UserInput flag, which allows us to control the bot and type messages.
   Broodwar->enableFlag(Flag::UserInput);
 
-  // Uncomment the following line and the bot will know about everything through the fog of war (cheat).
-  //Broodwar->enableFlag(Flag::CompleteMapInformation);
 
   // Set the command optimization level so that common commands can be grouped
   // and reduce the bot's APM (Actions Per Minute).
@@ -44,8 +38,33 @@ void ZCareAI::onStart()
   {
     // Retrieve you and your enemy's races. enemy() will just return the first enemy.
     // If you wish to deal with multiple enemies then you must use enemies().
-    if ( Broodwar->enemy() ) // First make sure there is an enemy
-      Broodwar << "The matchup is " << Broodwar->self()->getRace() << " vs " << Broodwar->enemy()->getRace() << std::endl;
+	  if (Broodwar->enemy()) // First make sure there is an enemy
+	  {
+		  switch (Broodwar->enemy()->getRace())
+		  {
+			  //Adaptation de la strategie en fonction de la race en face
+		  }
+		  //Initialisation des listes
+		  listeAttacker = new std::list<BWAPI::Unit>();
+		  listeWorker = new std::list<BWAPI::Unit>();
+		  listeCommandCenter = new std::list<BWAPI::Unit>();
+
+		  for (auto &u : Broodwar->self()->getUnits())
+		  {
+			  // Make sure to include this block when handling any Unit pointer!
+			  if (!u->exists())
+				  continue;
+			  if (u->getType().isWorker())
+			  {
+				  listeWorker->push_back(u);
+			  }
+			  else if (u->getType().isWorker())
+			  {
+				  listeCommandCenter->push_back(u);
+			  }
+			  else listeAttacker->push_back(u);
+		  }
+	  }
   }
 
 }
@@ -63,10 +82,6 @@ void ZCareAI::onFrame()
 {
   // Called once every game frame
 
-  // Display the game frame rate as text in the upper left area of the screen
-  Broodwar->drawTextScreen(200, 0,  "FPS: %d", Broodwar->getFPS() );
-  Broodwar->drawTextScreen(200, 20, "Average FPS: %f", Broodwar->getAverageFPS() );
-
   // Return if the game is a replay or is paused
   if ( Broodwar->isReplay() || Broodwar->isPaused() || !Broodwar->self() )
     return;
@@ -79,22 +94,7 @@ void ZCareAI::onFrame()
   // Iterate through all the units that we own
   for (auto &u : Broodwar->self()->getUnits())
   {
-    // Ignore the unit if it no longer exists
-    // Make sure to include this block when handling any Unit pointer!
-    if ( !u->exists() )
-      continue;
 
-    // Ignore the unit if it has one of the following status ailments
-    if ( u->isLockedDown() || u->isMaelstrommed() || u->isStasised() )
-      continue;
-
-    // Ignore the unit if it is in one of the following states
-    if ( u->isLoaded() || !u->isPowered() || u->isStuck() )
-      continue;
-
-    // Ignore the unit if it is incomplete or busy constructing
-    if ( !u->isCompleted() || u->isConstructing() )
-      continue;
 
 
     // Finally make the unit do some stuff!
@@ -295,4 +295,26 @@ void ZCareAI::onSaveGame(std::string gameName)
 
 void ZCareAI::onUnitComplete(BWAPI::Unit unit)
 {
+}
+
+bool checkStateUnit(BWAPI::Unit unit)
+{
+	// Ignore the unit if it no longer exists
+	// Make sure to include this block when handling any Unit pointer!
+	if (!unit->exists())
+		return false;
+
+	// Ignore the unit if it has one of the following status ailments
+	if (unit->isLockedDown() || unit->isMaelstrommed() || unit->isStasised())
+		return false;
+
+	// Ignore the unit if it is in one of the following states
+	if (unit->isLoaded() || !unit->isPowered() || unit->isStuck())
+		return false;
+
+	// Ignore the unit if it is incomplete or busy constructing
+	if (!unit->isCompleted() || unit->isConstructing())
+		return false;
+
+	return true;
 }
