@@ -17,6 +17,24 @@ class ScoutManager
 		// Send the scouts to unscouted locations (one scout send per function execution)
 		void scout();
 
+		// Number of locations to scout (no matter if they already have been or not)
+		int toScoutCount();
+
+		// Number of scouted locations
+		int scoutedCount();
+
+		// Number of unscouted locations
+		int unscoutedCount();
+
+		// Number of locations being scout
+		int beingScoutCount();
+
+		// Number of scouts
+		int scoutsCount();
+
+		// Number of scouts currently scouting
+		int busyScoutsCount();
+
 	private:
 		std::set<BWAPI::Position> locationsToScout;		// Locations that can be scout (no matter if they already have been or not)
 		std::set<BWAPI::Position> scoutedLocations;		// Locations that have already been scout
@@ -38,5 +56,10 @@ class ScoutManager
 		// Tell if the given position is being scout right now or not
 		bool isLocationBeingScout(
 			const BWAPI::Position position
+		);
+
+		// Tell if the given scout is standing on a location to scout
+		bool isScoutOnALocationToScout(
+			const BWAPI::Unit scout
 		);
 };

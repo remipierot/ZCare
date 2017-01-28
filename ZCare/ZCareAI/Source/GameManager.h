@@ -9,6 +9,24 @@ class GameManager
 		// Run the game loop
 		void update();	
 
+		// Number of locations to scout (no matter if they already have been or not)
+		int toScoutCount();
+
+		// Number of scouted locations
+		int scoutedCount();
+
+		// Number of unscouted locations
+		int unscoutedCount();
+
+		// Number of locations being scout
+		int beingScoutCount();
+
+		// Number of scouts
+		int scoutsCount();
+
+		// Number of scouts currently scouting
+		int busyScoutsCount();
+
 	private:
 		ScoutManager _ScoutManager;						// Scouting manager
 		std::set<BWAPI::Position> allStartLocations;	// All the starting positions

@@ -36,6 +36,15 @@ void ZCareAI::onFrame()
 	Broodwar->drawTextScreen(200, 0, "FPS: %d", Broodwar->getFPS());
 	Broodwar->drawTextScreen(200, 20, "Average FPS: %f", Broodwar->getAverageFPS());
 
+	Broodwar->drawTextScreen(0, 30, "Scouting locations data :");
+	Broodwar->drawTextScreen(10, 40, "To Scout : %d", _GameManager.toScoutCount());
+	Broodwar->drawTextScreen(10, 50, "Scouted : %d", _GameManager.scoutedCount());
+	Broodwar->drawTextScreen(10, 60, "Unscouted : %d", _GameManager.unscoutedCount());
+	Broodwar->drawTextScreen(10, 70, "Being Scout : %d", _GameManager.beingScoutCount());
+	Broodwar->drawTextScreen(0, 90, "Scouting units data :");
+	Broodwar->drawTextScreen(10, 100, "Scouts : %d", _GameManager.scoutsCount());
+	Broodwar->drawTextScreen(10, 110, "Busy Scouts : %d", _GameManager.busyScoutsCount());
+
 	// Return if the game is a replay or is paused
 	if (Broodwar->isReplay() || Broodwar->isPaused() || !Broodwar->self())
 	{
@@ -52,7 +61,6 @@ void ZCareAI::onFrame()
 	// Game loop
 	_GameManager.update();
 
-  /*
   // Iterate through all the units that we own
   for (auto &u : Broodwar->self()->getUnits())
   {
@@ -88,8 +96,9 @@ void ZCareAI::onFrame()
 	{
 
 	  // Order the depot to construct more workers! But only when it is idle.
-	  if ( u->isIdle() && !u->train(u->getType().getRace().getWorker()) )
+	  if ( u->isIdle() && !u->train(u->getType().getRace().getSupplyProvider()) )
 	  {
+		  /*
 		// If that fails, draw the error at the location so that you can visibly see what went wrong!
 		// However, drawing the error once will only appear for a single frame
 		// so create an event that keeps it on the screen for some frames
@@ -143,12 +152,13 @@ void ZCareAI::onFrame()
 			}
 		  } // closure: supplyBuilder is valid
 		} // closure: insufficient supply
-	  } // closure: failed to train idle unit
+		*/
+	  }
+	  
 
 	}
 
   } // closure: unit iterator
-  */
 }
 
 void ZCareAI::onSendText(std::string text)

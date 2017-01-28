@@ -28,8 +28,6 @@ void ScoutManager::updateLocationsToScout(set<Position> enemyStartLocations, set
 // Fill the scouts set
 void ScoutManager::updateScouts()
 {
-	scouts.clear();
-
 	for (auto &u : Broodwar->self()->getUnits())
 	{
 		if (u->getType() == BWAPI::UnitTypes::Zerg_Overlord)
@@ -49,18 +47,17 @@ void ScoutManager::scout()
 		int smallestDist = INT_MAX;
 		Position scoutTarget = Positions::None;
 
-		// Find the first scout that is not busy
+		// Find a not busy scout that is not standing on a location to scout
 		for (const Unit s : scouts)
 		{
-			if (!isScoutBusy(s))
+			if (!isScoutBusy(s) && !isScoutOnALocationToScout(s))
 			{
 				scout = s;
-				break;
 			}
 		}
 		
 		// If we have a scout available for scouting
-		if (scout != nullptr)
+		if (scout != nullptr && scout->canMove())
 		{
 			// Search the closest unscouted location that is not being scout right now
 			for (const BWAPI::Position p : unscoutedLocations)
@@ -85,23 +82,56 @@ void ScoutManager::scout()
 			}
 		}
 		
-		// Check if the busy scouts have arrived at a location that is being scout right now
-		for (const Unit s : busyScouts)
+		// Check if the busy scouts are on a location to scout
+		for (const Unit s : scouts)
 		{
-			for (const Position p : locationsBeingScout)
+			if (isScoutBusy(s) && isScoutOnALocationToScout(s))
 			{
-				if (s->getPosition() == p)
-				{
-					busyScouts.erase(s);
-					locationsBeingScout.erase(p);
-					unscoutedLocations.erase(p);
-					scoutedLocations.insert(p);
+				busyScouts.erase(s);
+				locationsBeingScout.erase(s->getPosition());
+				unscoutedLocations.erase(s->getPosition());
+				scoutedLocations.insert(s->getPosition());
 
-					break;
-				}
+				break;
 			}
 		}
 	}
+}
+
+// Number of locations to scout (no matter if they already have been or not)
+int ScoutManager::toScoutCount()
+{
+	return locationsToScout.size();
+}
+
+// Number of scouted locations
+int ScoutManager::scoutedCount()
+{
+	return scoutedLocations.size();
+}
+
+// Number of unscouted locations
+int ScoutManager::unscoutedCount()
+{
+	return unscoutedLocations.size();
+}
+
+// Number of locations being scout
+int ScoutManager::beingScoutCount()
+{
+	return locationsBeingScout.size();
+}
+
+// Number of scouts
+int ScoutManager::scoutsCount()
+{
+	return scouts.size();
+}
+
+// Number of scouts currently scouting
+int ScoutManager::busyScoutsCount()
+{
+	return busyScouts.size();
 }
 
 // Add the given position to the locations to scout and update the unscouted locations
@@ -130,4 +160,10 @@ bool ScoutManager::isScoutBusy(const Unit scout)
 bool ScoutManager::isLocationBeingScout(const Position position)
 {
 	return locationsBeingScout.find(position) != locationsBeingScout.end();
+}
+
+// Tell if the given scout is standing on a location to scout
+bool ScoutManager::isScoutOnALocationToScout(const Unit scout)
+{
+	return locationsToScout.find(scout->getPosition()) != locationsToScout.end();
 }

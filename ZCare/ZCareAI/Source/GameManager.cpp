@@ -12,6 +12,42 @@ void GameManager::update()
 	_ScoutManager.scout();
 }
 
+// Number of locations to scout (no matter if they already have been or not)
+int GameManager::toScoutCount()
+{
+	return _ScoutManager.toScoutCount();
+}
+
+// Number of scouted locations
+int GameManager::scoutedCount()
+{
+	return _ScoutManager.scoutedCount();
+}
+
+// Number of unscouted locations
+int GameManager::unscoutedCount()
+{
+	return _ScoutManager.unscoutedCount();
+}
+
+// Number of locations being scout
+int GameManager::beingScoutCount()
+{
+	return _ScoutManager.beingScoutCount();
+}
+
+// Number of scouts
+int GameManager::scoutsCount()
+{
+	return _ScoutManager.scoutsCount();
+}
+
+// Number of scouts currently scouting
+int GameManager::busyScoutsCount()
+{
+	return _ScoutManager.busyScoutsCount();
+}
+
 // Fill all the starting locations data sets
 void GameManager::fillStartingLocations()
 {
