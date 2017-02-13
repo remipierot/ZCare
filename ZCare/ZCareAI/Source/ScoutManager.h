@@ -14,6 +14,11 @@ class ScoutManager
 		// Fill the scouts set
 		void updateScouts();
 
+		// Create a scout with the given resourceDepot
+		void buildScout(
+			const BWAPI::Unit resourceDepot
+		);
+
 		// Send the scouts to unscouted locations (one scout send per function execution)
 		void scout();
 

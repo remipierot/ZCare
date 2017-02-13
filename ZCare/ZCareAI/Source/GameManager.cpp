@@ -10,6 +10,13 @@ void GameManager::update()
 	_ScoutManager.updateLocationsToScout(enemyStartLocations, otherStartLocations);
 	_ScoutManager.updateScouts();
 	_ScoutManager.scout();
+
+	_ProductionManager.updateResourceDepots();
+
+	_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
+	_WorkerManager.updateWorkers();
+	_WorkerManager.sendWorkersToWork();
+	_WorkerManager.callWorkersBack();
 }
 
 // Number of locations to scout (no matter if they already have been or not)

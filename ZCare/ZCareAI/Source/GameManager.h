@@ -2,6 +2,8 @@
 #include <BWAPI.h>
 #include "ToolBox.h"
 #include "ScoutManager.h"
+#include "WorkerManager.h"
+#include "ProductionManager.h"
 
 class GameManager
 {
@@ -29,6 +31,8 @@ class GameManager
 
 	private:
 		ScoutManager _ScoutManager;						// Scouting manager
+		WorkerManager _WorkerManager;					// Worker manager
+		ProductionManager _ProductionManager;			// Production manager
 		std::set<BWAPI::Position> allStartLocations;	// All the starting positions
 		std::set<BWAPI::Position> enemyStartLocations;	// Starting positions occupied by enemies
 		std::set<BWAPI::Position> otherStartLocations;	// Starting positions that are not occupied by me (but maybe by enemies)

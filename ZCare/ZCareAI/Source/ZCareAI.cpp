@@ -61,6 +61,7 @@ void ZCareAI::onFrame()
 	// Game loop
 	_GameManager.update();
 
+	/*
   // Iterate through all the units that we own
   for (auto &u : Broodwar->self()->getUnits())
   {
@@ -153,12 +154,13 @@ void ZCareAI::onFrame()
 		  } // closure: supplyBuilder is valid
 		} // closure: insufficient supply
 		*/
-	  }
+	  //}
 	  
 
-	}
+	//}
 
-  } // closure: unit iterator
+  //} // closure: unit iterator
+  
 }
 
 void ZCareAI::onSendText(std::string text)

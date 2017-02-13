@@ -37,7 +37,16 @@ void ScoutManager::updateScouts()
 	}
 }
 
-// Send the scouts to unscouted locations (one scout send per function execution)
+// Create a scout with the given resourceDepot
+void ScoutManager::buildScout(const BWAPI::Unit resourceDepot)
+{
+	if (resourceDepot->getType().isResourceDepot() && resourceDepot->isIdle())
+	{
+		resourceDepot->train(resourceDepot->getType().getRace().getSupplyProvider());
+	}
+}
+
+// Send the scouts to unscouted locations (one scout sent per function execution)
 void ScoutManager::scout()
 {
 	// If we have scouts and unscouted locations
