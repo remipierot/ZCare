@@ -1,11 +1,5 @@
 #include "StrategyManager.h"
 
-
-StrategyManager::StrategyManager()
-{
-}
-
-
-StrategyManager::~StrategyManager()
-{
-}
+using namespace std;
+using namespace BWAPI;
+using namespace Filter;

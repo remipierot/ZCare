@@ -1,6 +1,8 @@
 #include "ToolBox.h"
 
+using namespace std;
 using namespace BWAPI;
+using namespace Filter;
 
 //Use a UnitType combined to its TilePosition to get the Position corresponding to its center
 Position ToolBox::ConvertTilePosition(const TilePosition tilePosition, const UnitType unitType)

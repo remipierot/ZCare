@@ -42,7 +42,7 @@ void ScoutManager::buildScout(const BWAPI::Unit resourceDepot)
 {
 	if (resourceDepot->getType().isResourceDepot() && resourceDepot->isIdle())
 	{
-		resourceDepot->train(resourceDepot->getType().getRace().getSupplyProvider());
+		resourceDepot->train(BWAPI::UnitTypes::Zerg_Overlord);
 	}
 }
 

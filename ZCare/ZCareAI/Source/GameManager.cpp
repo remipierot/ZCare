@@ -1,6 +1,8 @@
 #include "GameManager.h"
 
+using namespace std;
 using namespace BWAPI;
+using namespace Filter;
 
 // Run the game loop
 void GameManager::update()
@@ -12,8 +14,15 @@ void GameManager::update()
 	_ScoutManager.scout();
 
 	_ProductionManager.updateResourceDepots();
-
-	_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
+	if ((_ProductionManager.isSupplyAboutToBeFull() || _ProductionManager.isSupplyFull()) && !_ProductionManager.isUnitBeingCreated())
+	{
+		_ScoutManager.buildScout(_ProductionManager.getResourceDepot(0));
+	}
+	else
+	{
+		_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
+	}
+	
 	_WorkerManager.updateWorkers();
 	_WorkerManager.sendWorkersToWork();
 	_WorkerManager.callWorkersBack();

@@ -1,11 +1,5 @@
 #include "CombatManager.h"
 
-
-CombatManager::CombatManager()
-{
-}
-
-
-CombatManager::~CombatManager()
-{
-}
+using namespace std;
+using namespace BWAPI;
+using namespace Filter;
