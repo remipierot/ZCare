@@ -29,10 +29,19 @@ Unit ProductionManager::getResourceDepot(unsigned int index)
 	}
 }
 
+// Construct a building at the specified location
+void ProductionManager::makeBuilding(const UnitType& buildingType, const TilePosition& targetBuildLocation, Unit worker)
+{
+	if (worker != NULL && targetBuildLocation.isValid())
+	{
+		worker->build(buildingType, targetBuildLocation);
+	}
+}
+
 // Tell if we are about to saturate our supply
 bool ProductionManager::isSupplyAboutToBeFull()
 {
-	return Broodwar->self()->supplyUsed() == (Broodwar->self()->supplyTotal() - (SUPPLY_FULL_CHECK_THRESHOLD * UnitTypes::Zerg_Drone.supplyRequired()));
+	return Broodwar->self()->supplyUsed() >= (Broodwar->self()->supplyTotal() - (SUPPLY_FULL_CHECK_THRESHOLD * UnitTypes::Zerg_Drone.supplyRequired()));
 }
 
 // Tell if we are using all of our supplies or not
@@ -45,4 +54,16 @@ bool ProductionManager::isSupplyFull()
 bool ProductionManager::isUnitBeingCreated()
 {
 	return Broodwar->self()->incompleteUnitCount() > 0;
+}
+
+// Return the closest unit of the given type using the base at the given index
+Unit ProductionManager::getClosestUnit(int resourceDepotIndex, BWAPI::UnitType unitType)
+{
+	return getResourceDepot(resourceDepotIndex)->getClosestUnit(GetType == unitType && Exists, 256);
+}
+
+// Return the quantity of mineral possessed by the player
+int ProductionManager::getMineralCount()
+{
+	return Broodwar->self()->minerals();
 }

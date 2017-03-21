@@ -25,6 +25,9 @@ public:
 	// Number of workers currently gathering resources
 	int busyWorkersCount();
 
+	// Return the worker with the lowest hit points
+	BWAPI::Unit getWorkerWithLowestLife();
+
 private:
 	std::set<const BWAPI::Unit> workers;				// Every worker
 	std::set<const BWAPI::Unit> busyWorkers;			// Workers that are currently gathering resources

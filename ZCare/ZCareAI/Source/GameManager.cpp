@@ -14,7 +14,16 @@ void GameManager::update()
 	_ScoutManager.scout();
 
 	_ProductionManager.updateResourceDepots();
-	if ((_ProductionManager.isSupplyAboutToBeFull() || _ProductionManager.isSupplyFull()) && !_ProductionManager.isUnitBeingCreated())
+
+	if (_ProductionManager.getMineralCount() >= BWAPI::UnitTypes::Zerg_Extractor.mineralPrice())
+	{
+		_ProductionManager.makeBuilding(
+			BWAPI::UnitTypes::Zerg_Extractor,
+			_ProductionManager.getClosestUnit(0, BWAPI::UnitTypes::Resource_Vespene_Geyser)->getTilePosition(),
+			_WorkerManager.getWorkerWithLowestLife()
+		);
+	}
+	else if (_ProductionManager.isSupplyAboutToBeFull() && !_ProductionManager.isUnitBeingCreated())
 	{
 		_ScoutManager.buildScout(_ProductionManager.getResourceDepot(0));
 	}

@@ -61,6 +61,27 @@ int WorkerManager::busyWorkersCount()
 	return busyWorkers.size();
 }
 
+// Return the worker with the lowest hit points
+BWAPI::Unit WorkerManager::getWorkerWithLowestLife()
+{
+	Unit lowestHPWorker = NULL;
+
+	for (const Unit w : workers)
+	{
+		if (lowestHPWorker == NULL)
+		{
+			lowestHPWorker = w;
+		}
+
+		if (w->getHitPoints() < lowestHPWorker->getHitPoints())
+		{
+			lowestHPWorker = w;
+		}
+	}
+
+	return lowestHPWorker;
+}
+
 // Tell if the given worker is currently gathering resources or not
 bool WorkerManager::isWorkerBusy(const Unit worker)
 {
