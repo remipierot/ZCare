@@ -32,7 +32,17 @@ void WorkerManager::sendWorkersToWork()
 	{
 		if (w->isIdle())
 		{
-			w->gather(w->getClosestUnit(IsMineralField || IsRefinery));
+			Unit closestMineral = w->getClosestUnit(IsMineralField);
+			Unit closestRefinery = w->getClosestUnit(IsRefinery);
+
+			if (closestRefinery != nullptr && !closestRefinery->isBeingGathered())
+			{
+				w->gather(closestRefinery);
+			}
+			else
+			{
+				w->gather(closestMineral);
+			}
 		}
 	}
 }

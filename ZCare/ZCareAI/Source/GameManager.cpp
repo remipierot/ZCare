@@ -7,21 +7,34 @@ using namespace Filter;
 // Run the game loop
 void GameManager::update()
 {
+	Unit builder;
+	Unit closestVespene;
+	Unit closestExtractor;
 	fillStartingLocations();
 
 	_ScoutManager.updateLocationsToScout(enemyStartLocations, otherStartLocations);
 	_ScoutManager.updateScouts();
 	_ScoutManager.scout();
 
+	_WorkerManager.updateWorkers();
+	_WorkerManager.sendWorkersToWork();
+	_WorkerManager.callWorkersBack();
+
 	_ProductionManager.updateResourceDepots();
 
-	if (_ProductionManager.getMineralCount() >= BWAPI::UnitTypes::Zerg_Extractor.mineralPrice())
+	builder = _WorkerManager.getWorkerWithLowestLife();
+	closestVespene = _ProductionManager.getClosestUnit(0, BWAPI::UnitTypes::Resource_Vespene_Geyser);
+	closestExtractor = _ProductionManager.getClosestUnit(0, BWAPI::UnitTypes::Zerg_Extractor);
+
+	if (_ProductionManager.getMineralCount() >= BWAPI::UnitTypes::Zerg_Extractor.mineralPrice() && 
+		closestVespene != nullptr &&
+		closestExtractor == nullptr)
 	{
 		_ProductionManager.makeBuilding(
 			BWAPI::UnitTypes::Zerg_Extractor,
-			_ProductionManager.getClosestUnit(0, BWAPI::UnitTypes::Resource_Vespene_Geyser)->getTilePosition(),
-			_WorkerManager.getWorkerWithLowestLife()
-		);
+			closestVespene->getTilePosition(),
+			builder
+			);
 	}
 	else if (_ProductionManager.isSupplyAboutToBeFull() && !_ProductionManager.isUnitBeingCreated())
 	{
@@ -31,10 +44,6 @@ void GameManager::update()
 	{
 		_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
 	}
-	
-	_WorkerManager.updateWorkers();
-	_WorkerManager.sendWorkersToWork();
-	_WorkerManager.callWorkersBack();
 }
 
 // Number of locations to scout (no matter if they already have been or not)
