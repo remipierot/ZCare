@@ -10,28 +10,42 @@ void GameManager::update()
 	Unit builder;
 	Unit closestVespene;
 	Unit closestExtractor;
-	fillStartingLocations();
+	Unit closestPool;
 
+	// Scout logic
+	fillStartingLocations();
 	_ScoutManager.updateLocationsToScout(enemyStartLocations, otherStartLocations);
 	_ScoutManager.updateScouts();
 	_ScoutManager.scout();
 
+	// Worker logic
 	_WorkerManager.updateWorkers();
 	_WorkerManager.sendWorkersToWork();
 	_WorkerManager.callWorkersBack();
 
+	// Production logic
 	_ProductionManager.updateResourceDepots();
-
 	builder = _WorkerManager.getWorkerWithLowestLife();
-	closestVespene = _ProductionManager.getClosestUnit(0, BWAPI::UnitTypes::Resource_Vespene_Geyser);
-	closestExtractor = _ProductionManager.getClosestUnit(0, BWAPI::UnitTypes::Zerg_Extractor);
+	closestVespene = _ProductionManager.getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);
+	closestExtractor = _ProductionManager.getClosestUnit(0, UnitTypes::Zerg_Extractor);
+	closestPool = _ProductionManager.getClosestUnit(0, UnitTypes::Zerg_Spawning_Pool);
 
-	if (_ProductionManager.getMineralCount() >= BWAPI::UnitTypes::Zerg_Extractor.mineralPrice() && 
+	_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
+
+	if (closestPool == nullptr)
+	{
+		_ProductionManager.makeBuilding(
+			UnitTypes::Zerg_Spawning_Pool,
+			_ProductionManager.getClosestBuildablePosition(UnitTypes::Zerg_Spawning_Pool, builder->getTilePosition()),
+			builder
+			);
+	}
+	else if (_ProductionManager.getMineralCount() >= UnitTypes::Zerg_Extractor.mineralPrice() &&
 		closestVespene != nullptr &&
 		closestExtractor == nullptr)
 	{
 		_ProductionManager.makeBuilding(
-			BWAPI::UnitTypes::Zerg_Extractor,
+			UnitTypes::Zerg_Extractor,
 			closestVespene->getTilePosition(),
 			builder
 			);
@@ -39,10 +53,6 @@ void GameManager::update()
 	else if (_ProductionManager.isSupplyAboutToBeFull() && !_ProductionManager.isUnitBeingCreated())
 	{
 		_ScoutManager.buildScout(_ProductionManager.getResourceDepot(0));
-	}
-	else
-	{
-		_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
 	}
 }
 

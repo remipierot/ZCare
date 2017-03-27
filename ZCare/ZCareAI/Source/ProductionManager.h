@@ -37,6 +37,12 @@ public:
 	// Return the quantity of mineral possessed by the player
 	int getMineralCount();
 
+	// Return the quantity of vespene gas possessed by the player
+	int getVespeneCount();
+
+	// Return the closest buildable position for a given building using the position given
+	BWAPI::TilePosition getClosestBuildablePosition(BWAPI::UnitType buildingType, BWAPI::TilePosition wantedPosition);
+
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base
 };

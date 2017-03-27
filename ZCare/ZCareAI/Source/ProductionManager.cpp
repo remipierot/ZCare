@@ -67,3 +67,15 @@ int ProductionManager::getMineralCount()
 {
 	return Broodwar->self()->minerals();
 }
+
+// Return the quantity of vespene gas possessed by the player
+int ProductionManager::getVespeneCount()
+{
+	return Broodwar->self()->gas();
+}
+
+// Return the closest buildable position for a given building using the position given
+TilePosition ProductionManager::getClosestBuildablePosition(UnitType buildingType, TilePosition wantedPosition)
+{
+	return Broodwar->getBuildLocation(buildingType, wantedPosition);
+}
