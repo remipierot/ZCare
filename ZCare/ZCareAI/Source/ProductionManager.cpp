@@ -38,6 +38,17 @@ void ProductionManager::makeBuilding(const UnitType& buildingType, const TilePos
 	}
 }
 
+// Build the wanted unit
+void ProductionManager::makeUnit(int resourceDepotIndex, const BWAPI::UnitType& unitType)
+{
+	Unit resourceDepot = getResourceDepot(resourceDepotIndex);
+
+	if (resourceDepot->getType().isResourceDepot() && resourceDepot->isIdle())
+	{
+		resourceDepot->train(unitType);
+	}
+}
+
 // Tell if we are about to saturate our supply
 bool ProductionManager::isSupplyAboutToBeFull()
 {

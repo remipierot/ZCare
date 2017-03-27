@@ -30,6 +30,7 @@ void GameManager::update()
 	closestExtractor = _ProductionManager.getClosestUnit(0, UnitTypes::Zerg_Extractor);
 	closestPool = _ProductionManager.getClosestUnit(0, UnitTypes::Zerg_Spawning_Pool);
 
+	_ProductionManager.makeUnit(0, UnitTypes::Zerg_Zergling);
 	_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
 
 	if (closestPool == nullptr)

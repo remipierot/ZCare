@@ -96,6 +96,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BOInstruction.cpp" />
+    <ClCompile Include="Source\BuildOrder.cpp" />
     <ClCompile Include="Source\CombatManager.cpp" />
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
@@ -107,6 +109,8 @@
     <ClCompile Include="Source\ZCareAI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BOInstruction.h" />
+    <ClInclude Include="Source\BuildOrder.h" />
     <ClInclude Include="Source\CombatManager.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\ProductionManager.h" />

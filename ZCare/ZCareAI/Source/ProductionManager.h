@@ -22,6 +22,12 @@ public:
 		BWAPI::Unit worker
 	);
 
+	// Build the wanted unit
+	void makeUnit(
+		int resourceDepotIndex,
+		const BWAPI::UnitType& unitType
+	);
+
 	// Tell if we are about to saturate our supply
 	bool isSupplyAboutToBeFull();
 
@@ -32,7 +38,10 @@ public:
 	bool isUnitBeingCreated();
 
 	// Return the closest unit of the given type using the base at the given index
-	BWAPI::Unit getClosestUnit(int resourceDepotIndex, BWAPI::UnitType unitType);
+	BWAPI::Unit getClosestUnit(
+		int resourceDepotIndex, 
+		BWAPI::UnitType unitType
+	);
 
 	// Return the quantity of mineral possessed by the player
 	int getMineralCount();
@@ -41,7 +50,10 @@ public:
 	int getVespeneCount();
 
 	// Return the closest buildable position for a given building using the position given
-	BWAPI::TilePosition getClosestBuildablePosition(BWAPI::UnitType buildingType, BWAPI::TilePosition wantedPosition);
+	BWAPI::TilePosition getClosestBuildablePosition(
+		BWAPI::UnitType buildingType, 
+		BWAPI::TilePosition wantedPosition
+	);
 
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base
