@@ -30,23 +30,30 @@ Unit ProductionManager::getResourceDepot(unsigned int index)
 }
 
 // Construct a building at the specified location
-void ProductionManager::makeBuilding(const UnitType& buildingType, const TilePosition& targetBuildLocation, Unit worker)
+bool ProductionManager::makeBuilding(const UnitType& buildingType, const TilePosition& targetBuildLocation, Unit worker)
 {
+	bool success = false;
+
 	if (worker != NULL && targetBuildLocation.isValid())
 	{
-		worker->build(buildingType, targetBuildLocation);
+		success = worker->build(buildingType, targetBuildLocation);
 	}
+
+	return success;
 }
 
 // Build the wanted unit
-void ProductionManager::makeUnit(int resourceDepotIndex, const BWAPI::UnitType& unitType)
+bool ProductionManager::makeUnit(int resourceDepotIndex, const BWAPI::UnitType& unitType)
 {
 	Unit resourceDepot = getResourceDepot(resourceDepotIndex);
+	bool success = false;
 
 	if (resourceDepot->getType().isResourceDepot() && resourceDepot->isIdle())
 	{
-		resourceDepot->train(unitType);
+		success = resourceDepot->train(unitType);
 	}
+
+	return success;
 }
 
 // Tell if we are about to saturate our supply

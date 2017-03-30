@@ -16,14 +16,14 @@ public:
 	);
 
 	// Construct a building at the specified location
-	void makeBuilding(
+	bool makeBuilding(
 		const BWAPI::UnitType& buildingType,
 		const BWAPI::TilePosition& targetBuildLocation,
 		BWAPI::Unit worker
 	);
 
 	// Build the wanted unit
-	void makeUnit(
+	bool makeUnit(
 		int resourceDepotIndex,
 		const BWAPI::UnitType& unitType
 	);

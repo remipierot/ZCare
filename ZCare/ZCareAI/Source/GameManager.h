@@ -6,6 +6,7 @@
 #include "ProductionManager.h"
 #include "StrategyManager.h"
 #include "CombatManager.h"
+#include "BuildOrder.h"
 
 class GameManager
 {
@@ -31,12 +32,15 @@ class GameManager
 		// Number of scouts currently scouting
 		int busyScoutsCount();
 
+		void initBO();
+
 	private:
 		ScoutManager _ScoutManager;						// Scouting manager
 		WorkerManager _WorkerManager;					// Worker manager
 		ProductionManager _ProductionManager;			// Production manager
 		StrategyManager _StrategyManager;				// Strategy manager
 		CombatManager _CombatManager;					// Combat manager
+		BuildOrder _BuildOrder;
 		std::set<BWAPI::Position> allStartLocations;	// All the starting positions
 		std::set<BWAPI::Position> enemyStartLocations;	// Starting positions occupied by enemies
 		std::set<BWAPI::Position> otherStartLocations;	// Starting positions that are not occupied by me (but maybe by enemies)

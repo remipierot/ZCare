@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "BOThreeHatch.h"
 
 using namespace std;
 using namespace BWAPI;
@@ -7,11 +8,6 @@ using namespace Filter;
 // Run the game loop
 void GameManager::update()
 {
-	Unit builder;
-	Unit closestVespene;
-	Unit closestExtractor;
-	Unit closestPool;
-
 	// Scout logic
 	fillStartingLocations();
 	_ScoutManager.updateLocationsToScout(enemyStartLocations, otherStartLocations);
@@ -25,6 +21,10 @@ void GameManager::update()
 
 	// Production logic
 	_ProductionManager.updateResourceDepots();
+
+	_BuildOrder.executeNextInstruction(_WorkerManager, _ProductionManager);
+
+	/*
 	builder = _WorkerManager.getWorkerWithLowestLife();
 	closestVespene = _ProductionManager.getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);
 	closestExtractor = _ProductionManager.getClosestUnit(0, UnitTypes::Zerg_Extractor);
@@ -55,6 +55,7 @@ void GameManager::update()
 	{
 		_ScoutManager.buildScout(_ProductionManager.getResourceDepot(0));
 	}
+	*/
 }
 
 // Number of locations to scout (no matter if they already have been or not)
@@ -126,4 +127,9 @@ void GameManager::fillStartingLocations()
 			enemyStartLocations.insert(enemyPosition);
 		}
 	}
+}
+
+void GameManager::initBO()
+{
+	_BuildOrder = BOThreeHatch();
 }

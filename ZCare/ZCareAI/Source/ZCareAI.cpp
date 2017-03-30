@@ -18,6 +18,8 @@ void ZCareAI::onStart()
 
 	// Set the local execution speed (useful for debug run)
 	Broodwar->setLocalSpeed(20);
+
+	_GameManager.initBO();
 }
 
 void ZCareAI::onEnd(bool isWinner)
