@@ -7,6 +7,7 @@
 #include "StrategyManager.h"
 #include "CombatManager.h"
 #include "BuildOrder.h"
+#include "BOParser.h"
 
 class GameManager
 {
@@ -41,6 +42,7 @@ class GameManager
 		StrategyManager _StrategyManager;				// Strategy manager
 		CombatManager _CombatManager;					// Combat manager
 		BuildOrder _BuildOrder;
+		BOParser _BOParser;
 		std::set<BWAPI::Position> allStartLocations;	// All the starting positions
 		std::set<BWAPI::Position> enemyStartLocations;	// Starting positions occupied by enemies
 		std::set<BWAPI::Position> otherStartLocations;	// Starting positions that are not occupied by me (but maybe by enemies)

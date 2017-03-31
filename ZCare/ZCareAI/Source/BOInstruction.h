@@ -57,6 +57,10 @@ public:
 
 	const char* typeToStr();
 
+	static const char* typeToStr(BOInstruction instruction);
+
+	static InstructionType strToType(const char* str);
+
 private:
 	InstructionType type;
 

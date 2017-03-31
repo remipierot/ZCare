@@ -107,3 +107,28 @@ const char* BOInstruction::typeToStr()
 			break;
 	}
 }
+
+const char* BOInstruction::typeToStr(BOInstruction instruction)
+{
+	return instruction.typeToStr();
+}
+
+BOInstruction::InstructionType BOInstruction::strToType(const char* str)
+{
+	if (strcmp(str, "NB_WORKERS") == 0)
+	{
+		return NB_WORKERS;
+	}
+	else if (strcmp(str, "BUILDING_COMPLETION") == 0)
+	{
+		return BUILDING_COMPLETION;
+	}
+	else if (strcmp(str, "RESOURCE_CAP") == 0)
+	{
+		return RESOURCE_CAP;
+	}
+	else
+	{
+		return END_OF_BO;
+	}
+}

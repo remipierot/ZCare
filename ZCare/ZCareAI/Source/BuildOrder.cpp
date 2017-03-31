@@ -30,6 +30,9 @@ bool BuildOrder::executeNextInstruction(WorkerManager wm, ProductionManager pm)
 	bool conditionsFulfilled = false;
 	bool executed = false;
 	BOInstruction* nextInstruction = getNextInstruction();
+	UnitType unitToBuild = nextInstruction->getUnitToBuild();
+
+	//TODO : Add building check in conditions to fulfill
 
 	switch (nextInstruction->getType())
 	{
@@ -51,19 +54,18 @@ bool BuildOrder::executeNextInstruction(WorkerManager wm, ProductionManager pm)
 		case BOInstruction::END_OF_BO:
 			break;
 	}
-
+	
 	if (conditionsFulfilled)
 	{
-		UnitType unitToBuild = nextInstruction->getUnitToBuild();
-
+		int mineralCount = pm.getMineralCount();
+		int vespeneCount = pm.getVespeneCount();
+		
 		if (nextInstruction->getUnitToBuild().isBuilding())
 		{
-			if (builder == nullptr || builder->isMorphing())
-			{
-				builder = wm.getWorkerWithLowestLife();
-			}
+			builder = wm.getWorkerWithLowestLife();
 			TilePosition buildLocation = pm.getClosestBuildablePosition(unitToBuild, builder->getTilePosition());
 
+			//Specific vespene location
 			if (unitToBuild == UnitTypes::Zerg_Extractor)
 			{
 				Unit closestVespene = pm.getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);;
@@ -74,17 +76,18 @@ bool BuildOrder::executeNextInstruction(WorkerManager wm, ProductionManager pm)
 				}
 			}
 
-			if (pm.getMineralCount() >= unitToBuild.mineralPrice() && pm.getVespeneCount() >= unitToBuild.gasPrice())
+			if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice())
 			{
 				pm.makeBuilding(unitToBuild, buildLocation, builder);
-				executed = builder->isMorphing();
 			}
+
+			executed = pm.isBeingBuilt(unitToBuild);
 		}
 		else
 		{
 			if (nextInstruction->getNbUnitsToBuild() > 0)
 			{
-				if (pm.getMineralCount() >= unitToBuild.mineralPrice() && pm.getVespeneCount() >= unitToBuild.gasPrice())
+				if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice())
 				{
 					pm.makeUnit(0, unitToBuild);
 					nextInstruction->decrementNbUnits();
@@ -95,16 +98,17 @@ bool BuildOrder::executeNextInstruction(WorkerManager wm, ProductionManager pm)
 				executed = true;
 			}
 		}
+		
 	}
-	else
-	{
-		wm.buildWorker(pm.getResourceDepot(0));
-	}
+	//else
+	//{
+		//wm.buildWorker(pm.getResourceDepot(0));
+	//}
 
 	if (executed)
 	{
 		currentInstruction++;
 	}
-
+	
 	return executed;
 }

@@ -97,3 +97,42 @@ TilePosition ProductionManager::getClosestBuildablePosition(UnitType buildingTyp
 {
 	return Broodwar->getBuildLocation(buildingType, wantedPosition);
 }
+
+bool ProductionManager::hasUnitRequirements(UnitType unit)
+{
+	return 	Broodwar->self()->hasUnitTypeRequirement(unit);
+}
+
+bool ProductionManager::checkForStartedConstruction()
+{
+	bool buildingSomething = false;
+
+	// for each building unit which is being constructed
+	for (auto &buildingStarted : Broodwar->self()->getUnits()) {
+		// filter out units which aren't buildings under construction
+		if (!(buildingStarted->getType().isBuilding() && (buildingStarted->isBeingConstructed() || buildingStarted->isMorphing())))
+		{
+			continue;
+		}
+		else
+		{
+			buildingSomething = true;
+			break;
+		}
+	}
+
+	return buildingSomething;
+}
+
+bool ProductionManager::isBeingBuilt(UnitType type)
+{
+	for (auto &b : Broodwar->self()->getUnits())
+	{
+		if (b->getType() == type)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}

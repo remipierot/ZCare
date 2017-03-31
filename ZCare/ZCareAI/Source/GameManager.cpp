@@ -109,5 +109,5 @@ void GameManager::fillStartingLocations()
 
 void GameManager::initBO()
 {
-	_BuildOrder = BOFourPool();
+	_BOParser = BOParser(&_BuildOrder);
 }

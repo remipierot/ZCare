@@ -55,6 +55,16 @@ public:
 		BWAPI::TilePosition wantedPosition
 	);
 
+	bool hasUnitRequirements(
+		BWAPI::UnitType unit
+	);
+
+	bool checkForStartedConstruction();
+
+	bool isBeingBuilt(
+		BWAPI::UnitType type
+	);
+
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base
 };

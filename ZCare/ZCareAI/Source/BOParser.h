@@ -6,11 +6,10 @@
 class BOParser
 {
 public:
+	BOParser();
 	BOParser(BuildOrder *buildOrder);
-	~BOParser();
 
 private:
 	BuildOrder *bo;
-
 };
 
