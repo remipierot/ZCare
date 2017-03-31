@@ -19,5 +19,6 @@ public:
 private:
 	std::vector<BOInstruction*> instructionSet;
 	int currentInstruction = -1;
+	BWAPI::Unit builder;
 };
 

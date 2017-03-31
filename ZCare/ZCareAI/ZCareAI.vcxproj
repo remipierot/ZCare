@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\BOFourPool.cpp" />
     <ClCompile Include="Source\BOInstruction.cpp" />
     <ClCompile Include="Source\BOParser.cpp" />
     <ClCompile Include="Source\BOThreeHatch.cpp" />
@@ -112,6 +113,8 @@
     <ClCompile Include="Source\ZCareAI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BOCatalog.h" />
+    <ClInclude Include="Source\BOFourPool.h" />
     <ClInclude Include="Source\BOInstruction.h" />
     <ClInclude Include="Source\BOParser.h" />
     <ClInclude Include="Source\BOThreeHatch.h" />

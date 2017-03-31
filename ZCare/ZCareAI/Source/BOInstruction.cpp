@@ -33,10 +33,9 @@ void BOInstruction::setBuildingCompletionInfos(int newPercentage, UnitType newBu
 	buildingToTrack = newBuildingToTrack;
 }
 
-void BOInstruction::setActions(UnitType newUnitToBuild, TilePosition newBuildLocation, int newNbUnitsToBuild)
+void BOInstruction::setActions(UnitType newUnitToBuild, int newNbUnitsToBuild)
 {
 	unitToBuild = newUnitToBuild;
-	buildLocation = newBuildLocation;
 	nbUnitsToBuild = newNbUnitsToBuild;
 }
 
