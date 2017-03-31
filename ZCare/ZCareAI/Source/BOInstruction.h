@@ -32,7 +32,6 @@ public:
 
 	void setActions(
 		BWAPI::UnitType newUnitToBuild,
-		BWAPI::TilePosition newBuildLocation = BWAPI::TilePositions::None,
 		int newNbUnitsToBuild = 1
 	);
 

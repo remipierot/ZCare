@@ -1,5 +1,5 @@
 #include "GameManager.h"
-#include "BOThreeHatch.h"
+#include "BOCatalog.h"
 
 using namespace std;
 using namespace BWAPI;
@@ -16,46 +16,24 @@ void GameManager::update()
 
 	// Worker logic
 	_WorkerManager.updateWorkers();
-	_WorkerManager.sendWorkersToWork();
-	_WorkerManager.callWorkersBack();
 
 	// Production logic
 	_ProductionManager.updateResourceDepots();
 
+	/*
+	Unit builder = _WorkerManager.getWorkerWithLowestLife();
+	_ProductionManager.makeBuilding(
+		UnitTypes::Zerg_Spawning_Pool,
+		_ProductionManager.getClosestBuildablePosition(UnitTypes::Zerg_Spawning_Pool, builder->getTilePosition()),
+		builder
+	);
+	*/
+
 	_BuildOrder.executeNextInstruction(_WorkerManager, _ProductionManager);
 
-	/*
-	builder = _WorkerManager.getWorkerWithLowestLife();
-	closestVespene = _ProductionManager.getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);
-	closestExtractor = _ProductionManager.getClosestUnit(0, UnitTypes::Zerg_Extractor);
-	closestPool = _ProductionManager.getClosestUnit(0, UnitTypes::Zerg_Spawning_Pool);
-
-	_ProductionManager.makeUnit(0, UnitTypes::Zerg_Zergling);
-	_WorkerManager.buildWorker(_ProductionManager.getResourceDepot(0));
-
-	if (closestPool == nullptr)
-	{
-		_ProductionManager.makeBuilding(
-			UnitTypes::Zerg_Spawning_Pool,
-			_ProductionManager.getClosestBuildablePosition(UnitTypes::Zerg_Spawning_Pool, builder->getTilePosition()),
-			builder
-			);
-	}
-	else if (_ProductionManager.getMineralCount() >= UnitTypes::Zerg_Extractor.mineralPrice() &&
-		closestVespene != nullptr &&
-		closestExtractor == nullptr)
-	{
-		_ProductionManager.makeBuilding(
-			UnitTypes::Zerg_Extractor,
-			closestVespene->getTilePosition(),
-			builder
-			);
-	}
-	else if (_ProductionManager.isSupplyAboutToBeFull() && !_ProductionManager.isUnitBeingCreated())
-	{
-		_ScoutManager.buildScout(_ProductionManager.getResourceDepot(0));
-	}
-	*/
+	// Workers have to work
+	_WorkerManager.sendWorkersToWork();
+	_WorkerManager.callWorkersBack();
 }
 
 // Number of locations to scout (no matter if they already have been or not)
@@ -131,5 +109,5 @@ void GameManager::fillStartingLocations()
 
 void GameManager::initBO()
 {
-	_BuildOrder = BOThreeHatch();
+	_BuildOrder = BOFourPool();
 }

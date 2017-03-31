@@ -58,7 +58,10 @@ bool BuildOrder::executeNextInstruction(WorkerManager wm, ProductionManager pm)
 
 		if (nextInstruction->getUnitToBuild().isBuilding())
 		{
-			Unit builder = wm.getWorkerWithLowestLife();
+			if (builder == nullptr || builder->isMorphing())
+			{
+				builder = wm.getWorkerWithLowestLife();
+			}
 			TilePosition buildLocation = pm.getClosestBuildablePosition(unitToBuild, builder->getTilePosition());
 
 			if (unitToBuild == UnitTypes::Zerg_Extractor)
@@ -73,7 +76,8 @@ bool BuildOrder::executeNextInstruction(WorkerManager wm, ProductionManager pm)
 
 			if (pm.getMineralCount() >= unitToBuild.mineralPrice() && pm.getVespeneCount() >= unitToBuild.gasPrice())
 			{
-				executed = pm.makeBuilding(unitToBuild, buildLocation, builder);
+				pm.makeBuilding(unitToBuild, buildLocation, builder);
+				executed = builder->isMorphing();
 			}
 		}
 		else
