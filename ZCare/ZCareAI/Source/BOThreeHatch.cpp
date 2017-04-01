@@ -6,18 +6,18 @@ BOThreeHatch::BOThreeHatch()
 {
 	BOInstruction* tmp;
 
-	tmp = new BOInstruction(BOInstruction::NB_WORKERS);
-	tmp->setWorkerCount(9);
+	tmp = new BOInstruction(BOInstruction::SUPPLY_USED);
+	tmp->setSupplyCount(9);
 	tmp->setActions(UnitTypes::Zerg_Overlord);
 	addInstruction(tmp);
 
-	tmp = new BOInstruction(BOInstruction::NB_WORKERS);
-	tmp->setWorkerCount(12);
+	tmp = new BOInstruction(BOInstruction::SUPPLY_USED);
+	tmp->setSupplyCount(12);
 	tmp->setActions(UnitTypes::Zerg_Hatchery);
 	addInstruction(tmp);
 
-	tmp = new BOInstruction(BOInstruction::NB_WORKERS);
-	tmp->setWorkerCount(11);
+	tmp = new BOInstruction(BOInstruction::SUPPLY_USED);
+	tmp->setSupplyCount(11);
 	tmp->setActions(UnitTypes::Zerg_Spawning_Pool);
 	addInstruction(tmp);
 }

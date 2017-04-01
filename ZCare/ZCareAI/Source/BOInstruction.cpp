@@ -10,11 +10,12 @@ BOInstruction::BOInstruction()
 BOInstruction::BOInstruction(InstructionType newType)
 {
 	type = newType;
+	completed = (newType == END_OF_BO) ? true : false;
 }
 
-void BOInstruction::setWorkerCount(int newWorkerCount)
+void BOInstruction::setSupplyCount(int newSupplyCount)
 {
-	workerCount = newWorkerCount;
+	supplyCount = newSupplyCount;
 }
 
 void BOInstruction::setMineralCap(int newMineralCap)
@@ -44,9 +45,9 @@ BOInstruction::InstructionType BOInstruction::getType()
 	return type;
 }
 
-int BOInstruction::getWorkerCount()
+int BOInstruction::getSupplyCount()
 {
-	return workerCount;
+	return supplyCount;
 }
 
 int BOInstruction::getMineralCap()
@@ -93,8 +94,8 @@ const char* BOInstruction::typeToStr()
 {
 	switch (type)
 	{
-		case NB_WORKERS:   
-			return "NB_WORKERS";
+		case SUPPLY_USED:   
+			return "SUPPLY_USED";
 			break;
 		case BUILDING_COMPLETION:   
 			return "BUILDING_COMPLETION";
@@ -115,9 +116,9 @@ const char* BOInstruction::typeToStr(BOInstruction instruction)
 
 BOInstruction::InstructionType BOInstruction::strToType(const char* str)
 {
-	if (strcmp(str, "NB_WORKERS") == 0)
+	if (strcmp(str, "SUPPLY_USED") == 0)
 	{
-		return NB_WORKERS;
+		return SUPPLY_USED;
 	}
 	else if (strcmp(str, "BUILDING_COMPLETION") == 0)
 	{
@@ -131,4 +132,19 @@ BOInstruction::InstructionType BOInstruction::strToType(const char* str)
 	{
 		return END_OF_BO;
 	}
+}
+
+void BOInstruction::reset()
+{
+	completed = false;
+}
+
+void BOInstruction::complete()
+{
+	completed = true;
+}
+
+bool BOInstruction::isCompleted()
+{
+	return completed;
 }

@@ -34,6 +34,8 @@ public:
 	// Tell if we can build new units or not
 	bool isSupplyFull();
 
+	int realSupplyUsed();
+
 	// Tell if a unit is being built or not
 	bool isUnitBeingCreated();
 
@@ -61,8 +63,10 @@ public:
 
 	bool checkForStartedConstruction();
 
-	bool isBeingBuilt(
-		BWAPI::UnitType type
+	bool isAlreadyBuilt(
+		BWAPI::UnitType type,
+		bool completed = false,
+		int count = 1
 	);
 
 private:

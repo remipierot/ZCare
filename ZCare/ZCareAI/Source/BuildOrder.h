@@ -14,7 +14,7 @@ public:
 
 	void reset();
 
-	bool executeNextInstruction(WorkerManager wm, ProductionManager pm);
+	bool executeNextInstruction(WorkerManager* wm, ProductionManager* pm);
 
 private:
 	std::vector<BOInstruction*> instructionSet;

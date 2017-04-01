@@ -45,19 +45,20 @@ BOParser::BOParser(BuildOrder *buildOrder)
 				{
 					tmp = new BOInstruction(BOInstruction::strToType(text));
 				}
-				else if (nomElement == "WorkerCount")
+				else if (nomElement == "SupplyCount")
 				{
-					tmp->setWorkerCount(atoi(text));
+					tmp->setSupplyCount(atoi(text));
 				}
 				else if (nomElement == "Actions")
 				{
 					tmp->setActions(UnitType::getType(text));
 				}
-
-				bo->addInstruction(tmp);
 			}
+
+			bo->addInstruction(tmp);
 		}
 
+		bo->reset();
 		Broodwar->sendText("%d instructions loaded", nbInstruction);
 	}
 }

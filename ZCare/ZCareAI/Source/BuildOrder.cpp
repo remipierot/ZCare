@@ -22,92 +22,109 @@ BOInstruction* BuildOrder::getNextInstruction()
 
 void BuildOrder::reset()
 {
+	for (auto i : instructionSet)
+	{
+		i->reset();
+	}
+
 	currentInstruction = -1;
 }
 
-bool BuildOrder::executeNextInstruction(WorkerManager wm, ProductionManager pm)
+bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm)
 {
 	bool conditionsFulfilled = false;
 	bool executed = false;
 	BOInstruction* nextInstruction = getNextInstruction();
 	UnitType unitToBuild = nextInstruction->getUnitToBuild();
+	int originNbUnitsToBuild = nextInstruction->getNbUnitsToBuild();
 
-	//TODO : Add building check in conditions to fulfill
-
-	switch (nextInstruction->getType())
+	if (!nextInstruction->isCompleted())
 	{
-		case BOInstruction::NB_WORKERS:
-			conditionsFulfilled = wm.workersCount() >= nextInstruction->getWorkerCount();
-			break;
-		case BOInstruction::BUILDING_COMPLETION:
-			break;
-		case BOInstruction::RESOURCE_CAP:
-			if (nextInstruction->getMineralCap() > 0)
-			{
-				conditionsFulfilled = pm.getMineralCount() >= nextInstruction->getMineralCap();
-			}
-			else if (nextInstruction->getVespeneCap() > 0)
-			{
-				conditionsFulfilled = pm.getVespeneCount() >= nextInstruction->getVespeneCap();
-			}
-			break;
-		case BOInstruction::END_OF_BO:
-			break;
-	}
-	
-	if (conditionsFulfilled)
-	{
-		int mineralCount = pm.getMineralCount();
-		int vespeneCount = pm.getVespeneCount();
-		
-		if (nextInstruction->getUnitToBuild().isBuilding())
+		switch (nextInstruction->getType())
 		{
-			builder = wm.getWorkerWithLowestLife();
-			TilePosition buildLocation = pm.getClosestBuildablePosition(unitToBuild, builder->getTilePosition());
-
-			//Specific vespene location
-			if (unitToBuild == UnitTypes::Zerg_Extractor)
-			{
-				Unit closestVespene = pm.getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);;
-				
-				if (closestVespene != nullptr)
+			case BOInstruction::SUPPLY_USED:
+				conditionsFulfilled = pm->realSupplyUsed() >= nextInstruction->getSupplyCount();
+				break;
+			case BOInstruction::BUILDING_COMPLETION:
+				break;
+			case BOInstruction::RESOURCE_CAP:
+				if (nextInstruction->getMineralCap() > 0)
 				{
-					buildLocation = closestVespene->getTilePosition();
+					conditionsFulfilled = pm->getMineralCount() >= nextInstruction->getMineralCap();
 				}
-			}
-
-			if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice())
-			{
-				pm.makeBuilding(unitToBuild, buildLocation, builder);
-			}
-
-			executed = pm.isBeingBuilt(unitToBuild);
+				else if (nextInstruction->getVespeneCap() > 0)
+				{
+					conditionsFulfilled = pm->getVespeneCount() >= nextInstruction->getVespeneCap();
+				}
+				break;
+			case BOInstruction::END_OF_BO:
+				break;
 		}
-		else
+
+		if (conditionsFulfilled)
 		{
-			if (nextInstruction->getNbUnitsToBuild() > 0)
+			int mineralCount = pm->getMineralCount();
+			int vespeneCount = pm->getVespeneCount();
+
+			if (nextInstruction->getUnitToBuild().isBuilding())
 			{
+				builder = wm->getWorkerWithLowestLife();
+				TilePosition buildLocation = pm->getClosestBuildablePosition(unitToBuild, builder->getTilePosition());
+
+				//Specific vespene location
+				if (unitToBuild == UnitTypes::Zerg_Extractor)
+				{
+					Unit closestVespene = pm->getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);;
+
+					if (closestVespene != nullptr)
+					{
+						buildLocation = closestVespene->getTilePosition();
+					}
+				}
+
 				if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice())
 				{
-					pm.makeUnit(0, unitToBuild);
-					nextInstruction->decrementNbUnits();
+					pm->makeBuilding(unitToBuild, buildLocation, builder);
 				}
 			}
 			else
 			{
-				executed = true;
+				if (nextInstruction->getNbUnitsToBuild() > 0)
+				{
+					if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice() && pm->hasUnitRequirements(unitToBuild))
+					{
+						pm->makeUnit(0, unitToBuild);
+						nextInstruction->decrementNbUnits();
+					}
+				}
 			}
 		}
-		
-	}
-	//else
-	//{
+		//else
+		//{
 		//wm.buildWorker(pm.getResourceDepot(0));
-	//}
+		//}
 
-	if (executed)
-	{
-		currentInstruction++;
+		if (nextInstruction->getUnitToBuild().isBuilding())
+		{
+			executed = pm->isAlreadyBuilt(unitToBuild);
+		}
+		else if (nextInstruction->getNbUnitsToBuild() <= 0)
+		{
+			executed = true;
+		}
+
+		if (executed)
+		{
+			nextInstruction->complete();
+			currentInstruction++;
+
+			Broodwar->sendText("Instruction %d completed (%s) - %d %s built", 
+				currentInstruction,
+				nextInstruction->typeToStr(), 
+				originNbUnitsToBuild,
+				nextInstruction->getUnitToBuild().c_str()
+			);
+		}
 	}
 	
 	return executed;

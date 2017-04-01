@@ -68,6 +68,11 @@ bool ProductionManager::isSupplyFull()
 	return Broodwar->self()->supplyUsed() >= Broodwar->self()->supplyTotal();
 }
 
+int ProductionManager::realSupplyUsed()
+{
+	return Broodwar->self()->supplyUsed() / 2;
+}
+
 // Tell if a unit is being built or not
 bool ProductionManager::isUnitBeingCreated()
 {
@@ -100,7 +105,20 @@ TilePosition ProductionManager::getClosestBuildablePosition(UnitType buildingTyp
 
 bool ProductionManager::hasUnitRequirements(UnitType unit)
 {
-	return 	Broodwar->self()->hasUnitTypeRequirement(unit);
+	bool requirementsMet = true;
+	auto requirements = unit.requiredUnits();
+
+	for (auto &r : requirements)
+	{
+		requirementsMet &= isAlreadyBuilt(r.first, true);
+
+		if (!requirementsMet)
+		{
+			break;
+		}
+	}
+
+	return 	requirementsMet;
 }
 
 bool ProductionManager::checkForStartedConstruction()
@@ -124,13 +142,18 @@ bool ProductionManager::checkForStartedConstruction()
 	return buildingSomething;
 }
 
-bool ProductionManager::isBeingBuilt(UnitType type)
+bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 {
 	for (auto &b : Broodwar->self()->getUnits())
 	{
-		if (b->getType() == type)
+		if (b->getType() == type && (!completed || (completed && b->isCompleted())))
 		{
-			return true;
+			count--;
+
+			if (count == 0)
+			{
+				return true;
+			}
 		}
 	}
 

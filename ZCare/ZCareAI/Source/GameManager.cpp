@@ -29,7 +29,7 @@ void GameManager::update()
 	);
 	*/
 
-	_BuildOrder.executeNextInstruction(_WorkerManager, _ProductionManager);
+	_BuildOrder.executeNextInstruction(&_WorkerManager, &_ProductionManager);
 
 	// Workers have to work
 	_WorkerManager.sendWorkersToWork();

@@ -5,7 +5,7 @@
 class BOInstruction
 {
 public:
-	enum InstructionType { NB_WORKERS, BUILDING_COMPLETION, RESOURCE_CAP, END_OF_BO };
+	enum InstructionType { SUPPLY_USED, BUILDING_COMPLETION, RESOURCE_CAP, END_OF_BO };
 
 	BOInstruction();
 
@@ -13,8 +13,8 @@ public:
 		InstructionType newType
 	);
 
-	void setWorkerCount(
-		int newWorkerCount
+	void setSupplyCount(
+		int newSupplyCount
 	);
 
 	void setMineralCap(
@@ -37,7 +37,7 @@ public:
 
 	InstructionType getType();
 
-	int getWorkerCount();
+	int getSupplyCount();
 
 	int getMineralCap();
 
@@ -61,11 +61,18 @@ public:
 
 	static InstructionType strToType(const char* str);
 
+	void reset();
+
+	void complete();
+
+	bool isCompleted();
+
 private:
 	InstructionType type;
+	bool completed = false;
 
 	// Conditions to fulfill
-	int workerCount;
+	int supplyCount;
 	int mineralCap;
 	int vespeneCap;
 	int buildingCompletionPercentage;
