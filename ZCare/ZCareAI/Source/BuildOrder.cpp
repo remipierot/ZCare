@@ -99,10 +99,10 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				}
 			}
 		}
-		//else
-		//{
-		//wm.buildWorker(pm.getResourceDepot(0));
-		//}
+		else if (nextInstruction->getType() == BOInstruction::SUPPLY_USED && pm->realSupplyUsed() < nextInstruction->getSupplyCount())
+		{
+			wm->buildWorker(pm->getResourceDepot(0));
+		}
 
 		if (nextInstruction->getUnitToBuild().isBuilding())
 		{
