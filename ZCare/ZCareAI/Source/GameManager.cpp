@@ -110,4 +110,5 @@ void GameManager::fillStartingLocations()
 void GameManager::initBO()
 {
 	_BOParser = BOParser(&_BuildOrder);
+	_ScoutManager.init(&_ProductionManager);
 }

@@ -1,10 +1,14 @@
 #pragma once
 #include <BWAPI.h>
 #include "ToolBox.h"
+#include "ProductionManager.h"
 
 class ScoutManager
 {
 	public:
+
+		void init(ProductionManager *prodManager);
+
 		// Set the locations that have to be scout
 		void updateLocationsToScout(
 			std::set<BWAPI::Position> enemyStartLocations,
@@ -41,6 +45,9 @@ class ScoutManager
 		int busyScoutsCount();
 
 	private:
+		ProductionManager *prodManager;
+		int nbScoutMort;
+
 		std::set<BWAPI::Position> locationsToScout;		// Locations that can be scout (no matter if they already have been or not)
 		std::set<BWAPI::Position> scoutedLocations;		// Locations that have already been scout
 		std::set<BWAPI::Position> unscoutedLocations;	// Locations that are not scouted yet

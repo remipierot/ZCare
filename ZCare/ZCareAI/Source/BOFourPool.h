@@ -1,5 +1,5 @@
 #pragma once
-#include "C:\Users\Remi\Documents\ZCare\ZCare\ZCareAI\Source\BuildOrder.h"
+#include "BuildOrder.h"
 class BOFourPool :
 	public BuildOrder
 {

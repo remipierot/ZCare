@@ -4,6 +4,14 @@ using namespace std;
 using namespace BWAPI;
 using namespace Filter;
 
+void ScoutManager::init(ProductionManager *prodManager)
+{
+	this->prodManager = prodManager;
+	nbScoutMort = 0;
+}
+
+
+
 // Set the locations that have to be scout
 void ScoutManager::updateLocationsToScout(set<Position> enemyStartLocations, set<Position> otherStartLocations)
 {
@@ -28,11 +36,26 @@ void ScoutManager::updateLocationsToScout(set<Position> enemyStartLocations, set
 // Fill the scouts set
 void ScoutManager::updateScouts()
 {
+	scouts.clear();
 	for (auto &u : Broodwar->self()->getUnits())
 	{
-		if (u->getType() == BWAPI::UnitTypes::Zerg_Overlord)
+		if (u->getType() == BWAPI::UnitTypes::Zerg_Overlord && u->exists())
 		{
 			scouts.insert(u);
+		}
+	}
+	int nbScout = scouts.size();
+
+	if (nbScoutMort <= nbScout)
+	{
+		nbScoutMort = nbScout;
+	}
+
+	if (nbScoutMort-nbScout > 0)
+	{
+		for (int i = 0; i < nbScoutMort-nbScout; i++)
+		{
+			prodManager->makeUnit(0, BWAPI::UnitTypes::Zerg_Overlord);
 		}
 	}
 }
