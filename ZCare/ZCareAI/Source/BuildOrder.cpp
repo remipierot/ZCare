@@ -74,7 +74,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				//Specific vespene location
 				if (unitToBuild == UnitTypes::Zerg_Extractor)
 				{
-					Unit closestVespene = pm->getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);;
+					Unit closestVespene = pm->getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);
 
 					if (closestVespene != nullptr)
 					{
@@ -99,10 +99,10 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				}
 			}
 		}
-		else if (nextInstruction->getType() == BOInstruction::SUPPLY_USED && pm->realSupplyUsed() < nextInstruction->getSupplyCount())
-		{
-			wm->buildWorker(pm->getResourceDepot(0));
-		}
+		//else if (nextInstruction->getType() == BOInstruction::SUPPLY_USED && pm->realSupplyUsed() < nextInstruction->getSupplyCount())
+		//{
+		//	wm->buildWorker(pm->getResourceDepot(0));
+		//}
 
 		if (nextInstruction->getUnitToBuild().isBuilding())
 		{
