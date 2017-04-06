@@ -1,5 +1,4 @@
 #include "GameManager.h"
-#include "BOCatalog.h"
 
 using namespace std;
 using namespace BWAPI;
@@ -20,15 +19,7 @@ void GameManager::update()
 	// Production logic
 	_ProductionManager.updateResourceDepots();
 
-	/*
-	Unit builder = _WorkerManager.getWorkerWithLowestLife();
-	_ProductionManager.makeBuilding(
-		UnitTypes::Zerg_Spawning_Pool,
-		_ProductionManager.getClosestBuildablePosition(UnitTypes::Zerg_Spawning_Pool, builder->getTilePosition()),
-		builder
-	);
-	*/
-
+	// Build order instruction execution
 	_BuildOrder.executeNextInstruction(&_WorkerManager, &_ProductionManager);
 
 	// Workers have to work
