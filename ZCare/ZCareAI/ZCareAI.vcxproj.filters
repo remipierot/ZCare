@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\BOInstruction.cpp" />
+    <ClCompile Include="Source\BOParser.cpp" />
+    <ClCompile Include="Source\BuildOrder.cpp" />
+    <ClCompile Include="Source\CombatManager.cpp" />
+    <ClCompile Include="Source\GameManager.cpp" />
+    <ClCompile Include="Source\ProductionManager.cpp" />
+    <ClCompile Include="Source\ScoutManager.cpp" />
+    <ClCompile Include="Source\StrategyManager.cpp" />
+    <ClCompile Include="Source\ToolBox.cpp" />
+    <ClCompile Include="Source\WorkerManager.cpp" />
+    <ClCompile Include="Source\tinyxml2.cpp">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Dll.cpp">
+      <Filter>Final %28DLL%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ZCareAI.cpp">
+      <Filter>Final %28DLL%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cell.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Grid.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\BOInstruction.h" />
+    <ClInclude Include="Source\BOParser.h" />
+    <ClInclude Include="Source\BuildOrder.h" />
+    <ClInclude Include="Source\CombatManager.h" />
+    <ClInclude Include="Source\GameManager.h" />
+    <ClInclude Include="Source\ProductionManager.h" />
+    <ClInclude Include="Source\ScoutManager.h" />
+    <ClInclude Include="Source\StrategyManager.h" />
+    <ClInclude Include="Source\ToolBox.h" />
+    <ClInclude Include="Source\WorkerManager.h" />
+    <ClInclude Include="Source\tinyxml2.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ZCareAI.h">
+      <Filter>Final %28DLL%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cell.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Grid.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="External">
+      <UniqueIdentifier>{e862a99a-ffa3-41e6-8003-ec1fbf9f4258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Final %28DLL%29">
+      <UniqueIdentifier>{c17249c3-1c9f-4d7a-bf84-609af59f7e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{20f26dc6-b9a9-49cc-8d4c-2353a96f30d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

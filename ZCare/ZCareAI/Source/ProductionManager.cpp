@@ -159,3 +159,25 @@ bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 
 	return false;
 }
+
+int ProductionManager::maxSupply()
+{
+	return Broodwar->self()->supplyTotal() / 2;
+}
+
+bool ProductionManager::canResourceDepotTrain(int index)
+{
+	Unit depot = getResourceDepot(index);
+
+	if (depot != NULL)
+	{
+		return depot->canTrain();
+	}
+
+	return false;
+}
+
+int ProductionManager::getNbResourceDepots()
+{
+	return resourceDepots.size();
+}

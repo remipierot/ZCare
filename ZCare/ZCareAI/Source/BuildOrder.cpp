@@ -91,10 +91,23 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			{
 				if (nextInstruction->getNbUnitsToBuild() > 0)
 				{
-					if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice() && pm->hasUnitRequirements(unitToBuild))
+					if (mineralCount >= unitToBuild.mineralPrice() && 
+						vespeneCount >= unitToBuild.gasPrice() && 
+						pm->hasUnitRequirements(unitToBuild) &&
+						(unitToBuild == UnitTypes::Zerg_Overlord || pm->realSupplyUsed() < pm->maxSupply()))
 					{
-						pm->makeUnit(0, unitToBuild);
-						nextInstruction->decrementNbUnits();
+						for (int i = 0; i < pm->getNbResourceDepots(); i++)
+						{
+							if (pm->canResourceDepotTrain(i))
+							{
+								if (pm->makeUnit(i, unitToBuild))
+								{
+									nextInstruction->decrementNbUnits();
+								}
+								break;
+							}
+						}
+
 					}
 				}
 			}
@@ -106,7 +119,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 		if (nextInstruction->getUnitToBuild().isBuilding())
 		{
-			executed = pm->isAlreadyBuilt(unitToBuild);
+			executed = pm->isAlreadyBuilt(unitToBuild, false, nextInstruction->getNbUnitsOfType());
 		}
 		else if (nextInstruction->getNbUnitsToBuild() <= 0)
 		{
@@ -118,14 +131,46 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			nextInstruction->complete();
 			currentInstruction++;
 
+			/*
 			Broodwar->sendText("Instruction %d completed (%s) - %d %s built", 
 				currentInstruction,
 				nextInstruction->typeToStr(), 
 				originNbUnitsToBuild,
 				nextInstruction->getUnitToBuild().c_str()
 			);
+			*/
 		}
 	}
 	
 	return executed;
+}
+
+void BuildOrder::drawDebug()
+{
+	BOInstruction* toPrint = NULL;
+	char color = ' ';
+	for (int i = (currentInstruction + 1); i < (currentInstruction + 6); i++)
+	{
+		color = (i == currentInstruction + 1) ? ToolBox::GREEN_CHAR : ToolBox::RED_CHAR;
+		if (i < instructionSet.size())
+		{
+			toPrint = instructionSet[i];
+		}
+		else
+		{
+			toPrint = NULL;
+		}
+
+		if (toPrint != NULL)
+		{
+			Broodwar->drawTextScreen(
+				10,
+				(i - (currentInstruction + 1) + 1) * 10,
+				"%c %d - %s",
+				color,
+				toPrint->getSupplyCount(),
+				toPrint->getUnitToBuild().c_str()
+			);
+		}
+	}
 }

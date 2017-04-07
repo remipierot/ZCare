@@ -36,6 +36,8 @@ public:
 
 	int realSupplyUsed();
 
+	int maxSupply();
+
 	// Tell if a unit is being built or not
 	bool isUnitBeingCreated();
 
@@ -68,6 +70,12 @@ public:
 		bool completed = false,
 		int count = 1
 	);
+
+	bool canResourceDepotTrain(
+		int index
+	);
+
+	int getNbResourceDepots();
 
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base

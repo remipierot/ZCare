@@ -148,3 +148,13 @@ bool BOInstruction::isCompleted()
 {
 	return completed;
 }
+
+void BOInstruction::setNbUnitsOfType(int newNbUnitsOfType)
+{
+	nbUnitsOfType = newNbUnitsOfType;
+}
+
+int BOInstruction::getNbUnitsOfType()
+{
+	return nbUnitsOfType;
+}

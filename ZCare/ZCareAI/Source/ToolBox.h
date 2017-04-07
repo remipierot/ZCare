@@ -29,5 +29,9 @@ class ToolBox
 		static bool IsPositionValid(
 			const BWAPI::Position position
 		);
+
+		static const char RED_CHAR = '\x08';
+		static const char GREEN_CHAR = '\x07';
+		static const char WHITE_CHAR = '\x04';
 };
 

@@ -16,6 +16,8 @@ public:
 
 	bool executeNextInstruction(WorkerManager* wm, ProductionManager* pm);
 
+	void drawDebug();
+
 private:
 	std::vector<BOInstruction*> instructionSet;
 	int currentInstruction = -1;

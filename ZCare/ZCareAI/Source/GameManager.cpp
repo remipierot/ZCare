@@ -104,3 +104,8 @@ void GameManager::initBO()
 	_BOParser = BOParser(&_BuildOrder);
 	_ScoutManager.init(&_ProductionManager);
 }
+
+void GameManager::drawDebug()
+{
+	_BuildOrder.drawDebug();
+}
