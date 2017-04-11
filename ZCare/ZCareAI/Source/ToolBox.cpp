@@ -58,3 +58,9 @@ bool ToolBox::IsPositionValid(const Position position)
 		position != Positions::None;
 }
 
+
+bool ToolBox::IsInCircle(int posX, int posY, int radius, int posX2, int posY2, int radius2)
+{
+	return
+		pow((posX2 - posX), 2) + pow((posY - posY2),2) <= pow((radius + radius2),2);
+}

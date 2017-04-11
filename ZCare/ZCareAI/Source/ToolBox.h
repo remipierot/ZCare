@@ -4,6 +4,44 @@
 class ToolBox
 {
 	public:
+
+		//Structure pour contenir un unite de gaz ou de mineraux avec un id de base
+		struct Mineral
+		{
+			int idParent;
+			BWAPI::Unit mineralUnit;
+
+			Mineral(BWAPI::Unit mineralUnit)
+			{
+				idParent = -1;
+				this->mineralUnit = mineralUnit;
+			}
+		};
+
+		//Structure de base contenant la liste de mineral et de gaz
+		struct Base
+		{
+				int idBase;
+				std::set<ToolBox::Mineral> *mineralFields;
+				std::set<ToolBox::Mineral> *gazFields;
+				bool isExpansionInteressting;
+				bool isStartingLocation;
+				bool isEnnemyLocation;
+
+				Base()
+				{
+					idBase = 0;
+					mineralFields = new std::set<ToolBox::Mineral>();
+					gazFields = new std::set<ToolBox::Mineral>();
+					isExpansionInteressting = false;
+					isStartingLocation = false;
+					isEnnemyLocation = false;
+				}
+		};
+
+
+
+
 		//Use a UnitType combined to its TilePosition to get the Position corresponding to its center
 		static BWAPI::Position ConvertTilePosition(
 			const BWAPI::TilePosition tilePosition,
@@ -29,5 +67,9 @@ class ToolBox
 		static bool IsPositionValid(
 			const BWAPI::Position position
 		);
+
+		static bool IsInCircle(
+			int posX, int posY, int radius, int pos2X, int pos2y, int radius2
+			);
 };
 

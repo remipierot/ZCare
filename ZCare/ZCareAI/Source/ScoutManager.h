@@ -46,7 +46,7 @@ class ScoutManager
 
 	private:
 		ProductionManager *prodManager;
-		int nbScoutMort;
+		int nbScoutMax;
 
 		std::set<BWAPI::Position> locationsToScout;		// Locations that can be scout (no matter if they already have been or not)
 		std::set<BWAPI::Position> scoutedLocations;		// Locations that have already been scout
@@ -54,6 +54,7 @@ class ScoutManager
 		std::set<BWAPI::Position> locationsBeingScout;	// Locations that are currently being scout (a scout is on its way to the location)
 		std::set<const BWAPI::Unit> scouts;				// Every scout
 		std::set<const BWAPI::Unit> busyScouts;			// Scouts that are currently scouting
+		std::set<BWAPI::Position> *mineralFields;  //Minerald Field that are not near a base and are not in the way 
 
 		// Add the given position to the locations to scout and update the unscouted locations
 		void addToLocationsToScout(

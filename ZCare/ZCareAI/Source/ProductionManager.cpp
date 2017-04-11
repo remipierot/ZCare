@@ -159,3 +159,13 @@ bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 
 	return false;
 }
+
+void ProductionManager::setMineralFields(std::set<Position> *mineralFields)
+{
+	this->mineralFields = mineralFields;
+}
+
+std::set<Position>* ProductionManager::getMineralFields()
+{
+	return mineralFields;
+}

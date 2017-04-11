@@ -7,7 +7,8 @@ using namespace Filter;
 void ScoutManager::init(ProductionManager *prodManager)
 {
 	this->prodManager = prodManager;
-	nbScoutMort = 0;
+	this->mineralFields = this->prodManager->getMineralFields();
+	nbScoutMax = 0;
 }
 
 
@@ -46,18 +47,34 @@ void ScoutManager::updateScouts()
 	}
 	int nbScout = scouts.size();
 
-	if (nbScoutMort <= nbScout)
+	if (nbScoutMax <= nbScout)
 	{
-		nbScoutMort = nbScout;
+		nbScoutMax = nbScout;
 	}
 
-	if (nbScoutMort-nbScout > 0)
+	if (nbScoutMax - nbScout > 0)
 	{
-		for (int i = 0; i < nbScoutMort-nbScout; i++)
+		for (int i = 0; i < nbScoutMax - nbScout; i++)
 		{
 			prodManager->makeUnit(0, BWAPI::UnitTypes::Zerg_Overlord);
 		}
 	}
+
+	//Busy Scout 
+	Color color(0, 0, 255);
+	Color color2(0, 255, 0);
+	//Useful if we want the scout to discover base that are on the way to our base
+	/*for (auto &busyScout : busyScouts)
+	{
+		Position pos = busyScout->getPosition();
+		/*for (auto &pos2 : *mineralFields)
+		{
+			if (ToolBox::IsInCircle(pos.x, pos.y, 300, pos2.x, pos2.y, 300))
+				mineralFields->erase(pos2);
+			//Broodwar->drawCircle(CoordinateType::Map, pos2.x, pos2.y, 300, color2);
+			//Broodwar->drawCircle(CoordinateType::Map, pos.x, pos.y, 300, color);
+		}
+	}*/
 }
 
 // Create a scout with the given resourceDepot
