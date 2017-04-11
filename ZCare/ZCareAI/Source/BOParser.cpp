@@ -53,6 +53,10 @@ BOParser::BOParser(BuildOrder *buildOrder)
 				{
 					tmp->setActions(UnitType::getType(text));
 				}
+				else if (nomElement == "UnitsOfType")
+				{
+					tmp->setNbUnitsOfType(atoi(text));
+				}
 			}
 
 			bo->addInstruction(tmp);
@@ -60,5 +64,9 @@ BOParser::BOParser(BuildOrder *buildOrder)
 
 		bo->reset();
 		Broodwar->sendText("%d instructions loaded", nbInstruction);
+	}
+	else
+	{
+		Broodwar->sendText("Unable to load bwapi-data/data/buildOrder.xml");
 	}
 }

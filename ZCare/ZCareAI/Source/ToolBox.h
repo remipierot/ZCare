@@ -68,8 +68,14 @@ class ToolBox
 			const BWAPI::Position position
 		);
 
+<<<<<<< HEAD
 		static bool IsInCircle(
 			int posX, int posY, int radius, int pos2X, int pos2y, int radius2
 			);
+=======
+		static const char RED_CHAR = '\x08';
+		static const char GREEN_CHAR = '\x07';
+		static const char WHITE_CHAR = '\x04';
+>>>>>>> 6feea932c4d071a9ff45816d1f745295cc88fcab
 };
 

@@ -48,11 +48,14 @@ void ZCareAI::onFrame()
 	Broodwar->drawTextScreen(10, 100, "Scouts : %d", _GameManager.scoutsCount());
 	Broodwar->drawTextScreen(10, 110, "Busy Scouts : %d", _GameManager.busyScoutsCount());
 	*/
-
+	/*
 	Broodwar->drawTextScreen(0, 30, "Supply infos :");
 	Broodwar->drawTextScreen(10, 40, "BWAPI Total supply : %d", Broodwar->self()->supplyTotal());
 	Broodwar->drawTextScreen(10, 50, "BWAPI Used supply : %d", Broodwar->self()->supplyUsed());
 	Broodwar->drawTextScreen(10, 60, "REAL Used supply : %d", Broodwar->self()->supplyUsed() / 2);
+	*/
+
+	_GameManager.drawDebug();
 
 	// Return if the game is a replay or is paused
 	if (Broodwar->isReplay() || Broodwar->isPaused() || !Broodwar->self())
@@ -62,7 +65,7 @@ void ZCareAI::onFrame()
 
 	// Prevent spamming by only running our onFrame once every number of latency frames.
 	// Latency frames are the number of frames before commands are processed.
-	if (Broodwar->getFrameCount() % Broodwar->getLatencyFrames() != 0)
+	if (Broodwar->getFrameCount() % Broodwar->getLatencyFrames() != 0) 
 	{
 		return;
 	}

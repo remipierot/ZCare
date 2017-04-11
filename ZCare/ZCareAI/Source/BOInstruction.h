@@ -35,6 +35,10 @@ public:
 		int newNbUnitsToBuild = 1
 	);
 
+	void setNbUnitsOfType(
+		int newNbUnitsOfType
+	);
+
 	InstructionType getType();
 
 	int getSupplyCount();
@@ -42,6 +46,8 @@ public:
 	int getMineralCap();
 
 	int getVespeneCap();
+
+	int getNbUnitsOfType();
 
 	int getBuildingCompletionPercentage();
 
@@ -82,5 +88,8 @@ private:
 	int nbUnitsToBuild;
 	BWAPI::UnitType unitToBuild;
 	BWAPI::TilePosition buildLocation;
+
+	// Additional infos
+	int nbUnitsOfType;
 };
 

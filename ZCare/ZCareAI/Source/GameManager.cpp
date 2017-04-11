@@ -1,5 +1,6 @@
 #include "GameManager.h"
 
+
 using namespace std;
 using namespace BWAPI;
 using namespace Filter;
@@ -237,4 +238,9 @@ void GameManager::initBO()
 	fillStartingLocations();
 	_ProductionManager.setMineralFields(mineralsLocations);
 	_ScoutManager.init(&_ProductionManager);
+}
+
+void GameManager::drawDebug()
+{
+	_BuildOrder.drawDebug();
 }
