@@ -20,6 +20,8 @@
     <ClCompile Include="Source\ZCareAI.cpp">
       <Filter>Final %28DLL%29</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Base.cpp" />
+    <ClCompile Include="Source\Resource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BOInstruction.h" />
@@ -38,6 +40,8 @@
     <ClInclude Include="Source\ZCareAI.h">
       <Filter>Final %28DLL%29</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Base.h" />
+    <ClInclude Include="Source\Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

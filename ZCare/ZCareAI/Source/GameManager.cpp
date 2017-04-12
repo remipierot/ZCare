@@ -28,23 +28,23 @@ void GameManager::update()
 	_WorkerManager.callWorkersBack();
 
 	//DEBUG DES CERCLES 
-	for (auto &base : *allBaseLocations)
+	for (auto &base : allBaseLocations)
 	{
 		Color color(0, 25 * base->idBase, 0);
 		std::string s = std::to_string(base->idBase);
 		char const *pchar = s.c_str(); 
-		for (ToolBox::Mineral posMineral : *base->mineralFields)
+		for (Resource* posMineral : base->mineralFields)
 		{
-			BWAPI::Position &positionMineral = posMineral.mineralUnit->getPosition();
+			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
 			Broodwar->drawCircle(CoordinateType::Map, positionMineral.x, positionMineral.y, 300, color);
 			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar);
 		}
 
 
 		Color color2(0, 0, 25 * base->idBase);
-		for (ToolBox::Mineral posGaz : *base->gazFields)
+		for (Resource* posGaz : base->gazFields)
 		{
-			BWAPI::Position positionGaz = posGaz.mineralUnit->getPosition();
+			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
 			Broodwar->drawCircle(CoordinateType::Map, positionGaz.x, positionGaz.y, 300, color2);
 		}	
 	}
@@ -122,30 +122,30 @@ void GameManager::fillStartingLocations()
 
 	bool isInCircle = false;
 	int idBase = 1;
-	ToolBox::Base *base;
+	Base *base;
 	for ( BWAPI::Unit tp : Broodwar->getStaticMinerals())
 	{
 		const TilePosition mineralsTilePosition = tp->getTilePosition();
 		if (ToolBox::IsTilePositionValid(mineralsTilePosition))
 		{
 			const Position mineralsPosition = ToolBox::ConvertTilePosition(mineralsTilePosition, UnitTypes::Resource_Mineral_Field);
-			mineralsLocations->insert(mineralsPosition);
-			ToolBox::Mineral mineral(tp);
-			mineralHelper->insert(mineral);
+			mineralsLocations.insert(mineralsPosition);
+			//Resource mineral(tp);
+			mineralHelper.insert(new Resource(tp));
 		}
 	}
-
-	for (ToolBox::Mineral mineral : *mineralHelper)
+	
+	for (Resource* mineral : mineralHelper)
 	{
-		if (mineral.idParent == -1)
+		if (mineral->idParent == -1)
 			{
-				base = new ToolBox::Base();
+				base = new Base();
 				base->idBase = idBase;
 
-				BWAPI::Unit unit = mineral.mineralUnit;
+				BWAPI::Unit unit = mineral->resourceUnit;
 				BWAPI::Position positionMineral = unit->getPosition(); 
-				base->mineralFields->insert(mineral);
-				mineral.idParent = idBase;
+				base->mineralFields.insert(mineral);
+				mineral->idParent = idBase;
 
 				for (const Position posUs : allStartLocations)
 				{
@@ -156,29 +156,27 @@ void GameManager::fillStartingLocations()
 				base->isStartingLocation = isInCircle;
 				isInCircle = false;
 
-				for (ToolBox::Mineral mineral2 : *mineralHelper)
+				for (Resource* mineral2 : mineralHelper)
 				{
-					if (&mineral != &mineral2)
+					if (mineral != mineral2)
 					{
-						BWAPI::Position positionMineral2 = mineral2.mineralUnit->getPosition();
+						BWAPI::Position positionMineral2 = mineral2->resourceUnit->getPosition();
 						if (ToolBox::IsInCircle(positionMineral.x, positionMineral.y, 300, positionMineral2.x, positionMineral2.y, 300) )
 						{
-							if (mineral2.idParent == -1)
+							if (mineral2->idParent == -1)
 							{
-								mineral2.idParent = idBase;
-								base->mineralFields->insert(mineral2);
+								mineral2->idParent = idBase;
+								base->mineralFields.insert(mineral2);
 							}
 						}
 					}
 				}
 				idBase += 1;
-				allBaseLocations->insert(base);
+				allBaseLocations.insert(base);
 			}	
 	}
 
-	
-
-	for (auto &base : *allBaseLocations)
+	for (auto &base : allBaseLocations)
 	{
 		for (const BWAPI::Unit &gazUnit : Broodwar->getStaticGeysers())
 		{
@@ -186,16 +184,15 @@ void GameManager::fillStartingLocations()
 			if (ToolBox::IsTilePositionValid(geysersTilePosition))
 			{
 				const Position geysersPosition = ToolBox::ConvertTilePosition(geysersTilePosition, UnitTypes::Resource_Vespene_Geyser);
-				gazLocations->insert(geysersPosition);
-				ToolBox::Mineral gaz(gazUnit);
-				base->gazFields->insert(gaz);
+				gazLocations.insert(geysersPosition);
+				base->gazFields.insert(new Resource(gazUnit));
 
-				for (ToolBox::Mineral mineralU : *mineralHelper)
+				for (Resource* mineralU : mineralHelper)
 				{
-					BWAPI::Position positionMineral = mineralU.mineralUnit->getPosition();
+					BWAPI::Position positionMineral = mineralU->resourceUnit->getPosition();
 					if (ToolBox::IsInCircle(geysersPosition.x, geysersPosition.y, 300, positionMineral.x, positionMineral.y, 300))
 					{
-						expansionsLocations->insert(geysersPosition);
+						expansionsLocations.insert(geysersPosition);
 						break;
 					}
 				}
@@ -208,7 +205,7 @@ void GameManager::fillStartingLocations()
 				}
 				if (!isInCircle)
 				{
-					gazLocations->insert(geysersPosition);
+					gazLocations.insert(geysersPosition);
 
 				}
 				else isInCircle = false;
@@ -216,13 +213,12 @@ void GameManager::fillStartingLocations()
 		}
 	}
 
-	
-	for (auto posGeyser : *gazLocations)
+	for (auto posGeyser : gazLocations)
 	{
-		for (auto posMinerals : *mineralsLocations)
+		for (auto posMinerals : mineralsLocations)
 		{
 			if (ToolBox::IsInCircle(posGeyser.x, posGeyser.y, 300, posMinerals.x, posMinerals.y, 300))
-				expansionsLocations->insert(posGeyser);
+				expansionsLocations.insert(posGeyser);
 		}
 	}
 }
@@ -230,13 +226,8 @@ void GameManager::fillStartingLocations()
 void GameManager::initBO()
 {
 	_BOParser = BOParser(&_BuildOrder);
-	mineralsLocations = new std::set<BWAPI::Position>();
-	gazLocations = new std::set<BWAPI::Position>();
-	expansionsLocations = new std::set<BWAPI::Position>();
-	allBaseLocations = new std::set<ToolBox::Base*>();
-	mineralHelper = new std::set<ToolBox::Mineral>();
 	fillStartingLocations();
-	_ProductionManager.setMineralFields(mineralsLocations);
+	_ProductionManager.setMineralFields(&mineralsLocations);
 	_ScoutManager.init(&_ProductionManager);
 }
 
