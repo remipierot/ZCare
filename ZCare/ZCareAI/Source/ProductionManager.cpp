@@ -160,7 +160,6 @@ bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 	return false;
 }
 
-<<<<<<< HEAD
 void ProductionManager::setMineralFields(std::set<Position> *mineralFields)
 {
 	this->mineralFields = mineralFields;
@@ -169,7 +168,8 @@ void ProductionManager::setMineralFields(std::set<Position> *mineralFields)
 std::set<Position>* ProductionManager::getMineralFields()
 {
 	return mineralFields;
-=======
+}
+
 int ProductionManager::maxSupply()
 {
 	return Broodwar->self()->supplyTotal() / 2;
@@ -190,5 +190,4 @@ bool ProductionManager::canResourceDepotTrain(int index)
 int ProductionManager::getNbResourceDepots()
 {
 	return resourceDepots.size();
->>>>>>> 6feea932c4d071a9ff45816d1f745295cc88fcab
 }

@@ -71,17 +71,15 @@ public:
 		int count = 1
 	);
 
-<<<<<<< HEAD
 	//Mineral Fields
 	void setMineralFields(std::set<BWAPI::Position> *mineralFields);
 	std::set<BWAPI::Position>* getMineralFields();
-=======
+
 	bool canResourceDepotTrain(
 		int index
 	);
 
 	int getNbResourceDepots();
->>>>>>> 6feea932c4d071a9ff45816d1f745295cc88fcab
 
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base

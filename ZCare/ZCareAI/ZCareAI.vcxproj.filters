@@ -20,12 +20,6 @@
     <ClCompile Include="Source\ZCareAI.cpp">
       <Filter>Final %28DLL%29</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Cell.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Grid.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BOInstruction.h" />
@@ -44,12 +38,6 @@
     <ClInclude Include="Source\ZCareAI.h">
       <Filter>Final %28DLL%29</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Cell.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Grid.h">
-      <Filter>Map</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -57,9 +45,6 @@
     </Filter>
     <Filter Include="Final %28DLL%29">
       <UniqueIdentifier>{c17249c3-1c9f-4d7a-bf84-609af59f7e65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map">
-      <UniqueIdentifier>{20f26dc6-b9a9-49cc-8d4c-2353a96f30d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

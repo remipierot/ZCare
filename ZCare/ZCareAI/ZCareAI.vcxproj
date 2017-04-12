@@ -99,11 +99,9 @@
     <ClCompile Include="Source\BOInstruction.cpp" />
     <ClCompile Include="Source\BOParser.cpp" />
     <ClCompile Include="Source\BuildOrder.cpp" />
-    <ClCompile Include="Source\Cell.cpp" />
     <ClCompile Include="Source\CombatManager.cpp" />
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
-    <ClCompile Include="Source\Grid.cpp" />
     <ClCompile Include="Source\ProductionManager.cpp" />
     <ClCompile Include="Source\ScoutManager.cpp" />
     <ClCompile Include="Source\StrategyManager.cpp" />
@@ -116,10 +114,8 @@
     <ClInclude Include="Source\BOInstruction.h" />
     <ClInclude Include="Source\BOParser.h" />
     <ClInclude Include="Source\BuildOrder.h" />
-    <ClInclude Include="Source\Cell.h" />
     <ClInclude Include="Source\CombatManager.h" />
     <ClInclude Include="Source\GameManager.h" />
-    <ClInclude Include="Source\Grid.h" />
     <ClInclude Include="Source\ProductionManager.h" />
     <ClInclude Include="Source\ScoutManager.h" />
     <ClInclude Include="Source\StrategyManager.h" />
