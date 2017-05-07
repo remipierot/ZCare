@@ -37,7 +37,9 @@ void GameManager::update()
 		{
 			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
 			Broodwar->drawCircle(CoordinateType::Map, positionMineral.x, positionMineral.y, 300, color);
-			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar);
+			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar); 
+			if (base->isExpansionInteressting)
+				Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y+20, "Expansion interessting");
 		}
 
 
@@ -129,8 +131,6 @@ void GameManager::fillStartingLocations()
 		if (ToolBox::IsTilePositionValid(mineralsTilePosition))
 		{
 			const Position mineralsPosition = ToolBox::ConvertTilePosition(mineralsTilePosition, UnitTypes::Resource_Mineral_Field);
-			mineralsLocations.insert(mineralsPosition);
-			//Resource mineral(tp);
 			mineralHelper.insert(new Resource(tp));
 		}
 	}
@@ -178,47 +178,28 @@ void GameManager::fillStartingLocations()
 
 	for (auto &base : allBaseLocations)
 	{
+		bool expansion = false;
 		for (const BWAPI::Unit &gazUnit : Broodwar->getStaticGeysers())
 		{
 			const TilePosition geysersTilePosition = gazUnit->getTilePosition();
-			if (ToolBox::IsTilePositionValid(geysersTilePosition))
+			if (ToolBox::IsTilePositionValid(geysersTilePosition) && !expansion)
 			{
 				const Position geysersPosition = ToolBox::ConvertTilePosition(geysersTilePosition, UnitTypes::Resource_Vespene_Geyser);
-				gazLocations.insert(geysersPosition);
-				base->gazFields.insert(new Resource(gazUnit));
-
-				for (Resource* mineralU : mineralHelper)
+				
+				for (Resource* mineralU : base->mineralFields)
 				{
 					BWAPI::Position positionMineral = mineralU->resourceUnit->getPosition();
 					if (ToolBox::IsInCircle(geysersPosition.x, geysersPosition.y, 300, positionMineral.x, positionMineral.y, 300))
 					{
-						expansionsLocations.insert(geysersPosition);
+						base->gazFields.insert(new Resource(gazUnit));
+						expansion = true;
 						break;
 					}
 				}
-
-				for (const Position posUs : allStartLocations)
-				{
-					if (!isInCircle && ToolBox::IsInCircle(geysersPosition.x, geysersPosition.y, 300, posUs.x, posUs.y, 300))
-						isInCircle = true;
-
-				}
-				if (!isInCircle)
-				{
-					gazLocations.insert(geysersPosition);
-
-				}
-				else isInCircle = false;
+				if (base->isStartingLocation)
+					base->isExpansionInteressting = false;
+				else base->isExpansionInteressting = expansion;
 			}
-		}
-	}
-
-	for (auto posGeyser : gazLocations)
-	{
-		for (auto posMinerals : mineralsLocations)
-		{
-			if (ToolBox::IsInCircle(posGeyser.x, posGeyser.y, 300, posMinerals.x, posMinerals.y, 300))
-				expansionsLocations.insert(posGeyser);
 		}
 	}
 }
@@ -227,7 +208,6 @@ void GameManager::initBO()
 {
 	_BOParser = BOParser(&_BuildOrder);
 	fillStartingLocations();
-	_ProductionManager.setMineralFields(&mineralsLocations);
 	_ScoutManager.init(&_ProductionManager);
 }
 

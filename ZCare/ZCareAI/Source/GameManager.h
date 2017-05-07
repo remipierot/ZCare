@@ -49,12 +49,7 @@ class GameManager
 		std::set<BWAPI::Position> allStartLocations;	// All the starting positions
 		std::set<BWAPI::Position> enemyStartLocations;	// Starting positions occupied by enemies
 		std::set<BWAPI::Position> otherStartLocations;	// Starting positions that are not occupied by me (but maybe by enemies)
-		std::set<BWAPI::Position> mineralsLocations;	// Positions of all the minerals fields
-		std::set<BWAPI::Position> gazLocations;		// Positions of all the gaz fields
-		std::set<BWAPI::Position> expansionsLocations; // Positions of all expansions that have gaz and mineral fields
-
-		std::set<Resource*> mineralHelper; //temporaire
-
+		std::set<Resource*> mineralHelper;		//List of mineral ressources (temporary)
 		std::set<Base*> allBaseLocations;		// List of struct base used to know all base on the map
 		BWAPI::Position personalStartLocation;			// My start position
 
