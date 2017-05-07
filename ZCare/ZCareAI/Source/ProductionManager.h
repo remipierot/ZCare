@@ -71,10 +71,6 @@ public:
 		int count = 1
 	);
 
-	//Mineral Fields
-	void setMineralFields(std::set<BWAPI::Position> *mineralFields);
-	std::set<BWAPI::Position>* getMineralFields();
-
 	bool canResourceDepotTrain(
 		int index
 	);
@@ -83,6 +79,5 @@ public:
 
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base
-	std::set<BWAPI::Position> *mineralFields;			// All Mineral fields that are not near a base 
 };
 
