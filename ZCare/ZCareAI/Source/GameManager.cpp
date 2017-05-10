@@ -26,6 +26,8 @@ void GameManager::update()
 	// Workers have to work
 	_WorkerManager.sendWorkersToWork();
 	_WorkerManager.callWorkersBack();
+	_CombatManager.update();
+
 }
 
 // Number of locations to scout (no matter if they already have been or not)

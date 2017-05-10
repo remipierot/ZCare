@@ -22,6 +22,7 @@
     </ClCompile>
     <ClCompile Include="Source\Base.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
+    <ClCompile Include="Source\Squad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BOInstruction.h" />
@@ -42,6 +43,7 @@
     </ClInclude>
     <ClInclude Include="Source\Base.h" />
     <ClInclude Include="Source\Resource.h" />
+    <ClInclude Include="Source\Squad.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
