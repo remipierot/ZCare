@@ -209,6 +209,7 @@ void GameManager::initBO()
 	_BOParser = BOParser(&_BuildOrder);
 	fillStartingLocations();
 	_ScoutManager.init(&_ProductionManager);
+	_ProductionManager.setAllBaseLocations(allBaseLocations);
 }
 
 void GameManager::drawDebug()
