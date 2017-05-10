@@ -9,7 +9,7 @@ public:
 	int idBase;
 	std::set<Resource*> mineralFields;
 	std::set<Resource*> gazFields;
-	bool isExpansionInteressting;
+	bool isExpansionInteresting;
 	bool isStartingLocation;
 	bool isEnnemyLocation;
 

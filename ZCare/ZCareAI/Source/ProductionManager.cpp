@@ -181,3 +181,8 @@ int ProductionManager::getNbResourceDepots()
 {
 	return resourceDepots.size();
 }
+
+void ProductionManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
+{
+	allBaseLocations = newAllBaseLocations;
+}

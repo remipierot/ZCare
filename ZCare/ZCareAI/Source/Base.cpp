@@ -3,7 +3,7 @@
 Base::Base()
 {
 	idBase = 0;
-	isExpansionInteressting = false;
+	isExpansionInteresting = false;
 	isStartingLocation = false;
 	isEnnemyLocation = false;
 }

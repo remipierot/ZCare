@@ -49,7 +49,7 @@ class GameManager
 		std::set<BWAPI::Position> allStartLocations;	// All the starting positions
 		std::set<BWAPI::Position> enemyStartLocations;	// Starting positions occupied by enemies
 		std::set<BWAPI::Position> otherStartLocations;	// Starting positions that are not occupied by me (but maybe by enemies)
-		std::set<Resource*> mineralHelper;		//List of mineral ressources (temporary)
+		std::set<Resource*> mineralHelper;		// List of mineral ressources (temporary)
 		std::set<Base*> allBaseLocations;		// List of struct base used to know all base on the map
 		BWAPI::Position personalStartLocation;			// My start position
 

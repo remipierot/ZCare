@@ -38,8 +38,8 @@ void GameManager::update()
 			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
 			Broodwar->drawCircle(CoordinateType::Map, positionMineral.x, positionMineral.y, 300, color);
 			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar); 
-			if (base->isExpansionInteressting)
-				Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y+20, "Expansion interessting");
+			if (base->isExpansionInteresting)
+				Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y+20, "Expansion interesting");
 		}
 
 
@@ -197,8 +197,8 @@ void GameManager::fillStartingLocations()
 					}
 				}
 				if (base->isStartingLocation)
-					base->isExpansionInteressting = false;
-				else base->isExpansionInteressting = expansion;
+					base->isExpansionInteresting = false;
+				else base->isExpansionInteresting = expansion;
 			}
 		}
 	}

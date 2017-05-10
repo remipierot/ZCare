@@ -1,5 +1,6 @@
 #pragma once
 #include <BWAPI.h>
+#include "Base.h"
 #include "ToolBox.h"
 
 class ProductionManager
@@ -77,7 +78,12 @@ public:
 
 	int getNbResourceDepots();
 
+	void setAllBaseLocations(
+		std::set<Base*> newAllBaseLocations
+	);
+
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base
+	std::set<Base*> allBaseLocations;
 };
 
