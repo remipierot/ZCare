@@ -1,4 +1,5 @@
 #include "ProductionManager.h"
+#include <vector>
 
 using namespace std;
 using namespace BWAPI;
@@ -182,7 +183,31 @@ int ProductionManager::getNbResourceDepots()
 	return resourceDepots.size();
 }
 
-void ProductionManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
+void ProductionManager::setAllBaseLocations(set<Base*> *newAllBaseLocations)
 {
 	allBaseLocations = newAllBaseLocations;
+}
+
+Base* ProductionManager::getExpansionOrderedByDistance(int index)
+{
+	Position mainBaseLocation = getResourceDepot(0)->getPosition();
+	vector<Base*> bases;
+	Base* expansion = nullptr;
+
+	for (Base* b : *allBaseLocations)
+	{
+		if (b->isExpansionInteresting && !b->isEnnemyLocation)
+		{
+			bases.push_back(b);
+		}
+	}
+
+	sort(bases.begin(), bases.end(), [](const Base* b1, const Base* b2) -> bool
+	{
+		return b1->distanceToMainBase < b2->distanceToMainBase;
+	});
+
+	expansion = bases[index];
+
+	return expansion;
 }

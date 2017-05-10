@@ -79,11 +79,15 @@ public:
 	int getNbResourceDepots();
 
 	void setAllBaseLocations(
-		std::set<Base*> newAllBaseLocations
+		std::set<Base*> *newAllBaseLocations
+	);
+
+	Base* getExpansionOrderedByDistance(
+		int index
 	);
 
 private:
 	std::set<const BWAPI::Unit> resourceDepots;				// Every base
-	std::set<Base*> allBaseLocations;
+	std::set<Base*> *allBaseLocations;
 };
 
