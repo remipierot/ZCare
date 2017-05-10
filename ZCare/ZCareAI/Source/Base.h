@@ -6,13 +6,15 @@
 class Base
 {
 public:
+	Base();
+
 	int idBase;
 	std::set<Resource*> mineralFields;
-	std::set<Resource*> gazFields;
+	Resource* gazFields;
 	bool isExpansionInteresting;
 	bool isStartingLocation;
 	bool isEnnemyLocation;
+	BWAPI::Position baseLocation;
 
-	Base();
 };
 

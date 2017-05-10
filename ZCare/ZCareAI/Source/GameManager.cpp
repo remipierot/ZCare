@@ -32,7 +32,8 @@ void GameManager::update()
 	{
 		Color color(0, 25 * base->idBase, 0);
 		std::string s = std::to_string(base->idBase);
-		char const *pchar = s.c_str(); 
+		char const *pchar = s.c_str();
+		Broodwar->drawText(CoordinateType::Map, base->baseLocation.x, base->baseLocation.y, "Base Location");
 		for (Resource* posMineral : base->mineralFields)
 		{
 			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
@@ -44,11 +45,12 @@ void GameManager::update()
 
 
 		Color color2(0, 0, 25 * base->idBase);
-		for (Resource* posGaz : base->gazFields)
+		if (base->gazFields != 0)
 		{
+			Resource* posGaz = base->gazFields;
 			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
 			Broodwar->drawCircle(CoordinateType::Map, positionGaz.x, positionGaz.y, 300, color2);
-		}	
+		}
 	}
 }
 
@@ -176,6 +178,7 @@ void GameManager::fillStartingLocations()
 			}	
 	}
 
+	////If a geyser is inside a mineral circle, it's an interesting expansion 
 	for (auto &base : allBaseLocations)
 	{
 		bool expansion = false;
@@ -189,9 +192,10 @@ void GameManager::fillStartingLocations()
 				for (Resource* mineralU : base->mineralFields)
 				{
 					BWAPI::Position positionMineral = mineralU->resourceUnit->getPosition();
+
 					if (ToolBox::IsInCircle(geysersPosition.x, geysersPosition.y, 300, positionMineral.x, positionMineral.y, 300))
 					{
-						base->gazFields.insert(new Resource(gazUnit));
+						base->gazFields = new Resource(gazUnit);
 						expansion = true;
 						break;
 					}
@@ -201,6 +205,25 @@ void GameManager::fillStartingLocations()
 				else base->isExpansionInteresting = expansion;
 			}
 		}
+	}
+
+	//For the base position 
+	for (auto &base : allBaseLocations)
+	{
+		int mineralCount = base->mineralFields.size();
+		BWAPI::Position position(0, 0);
+		for (Resource* mineralU : base->mineralFields)
+		{
+			position += ToolBox::ConvertTilePosition(mineralU->resourceUnit->getTilePosition(), UnitTypes::Resource_Mineral_Field);
+		}
+		if (base->gazFields != 0)
+		{
+			mineralCount += 1;
+			position += ToolBox::ConvertTilePosition(base->gazFields->resourceUnit->getTilePosition(), UnitTypes::Resource_Vespene_Geyser);
+		}
+		position /= mineralCount;
+		base->baseLocation = position;
+		
 	}
 }
 
