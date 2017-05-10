@@ -38,8 +38,10 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 	UnitType unitToBuild = nextInstruction->getUnitToBuild();
 	int originNbUnitsToBuild = nextInstruction->getNbUnitsToBuild();
 
+	//Run next instruction only if it is not completed
 	if (!nextInstruction->isCompleted())
 	{
+		//Define conditions to fulfill according to instruction type
 		switch (nextInstruction->getType())
 		{
 			case BOInstruction::SUPPLY_USED:
@@ -61,20 +63,38 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				break;
 		}
 
+		//Run nextInstruction only if its conditions are fulfilled
 		if (conditionsFulfilled)
 		{
 			int mineralCount = pm->getMineralCount();
 			int vespeneCount = pm->getVespeneCount();
 
+			TilePosition targetLocation = TilePositions::None;
+			Position p = Positions::Invalid;
+			Unit targetResourceDepot = nullptr;
+
+			if ((nextInstruction->getBaseIndex() + 1) <= pm->getNbResourceDepots())
+			{
+				targetResourceDepot = pm->getResourceDepot(nextInstruction->getBaseIndex());
+				p = targetResourceDepot->getPosition();
+				targetLocation = targetResourceDepot->getTilePosition();
+			}
+			else
+			{
+				targetLocation = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex())->tilePosition;
+				p = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex())->baseLocation;
+			}
+
+			//If nextInstruction is about making a building
 			if (nextInstruction->getUnitToBuild().isBuilding())
 			{
 				builder = wm->getWorkerWithLowestLife();
-				TilePosition buildLocation = pm->getClosestBuildablePosition(unitToBuild, builder->getTilePosition());
+				TilePosition buildLocation = pm->getClosestBuildablePosition(unitToBuild, targetLocation);
 
 				//Specific vespene location
 				if (unitToBuild == UnitTypes::Zerg_Extractor)
 				{
-					Unit closestVespene = pm->getClosestUnit(0, UnitTypes::Resource_Vespene_Geyser);
+					Unit closestVespene = pm->getClosestUnit(nextInstruction->getBaseIndex(), UnitTypes::Resource_Vespene_Geyser);
 
 					if (closestVespene != nullptr)
 					{
@@ -82,11 +102,25 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					}
 				}
 
+				//Make building if having enough ressources
 				if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice())
 				{
-					pm->makeBuilding(unitToBuild, buildLocation, builder);
+					if (!builder->isMoving() && !ToolBox::IsInCircle(p.x, p.y, 300, builder->getPosition().x, builder->getPosition().y, 10))
+					{
+						builder->move((Position)buildLocation);
+					}
+
+					Broodwar->drawCircleMap((Position)buildLocation, 300, Colors::Cyan);
+					Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Red, true);
+
+					if (ToolBox::IsInCircle(p.x, p.y, 300, builder->getPosition().x, builder->getPosition().y, 10))
+					{
+						pm->makeBuilding(unitToBuild, buildLocation, builder);
+						Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Green, true);
+					}
 				}
 			}
+			//If nextInstruction is about making a living unit
 			else
 			{
 				if (nextInstruction->getNbUnitsToBuild() > 0)
@@ -96,18 +130,24 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 						pm->hasUnitRequirements(unitToBuild) &&
 						(unitToBuild == UnitTypes::Zerg_Overlord || pm->realSupplyUsed() < pm->maxSupply()))
 					{
-						for (int i = 0; i < pm->getNbResourceDepots(); i++)
+						if (targetResourceDepot == nullptr || 
+							(targetResourceDepot != nullptr && !targetResourceDepot->canTrain()) ||
+							(targetResourceDepot != nullptr && !targetResourceDepot->isIdle()))
 						{
-							if (pm->canResourceDepotTrain(i))
+							for (int i = 0; i < pm->getNbResourceDepots(); i++)
 							{
-								if (pm->makeUnit(i, unitToBuild))
+								if (pm->canResourceDepotTrain(i))
 								{
-									nextInstruction->decrementNbUnits();
+									targetResourceDepot = pm->getResourceDepot(i);
+									break;
 								}
-								break;
 							}
 						}
 
+						if (targetResourceDepot->train(unitToBuild))
+						{
+							nextInstruction->decrementNbUnits();
+						}
 					}
 				}
 			}

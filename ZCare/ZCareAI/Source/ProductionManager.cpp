@@ -10,9 +10,9 @@ void ProductionManager::updateResourceDepots()
 {
 	for (auto &u : Broodwar->self()->getUnits())
 	{
-		if (u->getType().isResourceDepot())
+		if (u->getType().isResourceDepot() && (find(resourceDepots.begin(), resourceDepots.end(), u) == resourceDepots.end()))
 		{
-			resourceDepots.insert(u);
+			resourceDepots.push_back(u);
 		}
 	}
 }
@@ -22,7 +22,7 @@ Unit ProductionManager::getResourceDepot(unsigned int index)
 {
 	if (index < resourceDepots.size())
 	{
-		return *(next(resourceDepots.begin(), index));
+		return resourceDepots[index];
 	}
 	else
 	{

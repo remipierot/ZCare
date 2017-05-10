@@ -39,6 +39,10 @@ public:
 		int newNbUnitsOfType
 	);
 
+	void setBaseIndex(
+		int baseLocationId
+	);
+
 	InstructionType getType();
 
 	int getSupplyCount();
@@ -58,6 +62,8 @@ public:
 	BWAPI::UnitType getUnitToBuild();
 
 	BWAPI::TilePosition getBuildLocation();
+
+	int getBaseIndex();
 
 	void decrementNbUnits();
 
@@ -86,6 +92,7 @@ private:
 
 	// Actions to perform
 	int nbUnitsToBuild;
+	int baseIndex;
 	BWAPI::UnitType unitToBuild;
 	BWAPI::TilePosition buildLocation;
 

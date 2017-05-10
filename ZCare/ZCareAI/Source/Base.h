@@ -16,6 +16,6 @@ public:
 	bool isEnnemyLocation;
 	BWAPI::Position baseLocation;
 	float distanceToMainBase;
-
+	BWAPI::TilePosition tilePosition;
 };
 
