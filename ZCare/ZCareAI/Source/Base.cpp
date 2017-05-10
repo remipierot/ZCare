@@ -7,4 +7,5 @@ Base::Base()
 	isExpansionInteresting = false;
 	isStartingLocation = false;
 	isEnnemyLocation = false;
+	distanceToMainBase = 0;
 }

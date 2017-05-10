@@ -216,6 +216,7 @@ void GameManager::fillStartingLocations()
 		{
 			position += ToolBox::ConvertTilePosition(mineralU->resourceUnit->getTilePosition(), UnitTypes::Resource_Mineral_Field);
 		}
+
 		if (base->gazFields != 0)
 		{
 			mineralCount += 1;
@@ -223,6 +224,7 @@ void GameManager::fillStartingLocations()
 		}
 		position /= mineralCount;
 		base->baseLocation = position;
+		base->distanceToMainBase = personalStartLocation.getDistance(position);
 		
 	}
 }

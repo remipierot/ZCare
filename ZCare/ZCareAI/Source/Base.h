@@ -15,6 +15,7 @@ public:
 	bool isStartingLocation;
 	bool isEnnemyLocation;
 	BWAPI::Position baseLocation;
+	float distanceToMainBase;
 
 };
 
