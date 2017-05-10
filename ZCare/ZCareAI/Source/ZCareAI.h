@@ -27,7 +27,9 @@ class ZCareAI : public BWAPI::AIModule
 		// Everything below this line is safe to modify.
 
 		bool checkStateUnit(BWAPI::Unit unit);
+		void setCombatManager(CombatManager *combatManager);
 
 	private:
 		GameManager _GameManager;
+		CombatManager * _CombatManager;
 };

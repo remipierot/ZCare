@@ -20,6 +20,7 @@ void ZCareAI::onStart()
 	Broodwar->setLocalSpeed(20);
 
 	_GameManager.initBO();
+	this->setCombatManager(_GameManager.getCombatManager());
 }
 
 void ZCareAI::onEnd(bool isWinner)
@@ -72,6 +73,13 @@ void ZCareAI::onFrame()
 
 	// Game loop
 	_GameManager.update();
+	int y = 60;
+	for (Squad* squad : _CombatManager->getSquadList())
+	{
+		Broodwar->drawTextScreen(10, y, "Squad %d, Nombre : %d", squad->getIdSquad(), squad->numberUnit());
+		y += 20;
+	}
+	
 }
 
 void ZCareAI::onSendText(std::string text)
@@ -131,36 +139,38 @@ void ZCareAI::onUnitHide(BWAPI::Unit unit)
 void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 {
 	UnitType type = unit->getType();
-	if (!type.isWorker() && !type.isBuilding())
+	if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
 	{
-			int squadNumber = _GameManager.getCombatManager().squadNumber();
-			Squad* squad = new Squad(1);
-			if (squadNumber == 0)
+		int squadNumber = _CombatManager->squadNumber();
+		Squad* squad = 0;
+		if (squadNumber == 0)
+		{
+			squadNumber = 1;
+			squad = new Squad(squadNumber);
+			_CombatManager->addSquad(squad);
+		}		
+
+		bool insertion = false;
+		int currentSquad = 1;
+		while (!insertion)
+		{
+		/*Squad* */squad = _CombatManager->findSquad(currentSquad);
+			if (squad != 0)
 			{
-				_GameManager.getCombatManager().addSquad(squad);
-				squadNumber = 1;
+				//Broodwar->drawTextScreen(10, 60, "Squad %d : %d", currentSquad, _CombatManager->findSquad(currentSquad)->numberUnit());
+				if (squad->insertUnit(unit))
+				{
+					insertion = true;
+				}
+				else currentSquad += 1;
 			}
 				
-
-			bool insertion = false;
-			int currentSquad = 1;
-			//while (!insertion)
-			//{
-				//Squad* squad = _GameManager.getCombatManager().findSquad(currentSquad);
-				if (squad != 0)
-				{
-					if (squad->insertUnit(unit))
-					{
-						insertion = true;
-					}
-					else currentSquad += 1;
-				}
-			/*	else
-				{
-					_GameManager.getCombatManager().addSquad(new Squad(currentSquad));		
-				}*/
-			//}
+			else
+			{
+				_CombatManager->addSquad(new Squad(currentSquad));		
+			}
 		}
+	}
 }
 
 void ZCareAI::onUnitDestroy(BWAPI::Unit unit)
@@ -215,4 +225,9 @@ bool checkStateUnit(BWAPI::Unit unit)
 		return false;
 
 	return true;
+}
+
+void ZCareAI::setCombatManager(CombatManager *combatManager)
+{
+	this->_CombatManager = combatManager;
 }

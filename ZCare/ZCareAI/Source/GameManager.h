@@ -38,7 +38,7 @@ class GameManager
 
 		void drawDebug();
 
-		CombatManager getCombatManager();
+		CombatManager* getCombatManager();
 
 	private:
 		ScoutManager _ScoutManager;						// Scouting manager
