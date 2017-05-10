@@ -57,6 +57,10 @@ BOParser::BOParser(BuildOrder *buildOrder)
 				{
 					tmp->setNbUnitsOfType(atoi(text));
 				}
+				else if (nomElement == "Location")
+				{
+					tmp->setBaseIndex(atoi(text));
+				}
 			}
 
 			bo->addInstruction(tmp);

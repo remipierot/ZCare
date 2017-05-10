@@ -30,31 +30,6 @@ void GameManager::update()
 	//Combat Manager update
 	_CombatManager.update();
 
-	//DEBUG DES CERCLES 
-	for (auto &base : allBaseLocations)
-	{
-		Color color(0, 25 * base->idBase, 0);
-		std::string s = std::to_string(base->idBase);
-		char const *pchar = s.c_str();
-		Broodwar->drawText(CoordinateType::Map, base->baseLocation.x, base->baseLocation.y, "Base Location");
-		for (Resource* posMineral : base->mineralFields)
-		{
-			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
-			Broodwar->drawCircle(CoordinateType::Map, positionMineral.x, positionMineral.y, 300, color);
-			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar); 
-			if (base->isExpansionInteresting)
-				Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y+20, "Expansion interesting");
-		}
-
-
-		Color color2(0, 0, 25 * base->idBase);
-		if (base->gazFields != 0)
-		{
-			Resource* posGaz = base->gazFields;
-			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
-			Broodwar->drawCircle(CoordinateType::Map, positionGaz.x, positionGaz.y, 300, color2);
-		}
-	}
 }
 
 // Number of locations to scout (no matter if they already have been or not)
@@ -213,22 +188,28 @@ void GameManager::fillStartingLocations()
 	//For the base position 
 	for (auto &base : allBaseLocations)
 	{
-		int mineralCount = base->mineralFields.size();
-		BWAPI::Position position(0, 0);
+		int resourceCount = base->mineralFields.size();
+		Position position(0, 0);
+		TilePosition tilePos(0, 0);
+
 		for (Resource* mineralU : base->mineralFields)
 		{
 			position += ToolBox::ConvertTilePosition(mineralU->resourceUnit->getTilePosition(), UnitTypes::Resource_Mineral_Field);
+			tilePos += mineralU->resourceUnit->getTilePosition();
 		}
 
 		if (base->gazFields != 0)
 		{
-			mineralCount += 1;
+			resourceCount += 1;
 			position += ToolBox::ConvertTilePosition(base->gazFields->resourceUnit->getTilePosition(), UnitTypes::Resource_Vespene_Geyser);
+			tilePos += base->gazFields->resourceUnit->getTilePosition();
 		}
-		position /= mineralCount;
+
+		position /= resourceCount;
+		tilePos /= resourceCount;
 		base->baseLocation = position;
+		base->tilePosition = tilePos;
 		base->distanceToMainBase = personalStartLocation.getDistance(position);
-		
 	}
 }
 
@@ -243,6 +224,31 @@ void GameManager::initBO()
 void GameManager::drawDebug()
 {
 	_BuildOrder.drawDebug();
+
+	//DEBUG DES ressources et bases
+	for (auto &base : allBaseLocations)
+	{
+		Color color(0, 25 * base->idBase, 0);
+		std::string s = std::to_string(base->idBase);
+		char const *pchar = s.c_str();
+		Broodwar->drawText(CoordinateType::Map, base->baseLocation.x, base->baseLocation.y, "%c%s", ToolBox::GREEN_CHAR, "Base Location");
+		for (Resource* posMineral : base->mineralFields)
+		{
+			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
+			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar);
+			if (base->isExpansionInteresting)
+				Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y + 20, "%c%s", ToolBox::GREEN_CHAR, "Expansion interesting");
+		}
+
+
+		Color color2(0, 0, 25 * base->idBase);
+		if (base->gazFields != 0)
+		{
+			Resource* posGaz = base->gazFields;
+			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
+			Broodwar->drawText(CoordinateType::Map, positionGaz.x, positionGaz.y, "%c%s", ToolBox::GREEN_CHAR, "Vespene");
+		}
+	}
 }
 
 CombatManager GameManager::getCombatManager()

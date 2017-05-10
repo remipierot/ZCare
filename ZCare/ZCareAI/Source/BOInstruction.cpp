@@ -11,6 +11,7 @@ BOInstruction::BOInstruction(InstructionType newType)
 {
 	type = newType;
 	completed = (newType == END_OF_BO) ? true : false;
+	baseIndex = 0;
 }
 
 void BOInstruction::setSupplyCount(int newSupplyCount)
@@ -38,6 +39,11 @@ void BOInstruction::setActions(UnitType newUnitToBuild, int newNbUnitsToBuild)
 {
 	unitToBuild = newUnitToBuild;
 	nbUnitsToBuild = newNbUnitsToBuild;
+}
+
+void BOInstruction::setBaseIndex(int baseLocationId)
+{
+	baseIndex = baseLocationId;
 }
 
 BOInstruction::InstructionType BOInstruction::getType()
@@ -83,6 +89,11 @@ UnitType BOInstruction::getUnitToBuild()
 TilePosition BOInstruction::getBuildLocation()
 {
 	return buildLocation;
+}
+
+int BOInstruction::getBaseIndex()
+{
+	return baseIndex;
 }
 
 void BOInstruction::decrementNbUnits()

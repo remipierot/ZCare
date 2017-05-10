@@ -89,7 +89,7 @@ public:
 	);
 
 private:
-	std::set<const BWAPI::Unit> resourceDepots;				// Every base
+	std::vector<const BWAPI::Unit> resourceDepots;				// Every base
 	std::set<Base*> *allBaseLocations;
 };
 
