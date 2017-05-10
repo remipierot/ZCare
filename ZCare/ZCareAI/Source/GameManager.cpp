@@ -27,6 +27,7 @@ void GameManager::update()
 	_WorkerManager.sendWorkersToWork();
 	_WorkerManager.callWorkersBack();
 
+	//Combat Manager update
 	_CombatManager.update();
 
 	//DEBUG DES CERCLES 
@@ -236,10 +237,15 @@ void GameManager::initBO()
 	_BOParser = BOParser(&_BuildOrder);
 	fillStartingLocations();
 	_ScoutManager.init(&_ProductionManager);
-	_ProductionManager.setAllBaseLocations(allBaseLocations);
+	_ProductionManager.setAllBaseLocations(&allBaseLocations);
 }
 
 void GameManager::drawDebug()
 {
 	_BuildOrder.drawDebug();
+}
+
+CombatManager GameManager::getCombatManager()
+{
+	return _CombatManager;
 }

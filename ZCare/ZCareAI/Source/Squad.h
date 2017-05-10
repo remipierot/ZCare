@@ -16,6 +16,7 @@ public:
 	
 	int numberUnit();
 	int getIdSquad();
+	int getNumberUnitMax();
 
 	std::set<const BWAPI::Unit> getTerrainUnit();
 	std::set<const BWAPI::Unit> getAerialUnit();

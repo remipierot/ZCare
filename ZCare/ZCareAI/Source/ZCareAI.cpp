@@ -130,17 +130,37 @@ void ZCareAI::onUnitHide(BWAPI::Unit unit)
 
 void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 {
-	if ( Broodwar->isReplay() )
+	UnitType type = unit->getType();
+	if (!type.isWorker() && !type.isBuilding())
 	{
-		// if we are in a replay, then we will print out the build order of the structures
-		if (unit->getType().isBuilding() && !unit->getPlayer()->isNeutral())
-		{
-			int seconds = Broodwar->getFrameCount()/24;
-			int minutes = seconds/60;
-			seconds %= 60;
-			Broodwar->sendText("%.2d:%.2d: %s creates a %s", minutes, seconds, unit->getPlayer()->getName().c_str(), unit->getType().c_str());
+			int squadNumber = _GameManager.getCombatManager().squadNumber();
+			Squad* squad = new Squad(1);
+			if (squadNumber == 0)
+			{
+				_GameManager.getCombatManager().addSquad(squad);
+				squadNumber = 1;
+			}
+				
+
+			bool insertion = false;
+			int currentSquad = 1;
+			//while (!insertion)
+			//{
+				//Squad* squad = _GameManager.getCombatManager().findSquad(currentSquad);
+				if (squad != 0)
+				{
+					if (squad->insertUnit(unit))
+					{
+						insertion = true;
+					}
+					else currentSquad += 1;
+				}
+			/*	else
+				{
+					_GameManager.getCombatManager().addSquad(new Squad(currentSquad));		
+				}*/
+			//}
 		}
-	}
 }
 
 void ZCareAI::onUnitDestroy(BWAPI::Unit unit)

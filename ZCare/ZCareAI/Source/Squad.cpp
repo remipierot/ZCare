@@ -43,12 +43,12 @@ void Squad::attackOrMove(BWAPI::PositionOrUnit target)
 {
 	for (BWAPI::Unit unitT : terrainUnit)
 	{
-		if (!unitT->isAttacking)
+		if (!unitT->isAttacking())
 			unitT->attack(target);
 	}
 	for (BWAPI::Unit unitA : aerialUnit)
 	{
-		if (!unitA->isAttacking)
+		if (!unitA->isAttacking())
 			unitA->attack(target);
 	}
 }
@@ -58,7 +58,7 @@ bool Squad::insertUnit(BWAPI::Unit unit)
 {
 	if (this->numberUnitMax != currentNumberUnit)
 	{
-		if (unit->isFlying)
+		if (unit->isFlying())
 			aerialUnit.insert(unit);
 		else terrainUnit.insert(unit);
 		currentNumberUnit += 1;
@@ -71,6 +71,11 @@ bool Squad::insertUnit(BWAPI::Unit unit)
 int Squad::numberUnit()
 {
 	return terrainUnit.size() + aerialUnit.size();
+}
+
+int Squad::getNumberUnitMax()
+{
+	return numberUnitMax;
 }
 
 int Squad::getIdSquad()

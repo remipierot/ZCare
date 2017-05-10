@@ -15,18 +15,18 @@ void CombatManager::update()
 	{
 		bool isUnderAttack = false;
 		Unit unitToAttack = 0;
-		for (Unit terrainUnit : squad->getTerrainUnit)
+		for (Unit terrainUnit : squad->getTerrainUnit())
 		{
-			if (terrainUnit->isUnderAttack)
+			if (terrainUnit->isUnderAttack())
 			{
 				isUnderAttack = true;
 				unitToAttack = terrainUnit->getOrderTarget();
 			}
 		}
 
-		for (Unit aerialUnit : squad->getTerrainUnit)
+		for (Unit aerialUnit : squad->getAerialUnit())
 		{
-			if (aerialUnit->isUnderAttack)
+			if (aerialUnit->isUnderAttack())
 			{
 				isUnderAttack = true;
 				unitToAttack = aerialUnit->getOrderTarget();
@@ -53,4 +53,14 @@ Squad* CombatManager::findSquad(int idSquad)
 		}
 	}
 	return squadResult;
+}
+
+int CombatManager::squadNumber()
+{
+	return squadList.size();
+}
+
+std::set<Squad*> CombatManager::getSquadList()
+{
+	return this->squadList;
 }

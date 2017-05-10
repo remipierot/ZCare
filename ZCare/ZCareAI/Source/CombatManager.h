@@ -10,6 +10,9 @@ public:
 	void update();
 	void addSquad(Squad* squad);
 	Squad* findSquad(int idSquad);
+	int squadNumber();
+	std::set<Squad*> getSquadList();
+	
 
 private:
 	std::set<Squad*> squadList;

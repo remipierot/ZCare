@@ -2,6 +2,8 @@
 #include <BWAPI.h>
 #include "Base.h"
 #include "ToolBox.h"
+#include "CombatManager.h"
+#include "Squad.h"
 
 class ProductionManager
 {

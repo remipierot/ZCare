@@ -38,6 +38,8 @@ class GameManager
 
 		void drawDebug();
 
+		CombatManager getCombatManager();
+
 	private:
 		ScoutManager _ScoutManager;						// Scouting manager
 		WorkerManager _WorkerManager;					// Worker manager
