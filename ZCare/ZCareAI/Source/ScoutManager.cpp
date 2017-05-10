@@ -10,8 +10,6 @@ void ScoutManager::init(ProductionManager *prodManager)
 	nbScoutMax = 0;
 }
 
-
-
 // Set the locations that have to be scout
 void ScoutManager::updateLocationsToScout(set<Position> enemyStartLocations, set<Position> otherStartLocations)
 {
@@ -51,12 +49,9 @@ void ScoutManager::updateScouts()
 		nbScoutMax = nbScout;
 	}
 
-	if (nbScoutMax - nbScout > 0)
+	if (nbScoutMax > nbScout)
 	{
-		for (int i = 0; i < nbScoutMax - nbScout; i++)
-		{
-			prodManager->makeUnit(0, BWAPI::UnitTypes::Zerg_Overlord);
-		}
+		prodManager->makeUnit(0, BWAPI::UnitTypes::Zerg_Overlord);
 	}
 }
 

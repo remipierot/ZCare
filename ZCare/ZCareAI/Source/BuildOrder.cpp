@@ -85,6 +85,10 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				p = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex())->baseLocation;
 			}
 
+			if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Lair)
+			{
+				pm->getResourceDepot(nextInstruction->getBaseIndex())->morph(UnitTypes::Zerg_Lair);
+			}
 			//If nextInstruction is about making a building
 			if (nextInstruction->getUnitToBuild().isBuilding())
 			{
