@@ -27,6 +27,8 @@ void GameManager::update()
 	_WorkerManager.sendWorkersToWork();
 	_WorkerManager.callWorkersBack();
 
+	_CombatManager.update();
+
 	//DEBUG DES CERCLES 
 	for (auto &base : allBaseLocations)
 	{

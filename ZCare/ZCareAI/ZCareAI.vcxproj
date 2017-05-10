@@ -106,6 +106,7 @@
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ProductionManager.cpp" />
     <ClCompile Include="Source\ScoutManager.cpp" />
+    <ClCompile Include="Source\Squad.cpp" />
     <ClCompile Include="Source\StrategyManager.cpp" />
     <ClCompile Include="Source\tinyxml2.cpp" />
     <ClCompile Include="Source\ToolBox.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\ProductionManager.h" />
     <ClInclude Include="Source\ScoutManager.h" />
+    <ClInclude Include="Source\Squad.h" />
     <ClInclude Include="Source\StrategyManager.h" />
     <ClInclude Include="Source\tinyxml2.h" />
     <ClInclude Include="Source\ToolBox.h" />
