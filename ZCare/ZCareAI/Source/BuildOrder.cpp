@@ -81,8 +81,9 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			}
 			else
 			{
-				targetLocation = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex())->tilePosition;
-				p = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex())->baseLocation;
+				Base* b = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex());
+				targetLocation = b->tilePosition;
+				p = b->position;
 			}
 
 			if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Lair)
