@@ -9,7 +9,7 @@ using namespace Filter;
 void GameManager::update()
 {
 	// Scout logic
-	//fillStartingLocations();
+	fillStartingLocations();
 	_ScoutManager.updateLocationsToScout(enemyStartLocations, otherStartLocations);
 	_ScoutManager.updateScouts();
 	_ScoutManager.scout();
@@ -29,7 +29,6 @@ void GameManager::update()
 
 	//Combat Manager update
 	_CombatManager.update();
-
 }
 
 // Number of locations to scout (no matter if they already have been or not)
@@ -101,124 +100,121 @@ void GameManager::fillStartingLocations()
 			enemyStartLocations.insert(enemyPosition);
 		}
 	}
+}
 
+void GameManager::fillBases()
+{
 	bool isInCircle = false;
 	int idBase = 1;
 	Base *base;
-	for ( BWAPI::Unit tp : Broodwar->getStaticMinerals())
+
+	//Get every mineral field
+	for (Unit mineral : Broodwar->getStaticMinerals())
 	{
-		const TilePosition mineralsTilePosition = tp->getTilePosition();
+		const TilePosition mineralsTilePosition = mineral->getTilePosition();
 		if (ToolBox::IsTilePositionValid(mineralsTilePosition))
 		{
 			const Position mineralsPosition = ToolBox::ConvertTilePosition(mineralsTilePosition, UnitTypes::Resource_Mineral_Field);
-			mineralHelper.insert(new Resource(tp));
+			mineralHelper.insert(new Resource(mineral));
 		}
 	}
-	
+
+	//Build bases using the mineral fields
 	for (Resource* mineral : mineralHelper)
 	{
 		if (mineral->idParent == -1)
+		{
+			base = new Base();
+			base->idBase = idBase;
+
+			Position mineralPosition = mineral->resourceUnit->getPosition();
+			base->mineralFields.insert(mineral);
+			mineral->idParent = idBase;
+
+			//Check if mineral is attached to one of the starting locations
+			for (const Position startPos : allStartLocations)
 			{
-				base = new Base();
-				base->idBase = idBase;
-
-				BWAPI::Unit unit = mineral->resourceUnit;
-				BWAPI::Position positionMineral = unit->getPosition(); 
-				base->mineralFields.insert(mineral);
-				mineral->idParent = idBase;
-
-				for (const Position posUs : allStartLocations)
+				if (!isInCircle && ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 10, startPos.x, startPos.y, 300))
 				{
-					if (!isInCircle && ToolBox::IsInCircle(positionMineral.x, positionMineral.y, 300, posUs.x, posUs.y, 300))
-						isInCircle = true;
+					isInCircle = true;
+					break;
 				}
+			}
 
-				base->isStartingLocation = isInCircle;
-				isInCircle = false;
+			base->isStartingLocation = isInCircle;
+			isInCircle = false;
 
-				for (Resource* mineral2 : mineralHelper)
+			//Look for linked minerals
+			for (Resource* linkedMineral : mineralHelper)
+			{
+				if (mineral != linkedMineral)
 				{
-					if (mineral != mineral2)
+					Position linkedMineralPosition = linkedMineral->resourceUnit->getPosition();
+					if (ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 10, linkedMineralPosition.x, linkedMineralPosition.y, 300))
 					{
-						BWAPI::Position positionMineral2 = mineral2->resourceUnit->getPosition();
-						if (ToolBox::IsInCircle(positionMineral.x, positionMineral.y, 300, positionMineral2.x, positionMineral2.y, 300) )
+						if (linkedMineral->idParent == -1)
 						{
-							if (mineral2->idParent == -1)
-							{
-								mineral2->idParent = idBase;
-								base->mineralFields.insert(mineral2);
-							}
+							linkedMineral->idParent = idBase;
+							base->mineralFields.insert(linkedMineral);
 						}
 					}
 				}
-				idBase += 1;
-				allBaseLocations.insert(base);
-			}	
+			}
+
+			idBase++;
+			allBaseLocations.insert(base);
+		}
 	}
 
-	////If a geyser is inside a mineral circle, it's an interesting expansion 
+	//If a geyser is inside a mineral circle, it's an interesting expansion 
 	for (auto &base : allBaseLocations)
 	{
 		bool expansion = false;
-		for (const BWAPI::Unit &gazUnit : Broodwar->getStaticGeysers())
-		{
-			const TilePosition geysersTilePosition = gazUnit->getTilePosition();
-			if (ToolBox::IsTilePositionValid(geysersTilePosition) && !expansion)
-			{
-				const Position geysersPosition = ToolBox::ConvertTilePosition(geysersTilePosition, UnitTypes::Resource_Vespene_Geyser);
-				
-				for (Resource* mineralU : base->mineralFields)
-				{
-					BWAPI::Position positionMineral = mineralU->resourceUnit->getPosition();
 
-					if (ToolBox::IsInCircle(geysersPosition.x, geysersPosition.y, 300, positionMineral.x, positionMineral.y, 300))
+		//Get every geyser
+		for (const Unit &gazUnit : Broodwar->getStaticGeysers())
+		{
+			const TilePosition geyserTilePosition = gazUnit->getTilePosition();
+
+			if (ToolBox::IsTilePositionValid(geyserTilePosition) && !expansion)
+			{
+				const Position geyserPosition = gazUnit->getPosition();
+
+				for (Resource* mineral : base->mineralFields)
+				{
+					Position mineralPosition = mineral->resourceUnit->getPosition();
+
+					if (ToolBox::IsInCircle(geyserPosition.x, geyserPosition.y, 10, mineralPosition.x, mineralPosition.y, 300))
 					{
-						base->gazFields = new Resource(gazUnit);
+						base->gazField = new Resource(gazUnit);
 						expansion = true;
 						break;
 					}
 				}
-				if (base->isStartingLocation)
-					base->isExpansionInteresting = false;
-				else base->isExpansionInteresting = expansion;
+				
+				base->isExpansionInteresting = expansion && !base->isStartingLocation;
 			}
 		}
 	}
 
-	//For the base position 
+	//Store positions and tilePositions
 	for (auto &base : allBaseLocations)
 	{
-		int resourceCount = base->mineralFields.size();
-		Position position(0, 0);
-		TilePosition tilePos(0, 0);
-
-		for (Resource* mineralU : base->mineralFields)
-		{
-			position += ToolBox::ConvertTilePosition(mineralU->resourceUnit->getTilePosition(), UnitTypes::Resource_Mineral_Field);
-			tilePos += mineralU->resourceUnit->getTilePosition();
-		}
-
-		if (base->gazFields != 0)
-		{
-			resourceCount += 1;
-			position += ToolBox::ConvertTilePosition(base->gazFields->resourceUnit->getTilePosition(), UnitTypes::Resource_Vespene_Geyser);
-			tilePos += base->gazFields->resourceUnit->getTilePosition();
-		}
-
-		position /= resourceCount;
-		tilePos /= resourceCount;
-		base->baseLocation = position;
-		base->tilePosition = tilePos;
-		base->distanceToMainBase = personalStartLocation.getDistance(position);
+		base->computePosition();
+		base->computeTilePosition();
+		base->setDistanceToMainBase(_ProductionManager.getResourceDepot(0));
 	}
+	
 }
 
 void GameManager::initBO()
 {
 	_BOParser = BOParser(&_BuildOrder);
+	_ProductionManager.updateResourceDepots();
 	fillStartingLocations();
+	fillBases();
 	_ScoutManager.init(&_ProductionManager);
-	_ProductionManager.setAllBaseLocations(&allBaseLocations);
+	_ProductionManager.setAllBaseLocations(allBaseLocations);
 }
 
 void GameManager::drawDebug()
@@ -228,23 +224,27 @@ void GameManager::drawDebug()
 	//DEBUG DES ressources et bases
 	for (auto &base : allBaseLocations)
 	{
-		Color color(0, 25 * base->idBase, 0);
+		Color color(0, 0, 0);
+
+		color = (base->isStartingLocation) ? Colors::Green :
+				(base->isEnnemyLocation) ? Colors::Red :
+				(base->isExpansionInteresting) ? Colors::Cyan :
+				Colors::Blue;
+
 		std::string s = std::to_string(base->idBase);
 		char const *pchar = s.c_str();
-		Broodwar->drawText(CoordinateType::Map, base->baseLocation.x, base->baseLocation.y, "%c%s", ToolBox::GREEN_CHAR, "Base Location");
+		Broodwar->drawTextMap(base->position.x - 35, base->position.y - 35, "%c%s", ToolBox::GREEN_CHAR, "Base Location");
+		Broodwar->drawCircleMap(base->position, 20, color, true);
+
 		for (Resource* posMineral : base->mineralFields)
 		{
 			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
 			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar);
-			if (base->isExpansionInteresting)
-				Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y + 20, "%c%s", ToolBox::GREEN_CHAR, "Expansion interesting");
 		}
 
-
-		Color color2(0, 0, 25 * base->idBase);
-		if (base->gazFields != 0)
+		if (base->gazField != 0)
 		{
-			Resource* posGaz = base->gazFields;
+			Resource* posGaz = base->gazField;
 			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
 			Broodwar->drawText(CoordinateType::Map, positionGaz.x, positionGaz.y, "%c%s", ToolBox::GREEN_CHAR, "Vespene");
 		}

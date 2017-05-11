@@ -1,7 +1,6 @@
 #include "ProductionManager.h"
 #include <vector>
 
-
 using namespace std;
 using namespace BWAPI;
 using namespace Filter;
@@ -184,31 +183,46 @@ int ProductionManager::getNbResourceDepots()
 	return resourceDepots.size();
 }
 
-void ProductionManager::setAllBaseLocations(set<Base*> *newAllBaseLocations)
+void ProductionManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
 {
-	allBaseLocations = newAllBaseLocations;
+	for (Base* b : newAllBaseLocations)
+	{
+		allBaseLocations.insert(b);
+		Broodwar->sendText("LOCATION %d - COORDINATES [%d, %d] - DISTANCE FROM MAIN %f", b->idBase, b->position.x, b->position.y, b->distanceToMainBase);
+	}
 }
 
 Base* ProductionManager::getExpansionOrderedByDistance(int index)
 {
-	Position mainBaseLocation = getResourceDepot(0)->getPosition();
-	vector<Base*> bases;
+	vector<float> sortedBaseDistances(0);
 	Base* expansion = nullptr;
 
-	for (Base* b : *allBaseLocations)
+	for (Base* b : allBaseLocations)
 	{
-		if (b->isExpansionInteresting && !b->isEnnemyLocation)
+		expansion = b;
+		if (b->isExpansionInteresting)
 		{
-			bases.push_back(b);
+			sortedBaseDistances.push_back(b->distanceToMainBase);
 		}
 	}
 
-	sort(bases.begin(), bases.end(), [](const Base* b1, const Base* b2) -> bool
-	{
-		return b1->distanceToMainBase < b2->distanceToMainBase;
-	});
+	sort(sortedBaseDistances.begin(), sortedBaseDistances.end());
 
-	expansion = bases[index];
+	if (index < sortedBaseDistances.size())
+	{
+		for (Base* b : allBaseLocations)
+		{
+			b->printBase();
+			if (b->distanceToMainBase == sortedBaseDistances[index])
+			{
+				expansion = b;
+				break;
+			}
+		}
+	}
+
+	Broodwar->sendText("-----------");
+	expansion->printBase();
 
 	return expansion;
 }

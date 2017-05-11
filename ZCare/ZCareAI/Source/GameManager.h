@@ -58,5 +58,7 @@ class GameManager
 
 		// Fill all the starting locations data sets
 		void fillStartingLocations();
+
+		void fillBases();
 };
 

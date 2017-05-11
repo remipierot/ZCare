@@ -17,7 +17,7 @@ void ZCareAI::onStart()
 	Broodwar->setCommandOptimizationLevel(2);
 
 	// Set the local execution speed (useful for debug run)
-	Broodwar->setLocalSpeed(20);
+	Broodwar->setLocalSpeed(10);
 
 	_GameManager.initBO();
 	this->setCombatManager(_GameManager.getCombatManager());

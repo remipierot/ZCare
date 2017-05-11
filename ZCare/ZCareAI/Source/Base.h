@@ -7,15 +7,22 @@ class Base
 {
 public:
 	Base();
+	Base(Base* b);
 
 	int idBase;
 	std::set<Resource*> mineralFields;
-	Resource* gazFields;
+	Resource* gazField;
 	bool isExpansionInteresting;
 	bool isStartingLocation;
 	bool isEnnemyLocation;
-	BWAPI::Position baseLocation;
 	float distanceToMainBase;
+	BWAPI::Position position;
 	BWAPI::TilePosition tilePosition;
+
+	void computePosition();
+	void computeTilePosition();
+	float getDistanceToUnit(BWAPI::Unit u);
+	void setDistanceToMainBase(BWAPI::Unit u);
+	void printBase();
 };
 
