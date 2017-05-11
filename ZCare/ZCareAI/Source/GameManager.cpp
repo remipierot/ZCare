@@ -251,7 +251,7 @@ void GameManager::drawDebug()
 	}
 }
 
-CombatManager GameManager::getCombatManager()
+CombatManager* GameManager::getCombatManager()
 {
-	return _CombatManager;
+	return &_CombatManager;
 }

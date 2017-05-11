@@ -15,21 +15,42 @@ void CombatManager::update()
 	{
 		bool isUnderAttack = false;
 		Unit unitToAttack = 0;
+		std::set<Unit> unitToErase;
+
 		for (Unit terrainUnit : squad->getTerrainUnit())
 		{
-			if (terrainUnit->isUnderAttack())
+			if (terrainUnit->exists())
 			{
-				isUnderAttack = true;
-				unitToAttack = terrainUnit->getOrderTarget();
+				if (terrainUnit->isUnderAttack())
+				{
+					isUnderAttack = true;
+					unitToAttack = terrainUnit->getOrderTarget();
+				}
 			}
+			else unitToErase.insert(terrainUnit);	
 		}
 
 		for (Unit aerialUnit : squad->getAerialUnit())
 		{
-			if (aerialUnit->isUnderAttack())
+			if (aerialUnit->exists())
 			{
-				isUnderAttack = true;
-				unitToAttack = aerialUnit->getOrderTarget();
+				if (aerialUnit->isUnderAttack())
+				{
+					isUnderAttack = true;
+					unitToAttack = aerialUnit->getOrderTarget();
+				}
+			}
+			else unitToErase.insert(aerialUnit);
+		}
+		for (Unit unitErase : unitToErase)
+		{
+			if (unitErase->isFlying())
+			{
+				squad->getAerialUnit().erase(unitErase);
+			}
+			else
+			{
+				squad->getTerrainUnit().erase(unitErase);
 			}
 		}
 		squad->attackOrMove(unitToAttack);
@@ -38,7 +59,7 @@ void CombatManager::update()
 
 void CombatManager::addSquad(Squad* squad)
 {
-	squadList.insert(squad);
+	this->squadList.insert(squad);
 }
 
 Squad* CombatManager::findSquad(int idSquad)
@@ -57,7 +78,7 @@ Squad* CombatManager::findSquad(int idSquad)
 
 int CombatManager::squadNumber()
 {
-	return squadList.size();
+	return this->squadList.size();
 }
 
 std::set<Squad*> CombatManager::getSquadList()
