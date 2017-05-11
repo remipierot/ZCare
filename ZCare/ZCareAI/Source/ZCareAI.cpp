@@ -79,6 +79,15 @@ void ZCareAI::onFrame()
 		Broodwar->drawTextScreen(10, y, "Squad %d, Nombre : %d", squad->getIdSquad(), squad->numberUnit());
 		y += 20;
 	}
+
+	for (Unit uni : unitShow)
+	{
+		Broodwar->drawCircleMap(uni->getPosition(),10, Color(0, 60, 0), true);
+	}
+	for (Unit building : buildingShow)
+	{
+		Broodwar->drawCircleMap(building->getPosition(), 10, Color(0, 0, 60), true);
+	}
 	
 }
 
@@ -130,6 +139,26 @@ void ZCareAI::onUnitEvade(BWAPI::Unit unit)
 
 void ZCareAI::onUnitShow(BWAPI::Unit unit)
 {
+	bool notOurUnit = true;
+	if (!unit->getType().isNeutral())
+	{
+		for (Unit usUnit : Broodwar->self()->getUnits())
+		{
+			if (usUnit == unit)
+			{
+				notOurUnit = false;
+				break;
+			}
+
+		}
+
+		if (notOurUnit)
+			if (unit->getType().isBuilding())
+				buildingShow.insert(unit);
+			else unitShow.insert(unit);
+	}
+
+
 }
 
 void ZCareAI::onUnitHide(BWAPI::Unit unit)

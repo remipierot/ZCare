@@ -83,12 +83,12 @@ int Squad::getIdSquad()
 	return this->idSquad;
 }
 
-std::set<const BWAPI::Unit> Squad::getTerrainUnit()
+std::set<const BWAPI::Unit>* Squad::getTerrainUnit()
 {
-	return this->terrainUnit;
+	return &this->terrainUnit;
 }
 
-std::set<const BWAPI::Unit> Squad::getAerialUnit()
+std::set<const BWAPI::Unit>* Squad::getAerialUnit()
 {
-	return this->aerialUnit;
+	return &this->aerialUnit;
 }

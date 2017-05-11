@@ -32,4 +32,6 @@ class ZCareAI : public BWAPI::AIModule
 	private:
 		GameManager _GameManager;
 		CombatManager * _CombatManager;
+		std::set<const BWAPI::Unit> unitShow;
+		std::set<const BWAPI::Unit> buildingShow;
 };

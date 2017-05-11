@@ -16,5 +16,8 @@ public:
 
 private:
 	std::set<Squad*> squadList;
+	bool finalAttackMode;
+	bool defenseMode;
+	bool attackMode;
 };
 

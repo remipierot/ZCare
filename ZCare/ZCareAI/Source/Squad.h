@@ -3,9 +3,17 @@
 #include "BWAPI.h"
 #include "ToolBox.h"
 
+
+
 class Squad
 {
 public:
+	enum SquadMode{
+		attackMode,
+		defenseMode,
+		patrolMode
+	};
+
 	Squad(int squad);
 	Squad(std::set<const BWAPI::Unit> terrainUnit, std::set<const BWAPI::Unit> aerialUnit);
 	~Squad();
@@ -18,8 +26,8 @@ public:
 	int getIdSquad();
 	int getNumberUnitMax();
 
-	std::set<const BWAPI::Unit> getTerrainUnit();
-	std::set<const BWAPI::Unit> getAerialUnit();
+	std::set<const BWAPI::Unit>* getTerrainUnit();
+	std::set<const BWAPI::Unit>* getAerialUnit();
 
 
 private :
