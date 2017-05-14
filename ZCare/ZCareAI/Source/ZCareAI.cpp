@@ -34,28 +34,6 @@ void ZCareAI::onEnd(bool isWinner)
 
 void ZCareAI::onFrame()
 {
-	// Called once every game frame
-	// Display the game frame rate as text in the upper left area of the screen
-	Broodwar->drawTextScreen(200, 0, "FPS: %d", Broodwar->getFPS());
-	Broodwar->drawTextScreen(200, 20, "Average FPS: %f", Broodwar->getAverageFPS());
-
-	/*
-	Broodwar->drawTextScreen(0, 30, "Scouting locations data :");
-	Broodwar->drawTextScreen(10, 40, "To Scout : %d", _GameManager.toScoutCount());
-	Broodwar->drawTextScreen(10, 50, "Scouted : %d", _GameManager.scoutedCount());
-	Broodwar->drawTextScreen(10, 60, "Unscouted : %d", _GameManager.unscoutedCount());
-	Broodwar->drawTextScreen(10, 70, "Being Scout : %d", _GameManager.beingScoutCount());
-	Broodwar->drawTextScreen(0, 90, "Scouting units data :");
-	Broodwar->drawTextScreen(10, 100, "Scouts : %d", _GameManager.scoutsCount());
-	Broodwar->drawTextScreen(10, 110, "Busy Scouts : %d", _GameManager.busyScoutsCount());
-	*/
-	/*
-	Broodwar->drawTextScreen(0, 30, "Supply infos :");
-	Broodwar->drawTextScreen(10, 40, "BWAPI Total supply : %d", Broodwar->self()->supplyTotal());
-	Broodwar->drawTextScreen(10, 50, "BWAPI Used supply : %d", Broodwar->self()->supplyUsed());
-	Broodwar->drawTextScreen(10, 60, "REAL Used supply : %d", Broodwar->self()->supplyUsed() / 2);
-	*/
-
 	_GameManager.drawDebug();
 
 	// Return if the game is a replay or is paused
@@ -73,6 +51,7 @@ void ZCareAI::onFrame()
 
 	// Game loop
 	_GameManager.update();
+
 	int y = 60;
 	for (Squad* squad : _CombatManager->getSquadList())
 	{

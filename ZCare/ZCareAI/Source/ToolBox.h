@@ -34,8 +34,16 @@ class ToolBox
 			int posX, int posY, int radius, int pos2X, int pos2y, int radius2
 		);
 
-		static const char RED_CHAR = '\x08';
-		static const char GREEN_CHAR = '\x07';
+		static const char YELLOW_CHAR = '\x03';
 		static const char WHITE_CHAR = '\x04';
+		static const char GREY_CHAR = '\x05';
+		static const char DARK_RED_CHAR = '\x06';
+		static const char BRIGHT_GREEN_CHAR = '\x07';
+		static const char BRIGHT_RED_CHAR = '\x08';
+		static const char PURPLE_CHAR = '\x10';
+		static const char ORANGE_CHAR = '\x11';
+		static const char BLACK_CHAR = '\x14';
+		static const char BROWN_CHAR = '\x15';
+		static const char DARK_GREEN_CHAR = '\x18';
 };
 

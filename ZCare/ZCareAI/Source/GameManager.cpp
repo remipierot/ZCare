@@ -107,6 +107,7 @@ void GameManager::fillBases()
 	bool isInCircle = false;
 	int idBase = 1;
 	Base *base;
+	Unit mainBase = _ProductionManager.getResourceDepot(0);
 
 	//Get every mineral field
 	for (Unit mineral : Broodwar->getStaticMinerals())
@@ -202,7 +203,7 @@ void GameManager::fillBases()
 	{
 		base->computePosition();
 		base->computeTilePosition();
-		base->setDistanceToMainBase(_ProductionManager.getResourceDepot(0));
+		base->setDistanceToMainBase(mainBase);
 	}
 	
 }
@@ -221,32 +222,61 @@ void GameManager::drawDebug()
 {
 	_BuildOrder.drawDebug();
 
-	//DEBUG DES ressources et bases
+	Broodwar->drawTextScreen(200, 20, "FPS: %d", Broodwar->getFPS());
+	Broodwar->drawTextScreen(200, 30, "Average FPS: %f", Broodwar->getAverageFPS());
+
+	Broodwar->drawTextScreen(500, 20, "Bases data");
+
+	Position mainBase = _ProductionManager.getResourceDepot(0)->getPosition();
+
+	//Resources and bases debug
 	for (auto &base : allBaseLocations)
 	{
 		Color color(0, 0, 0);
+		char textColor = ' ';
 
-		color = (base->isStartingLocation) ? Colors::Green :
-				(base->isEnnemyLocation) ? Colors::Red :
-				(base->isExpansionInteresting) ? Colors::Cyan :
-				Colors::Blue;
+		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR : 
+					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+					ToolBox::WHITE_CHAR;
 
-		std::string s = std::to_string(base->idBase);
+		color = (base->isEnnemyLocation) ? Colors::Red :
+				(base->isStartingLocation) ? Colors::Yellow :
+				(base->isExpansionInteresting) ? Colors::Green :
+				Colors::White;
+
+		string s = to_string(base->idBase);
 		char const *pchar = s.c_str();
-		Broodwar->drawTextMap(base->position.x - 35, base->position.y - 35, "%c%s", ToolBox::GREEN_CHAR, "Base Location");
+		Broodwar->drawTextMap(base->position.x - 23, base->position.y - 35, "%c %s %d", textColor, "Base", base->idBase);
 		Broodwar->drawCircleMap(base->position, 20, color, true);
 
 		for (Resource* posMineral : base->mineralFields)
 		{
-			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
-			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar);
+			Position &positionMineral = posMineral->resourceUnit->getPosition();
+			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, "%c %s", textColor, pchar);
 		}
 
 		if (base->gazField != 0)
 		{
 			Resource* posGaz = base->gazField;
-			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
-			Broodwar->drawText(CoordinateType::Map, positionGaz.x, positionGaz.y, "%c%s", ToolBox::GREEN_CHAR, "Vespene");
+			Position positionGaz = posGaz->resourceUnit->getPosition();
+			Broodwar->drawText(CoordinateType::Map, positionGaz.x - 5, positionGaz.y, "%c %s", textColor, "Vespene");
+		}
+
+		Broodwar->drawTextScreen(
+			505,
+			20 + base->idBase * 10,
+			"%c %d - [%d, %d] - %d",
+			textColor,
+			base->idBase,
+			base->position.x,
+			base->position.y,
+			base->distanceToMainBase
+		);
+
+		if (base->distanceToMainBase > 200)
+		{
+			Broodwar->drawLineMap(mainBase, base->position, color);
 		}
 	}
 }

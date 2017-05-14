@@ -15,7 +15,7 @@ public:
 	bool isExpansionInteresting;
 	bool isStartingLocation;
 	bool isEnnemyLocation;
-	float distanceToMainBase;
+	int distanceToMainBase;
 	BWAPI::Position position;
 	BWAPI::TilePosition tilePosition;
 
