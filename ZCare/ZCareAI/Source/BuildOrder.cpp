@@ -175,15 +175,6 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 		{
 			nextInstruction->complete();
 			currentInstruction++;
-
-			/*
-			Broodwar->sendText("Instruction %d completed (%s) - %d %s built", 
-				currentInstruction,
-				nextInstruction->typeToStr(), 
-				originNbUnitsToBuild,
-				nextInstruction->getUnitToBuild().c_str()
-			);
-			*/
 		}
 	}
 	
@@ -194,6 +185,7 @@ void BuildOrder::drawDebug()
 {
 	BOInstruction* toPrint = NULL;
 	char color = ' ';
+	string baseLocationInfo = "";
 
 	Broodwar->drawTextScreen(5, 20, "Build Order data");
 
@@ -211,13 +203,27 @@ void BuildOrder::drawDebug()
 
 		if (toPrint != NULL)
 		{
+			int baseIndex = toPrint->getBaseIndex();
+			
+			if (baseIndex == 0)
+				baseLocationInfo = "@MAIN";
+			else if (baseIndex == 1)
+				baseLocationInfo = '@' + to_string(baseIndex) + "ST EXP";
+			else if (baseIndex == 2)
+				baseLocationInfo = '@' + to_string(baseIndex) + "ND EXP";
+			else if (baseIndex == 3)
+				baseLocationInfo = '@' + to_string(baseIndex) + "RD EXP";
+			else
+				baseLocationInfo = '@' + to_string(baseIndex) + "TH EXP";
+
 			Broodwar->drawTextScreen(
 				10,
 				20 + (i - (currentInstruction + 1) + 1) * 10,
-				"%c %d - %s",
+				"%c %d - %s %s",
 				color,
 				toPrint->getSupplyCount(),
-				toPrint->getUnitToBuild().c_str()
+				toPrint->getUnitToBuild().c_str(),
+				baseLocationInfo.c_str()
 			);
 		}
 	}

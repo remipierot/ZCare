@@ -107,6 +107,7 @@ void GameManager::fillBases()
 	bool isInCircle = false;
 	int idBase = 1;
 	Base *base;
+	Unit mainBase = _ProductionManager.getResourceDepot(0);
 
 	//Get every mineral field
 	for (Unit mineral : Broodwar->getStaticMinerals())
@@ -202,7 +203,7 @@ void GameManager::fillBases()
 	{
 		base->computePosition();
 		base->computeTilePosition();
-		base->setDistanceToMainBase(_ProductionManager.getResourceDepot(0));
+		base->setDistanceToMainBase(mainBase);
 	}
 	
 }
@@ -226,7 +227,9 @@ void GameManager::drawDebug()
 
 	Broodwar->drawTextScreen(500, 20, "Bases data");
 
-	//DEBUG DES ressources et bases
+	Position mainBase = _ProductionManager.getResourceDepot(0)->getPosition();
+
+	//Resources and bases debug
 	for (auto &base : allBaseLocations)
 	{
 		Color color(0, 0, 0);
@@ -270,6 +273,11 @@ void GameManager::drawDebug()
 			base->position.y,
 			base->distanceToMainBase
 		);
+
+		if (base->distanceToMainBase > 200)
+		{
+			Broodwar->drawLineMap(mainBase, base->position, color);
+		}
 	}
 }
 
