@@ -29,6 +29,8 @@ public:
 	std::set<const BWAPI::Unit>* getTerrainUnit();
 	std::set<const BWAPI::Unit>* getAerialUnit();
 
+	void setModeSquad(SquadMode mode);
+
 
 private :
 	int idSquad;
@@ -36,6 +38,7 @@ private :
 	int currentNumberUnit;
 	std::set<const BWAPI::Unit> terrainUnit;
 	std::set<const BWAPI::Unit> aerialUnit;
+	SquadMode modeSquad;
 
 };
 

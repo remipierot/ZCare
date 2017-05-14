@@ -4,7 +4,8 @@
 Squad::Squad(int squad):
 	idSquad(squad),
 	numberUnitMax(20),
-	currentNumberUnit(0)
+	currentNumberUnit(0),
+	modeSquad(defenseMode)
 {
 	
 }
@@ -14,6 +15,7 @@ Squad::Squad(std::set<const BWAPI::Unit> terrainUnit, std::set<const BWAPI::Unit
 	this->aerialUnit = aerialUnit;
 	this->terrainUnit = terrainUnit;
 	currentNumberUnit = numberUnit();
+	modeSquad = defenseMode;
 }
 
 Squad::~Squad()
@@ -91,4 +93,9 @@ std::set<const BWAPI::Unit>* Squad::getTerrainUnit()
 std::set<const BWAPI::Unit>* Squad::getAerialUnit()
 {
 	return &this->aerialUnit;
+}
+
+void Squad::setModeSquad(SquadMode mode)
+{
+	this->modeSquad = mode;
 }
