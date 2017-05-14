@@ -109,5 +109,17 @@ void Base::setDistanceToMainBase(Unit u)
 
 void Base::printBase()
 {
-	Broodwar->sendText("%d - [%d, %d] %d", idBase, position.x, position.y, distanceToMainBase);
+	char textColor = (isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR :
+						(isStartingLocation) ? ToolBox::YELLOW_CHAR :
+						(isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+						ToolBox::WHITE_CHAR;
+
+	Broodwar->sendText(
+		"%c %d - [%d, %d] - %d",
+		textColor,
+		idBase,
+		position.x,
+		position.y,
+		distanceToMainBase
+	);
 }

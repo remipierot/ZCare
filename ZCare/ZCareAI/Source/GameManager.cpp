@@ -221,6 +221,9 @@ void GameManager::drawDebug()
 {
 	_BuildOrder.drawDebug();
 
+	Broodwar->drawTextScreen(200, 20, "FPS: %d", Broodwar->getFPS());
+	Broodwar->drawTextScreen(200, 30, "Average FPS: %f", Broodwar->getAverageFPS());
+
 	Broodwar->drawTextScreen(500, 20, "Bases data");
 
 	//DEBUG DES ressources et bases
@@ -239,22 +242,22 @@ void GameManager::drawDebug()
 				(base->isExpansionInteresting) ? Colors::Green :
 				Colors::White;
 
-		std::string s = std::to_string(base->idBase);
+		string s = to_string(base->idBase);
 		char const *pchar = s.c_str();
-		Broodwar->drawTextMap(base->position.x - 20, base->position.y - 35, "%c %s %d", textColor, "Base", base->idBase);
+		Broodwar->drawTextMap(base->position.x - 23, base->position.y - 35, "%c %s %d", textColor, "Base", base->idBase);
 		Broodwar->drawCircleMap(base->position, 20, color, true);
 
 		for (Resource* posMineral : base->mineralFields)
 		{
-			BWAPI::Position &positionMineral = posMineral->resourceUnit->getPosition();
-			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, pchar);
+			Position &positionMineral = posMineral->resourceUnit->getPosition();
+			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, "%c %s", textColor, pchar);
 		}
 
 		if (base->gazField != 0)
 		{
 			Resource* posGaz = base->gazField;
-			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
-			Broodwar->drawText(CoordinateType::Map, positionGaz.x, positionGaz.y, "%c %s", textColor, "Vespene");
+			Position positionGaz = posGaz->resourceUnit->getPosition();
+			Broodwar->drawText(CoordinateType::Map, positionGaz.x - 5, positionGaz.y, "%c %s", textColor, "Vespene");
 		}
 
 		Broodwar->drawTextScreen(

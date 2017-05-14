@@ -188,31 +188,32 @@ void ProductionManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
 	for (Base* b : newAllBaseLocations)
 	{
 		allBaseLocations.insert(b);
-		//Broodwar->sendText("LOCATION %d - COORDINATES [%d, %d] - DISTANCE FROM MAIN %f", b->idBase, b->position.x, b->position.y, b->distanceToMainBase);
 	}
 }
 
 Base* ProductionManager::getExpansionOrderedByDistance(int index)
 {
-	vector<int> sortedBaseDistances(0);
+	vector<float> sortedBaseDistances;
 	Base* expansion = nullptr;
 
+	//Get distance of every non enemy location from main base
 	for (Base* b : allBaseLocations)
 	{
 		expansion = b;
-		if (b->isExpansionInteresting)
+		if (!b->isEnnemyLocation)
 		{
-			sortedBaseDistances.push_back(b->distanceToMainBase);
+			sortedBaseDistances.push_back((float)b->distanceToMainBase);
 		}
 	}
 
+	//Sort the list by ascending distances
 	sort(sortedBaseDistances.begin(), sortedBaseDistances.end());
 
+	//Get the base corresponding to the wanted distance
 	if (index < sortedBaseDistances.size())
 	{
 		for (Base* b : allBaseLocations)
 		{
-			//b->printBase();
 			if (b->distanceToMainBase == sortedBaseDistances[index])
 			{
 				expansion = b;
@@ -220,9 +221,6 @@ Base* ProductionManager::getExpansionOrderedByDistance(int index)
 			}
 		}
 	}
-
-	//Broodwar->sendText("-----------");
-	//expansion->printBase();
 
 	return expansion;
 }
