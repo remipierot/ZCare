@@ -221,19 +221,27 @@ void GameManager::drawDebug()
 {
 	_BuildOrder.drawDebug();
 
+	Broodwar->drawTextScreen(500, 20, "Bases data");
+
 	//DEBUG DES ressources et bases
 	for (auto &base : allBaseLocations)
 	{
 		Color color(0, 0, 0);
+		char textColor = ' ';
 
-		color = (base->isStartingLocation) ? Colors::Green :
-				(base->isEnnemyLocation) ? Colors::Red :
-				(base->isExpansionInteresting) ? Colors::Cyan :
-				Colors::Blue;
+		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR : 
+					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+					ToolBox::WHITE_CHAR;
+
+		color = (base->isEnnemyLocation) ? Colors::Red :
+				(base->isStartingLocation) ? Colors::Yellow :
+				(base->isExpansionInteresting) ? Colors::Green :
+				Colors::White;
 
 		std::string s = std::to_string(base->idBase);
 		char const *pchar = s.c_str();
-		Broodwar->drawTextMap(base->position.x - 35, base->position.y - 35, "%c%s", ToolBox::GREEN_CHAR, "Base Location");
+		Broodwar->drawTextMap(base->position.x - 20, base->position.y - 35, "%c %s %d", textColor, "Base", base->idBase);
 		Broodwar->drawCircleMap(base->position, 20, color, true);
 
 		for (Resource* posMineral : base->mineralFields)
@@ -246,8 +254,19 @@ void GameManager::drawDebug()
 		{
 			Resource* posGaz = base->gazField;
 			BWAPI::Position positionGaz = posGaz->resourceUnit->getPosition();
-			Broodwar->drawText(CoordinateType::Map, positionGaz.x, positionGaz.y, "%c%s", ToolBox::GREEN_CHAR, "Vespene");
+			Broodwar->drawText(CoordinateType::Map, positionGaz.x, positionGaz.y, "%c %s", textColor, "Vespene");
 		}
+
+		Broodwar->drawTextScreen(
+			505,
+			20 + base->idBase * 10,
+			"%c %d - [%d, %d] - %d",
+			textColor,
+			base->idBase,
+			base->position.x,
+			base->position.y,
+			base->distanceToMainBase
+		);
 	}
 }
 

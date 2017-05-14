@@ -58,8 +58,8 @@ void Base::computePosition()
 			resourceCount++;
 		}
 
-		p.x /= (float)resourceCount;
-		p.y /= (float)resourceCount;
+		p.x /= resourceCount;
+		p.y /= resourceCount;
 
 		position = p;
 	}
@@ -90,8 +90,8 @@ void Base::computeTilePosition()
 			resourceCount++;
 		}
 
-		tp.x /= (float)resourceCount;
-		tp.y /= (float)resourceCount;
+		tp.x /= resourceCount;
+		tp.y /= resourceCount;
 
 		tilePosition = tp;
 	}
@@ -99,15 +99,15 @@ void Base::computeTilePosition()
 
 float Base::getDistanceToUnit(Unit u)
 {
-	return position.getDistance(u->getPosition());
+	return (float)position.getDistance(u->getPosition());
 }
 
 void Base::setDistanceToMainBase(Unit u)
 {
-	distanceToMainBase = getDistanceToUnit(u);
+	distanceToMainBase = (int)getDistanceToUnit(u);
 }
 
 void Base::printBase()
 {
-	Broodwar->sendText("BASE %d - [%d, %d] %f", idBase, position.x, position.y, distanceToMainBase);
+	Broodwar->sendText("%d - [%d, %d] %d", idBase, position.x, position.y, distanceToMainBase);
 }

@@ -42,7 +42,7 @@ void CombatManager::update()
 					Unit unitClose = 0;
 					for (Unit ennemy : unitToAttack)
 					{
-						float tempDist = ennemy->getPosition().getDistance(terrainUnit->getPosition());
+						float tempDist = (float)ennemy->getPosition().getDistance(terrainUnit->getPosition());
 						if (unitClose == 0)
 						{
 							distanceClose = tempDist;
@@ -77,7 +77,7 @@ void CombatManager::update()
 					Unit unitClose = 0;
 					for (Unit ennemy : unitToAttack)
 					{
-						float tempDist = ennemy->getPosition().getDistance(aerialUnit->getPosition());
+						float tempDist = (float)ennemy->getPosition().getDistance(aerialUnit->getPosition());
 						if (unitClose == 0)
 						{
 							distanceClose = tempDist;

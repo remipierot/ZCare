@@ -194,9 +194,12 @@ void BuildOrder::drawDebug()
 {
 	BOInstruction* toPrint = NULL;
 	char color = ' ';
+
+	Broodwar->drawTextScreen(5, 20, "Build Order data");
+
 	for (int i = (currentInstruction + 1); i < (currentInstruction + 6); i++)
 	{
-		color = (i == currentInstruction + 1) ? ToolBox::GREEN_CHAR : ToolBox::RED_CHAR;
+		color = (i == currentInstruction + 1) ? ToolBox::BRIGHT_GREEN_CHAR : ToolBox::BRIGHT_RED_CHAR;
 		if (i < instructionSet.size())
 		{
 			toPrint = instructionSet[i];
@@ -210,7 +213,7 @@ void BuildOrder::drawDebug()
 		{
 			Broodwar->drawTextScreen(
 				10,
-				(i - (currentInstruction + 1) + 1) * 10,
+				20 + (i - (currentInstruction + 1) + 1) * 10,
 				"%c %d - %s",
 				color,
 				toPrint->getSupplyCount(),

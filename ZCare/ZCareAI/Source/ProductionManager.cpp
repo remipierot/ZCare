@@ -188,13 +188,13 @@ void ProductionManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
 	for (Base* b : newAllBaseLocations)
 	{
 		allBaseLocations.insert(b);
-		Broodwar->sendText("LOCATION %d - COORDINATES [%d, %d] - DISTANCE FROM MAIN %f", b->idBase, b->position.x, b->position.y, b->distanceToMainBase);
+		//Broodwar->sendText("LOCATION %d - COORDINATES [%d, %d] - DISTANCE FROM MAIN %f", b->idBase, b->position.x, b->position.y, b->distanceToMainBase);
 	}
 }
 
 Base* ProductionManager::getExpansionOrderedByDistance(int index)
 {
-	vector<float> sortedBaseDistances(0);
+	vector<int> sortedBaseDistances(0);
 	Base* expansion = nullptr;
 
 	for (Base* b : allBaseLocations)
@@ -212,7 +212,7 @@ Base* ProductionManager::getExpansionOrderedByDistance(int index)
 	{
 		for (Base* b : allBaseLocations)
 		{
-			b->printBase();
+			//b->printBase();
 			if (b->distanceToMainBase == sortedBaseDistances[index])
 			{
 				expansion = b;
@@ -221,8 +221,8 @@ Base* ProductionManager::getExpansionOrderedByDistance(int index)
 		}
 	}
 
-	Broodwar->sendText("-----------");
-	expansion->printBase();
+	//Broodwar->sendText("-----------");
+	//expansion->printBase();
 
 	return expansion;
 }
