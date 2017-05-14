@@ -64,3 +64,37 @@ bool ToolBox::IsInCircle(int posX, int posY, int radius, int posX2, int posY2, i
 	return
 		pow((posX2 - posX), 2) + pow((posY - posY2),2) <= pow((radius + radius2),2);
 }
+
+bool ToolBox::IsInCircle(Position p1, int r1, Position p2, int r2)
+{
+	return
+		IsInCircle(p1.x, p1.y, r1, p2.x, p2.y, r2);
+}
+
+bool ToolBox::areUnitsLinkedByEvolution(const UnitType unit1, const UnitType unit2)
+{
+	bool linkedByEvolution = false;
+
+	//Spire evolution
+	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Greater_Spire && unit2 == UnitTypes::Zerg_Spire);
+	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Greater_Spire && unit1 == UnitTypes::Zerg_Spire);
+
+	//Hatchery evolution
+	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Lair && unit2 == UnitTypes::Zerg_Hatchery);
+	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Lair && unit1 == UnitTypes::Zerg_Hatchery);
+	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Hive && unit2 == UnitTypes::Zerg_Hatchery);
+	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Hive && unit1 == UnitTypes::Zerg_Hatchery);
+	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Hive && unit2 == UnitTypes::Zerg_Lair);
+	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Hive && unit1 == UnitTypes::Zerg_Lair);
+
+	//Creep Colony evolution
+	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Sunken_Colony && unit2 == UnitTypes::Zerg_Creep_Colony);
+	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Sunken_Colony && unit1 == UnitTypes::Zerg_Creep_Colony);
+	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Spore_Colony && unit2 == UnitTypes::Zerg_Creep_Colony);
+	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Spore_Colony && unit1 == UnitTypes::Zerg_Creep_Colony);
+
+	//Same unit type
+	linkedByEvolution |= (unit1 == unit2);
+
+	return linkedByEvolution;
+}

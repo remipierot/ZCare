@@ -34,6 +34,15 @@ class ToolBox
 			int posX, int posY, int radius, int pos2X, int pos2y, int radius2
 		);
 
+		static bool IsInCircle(
+			BWAPI::Position p1, int r1, BWAPI::Position p2, int r2
+		);
+
+		static bool areUnitsLinkedByEvolution(
+			const BWAPI::UnitType unit1,
+			const BWAPI::UnitType unit2
+		);
+
 		static const char YELLOW_CHAR = '\x03';
 		static const char WHITE_CHAR = '\x04';
 		static const char GREY_CHAR = '\x05';

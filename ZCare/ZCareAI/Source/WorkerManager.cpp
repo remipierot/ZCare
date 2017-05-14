@@ -7,9 +7,11 @@ using namespace Filter;
 // Fill the workers set
 void WorkerManager::updateWorkers()
 {
+	workers.clear();
+
 	for (auto &u : Broodwar->self()->getUnits())
 	{
-		if (u->getType().isWorker())
+		if (u->getType().isWorker() && !u->isMorphing())
 		{
 			workers.insert(u);
 		}
@@ -83,7 +85,11 @@ BWAPI::Unit WorkerManager::getWorkerWithLowestLife()
 			lowestHPWorker = w;
 		}
 
-		if (w->getHitPoints() < lowestHPWorker->getHitPoints())
+		if (w->getHitPoints() < lowestHPWorker->getHitPoints() && 
+			w->canBuild() && 
+			!w->isMorphing() && 
+			!w->isCarryingGas() && 
+			!w->isCarryingMinerals())
 		{
 			lowestHPWorker = w;
 		}

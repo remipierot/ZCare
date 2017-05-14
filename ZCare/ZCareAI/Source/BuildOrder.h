@@ -22,5 +22,8 @@ private:
 	std::vector<BOInstruction*> instructionSet;
 	int currentInstruction = -1;
 	BWAPI::Unit builder;
+	bool builderMovingToSpot;
+	bool builderBuildingToSpot;
+	BWAPI::TilePosition tileBuildLocation;
 };
 

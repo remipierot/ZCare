@@ -147,7 +147,7 @@ bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 {
 	for (auto &b : Broodwar->self()->getUnits())
 	{
-		if (b->getType() == type && (!completed || (completed && b->isCompleted())))
+		if (ToolBox::areUnitsLinkedByEvolution(b->getType(), type) && (!completed || (completed && b->isCompleted())))
 		{
 			count--;
 

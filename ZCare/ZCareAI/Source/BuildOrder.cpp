@@ -28,6 +28,9 @@ void BuildOrder::reset()
 	}
 
 	currentInstruction = -1;
+	builder = nullptr;
+	builderBuildingToSpot = false;
+	builderMovingToSpot = false;
 }
 
 bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm)
@@ -45,7 +48,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 		switch (nextInstruction->getType())
 		{
 			case BOInstruction::SUPPLY_USED:
-				conditionsFulfilled = pm->realSupplyUsed() >= nextInstruction->getSupplyCount();
+				conditionsFulfilled = true; // pm->realSupplyUsed() >= nextInstruction->getSupplyCount();
 				break;
 			case BOInstruction::BUILDING_COMPLETION:
 				break;
@@ -69,21 +72,18 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			int mineralCount = pm->getMineralCount();
 			int vespeneCount = pm->getVespeneCount();
 
-			TilePosition targetLocation = TilePositions::None;
-			Position p = Positions::Invalid;
+			Base* b = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex());
+			TilePosition targetTilePosition = b->tilePosition;
+			Position targetPosition = b->position;
 			Unit targetResourceDepot = nullptr;
 
-			if ((nextInstruction->getBaseIndex() + 1) <= pm->getNbResourceDepots())
+			for (int i = 0; i < pm->getNbResourceDepots(); i++)
 			{
-				targetResourceDepot = pm->getResourceDepot(nextInstruction->getBaseIndex());
-				p = targetResourceDepot->getPosition();
-				targetLocation = targetResourceDepot->getTilePosition();
-			}
-			else
-			{
-				Base* b = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex());
-				targetLocation = b->tilePosition;
-				p = b->position;
+				if (pm->canResourceDepotTrain(i) && ToolBox::IsInCircle(pm->getResourceDepot(i)->getPosition(), 10, targetPosition, 300))
+				{
+					targetResourceDepot = pm->getResourceDepot(i);
+					break;
+				}
 			}
 
 			if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Lair)
@@ -93,8 +93,15 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			//If nextInstruction is about making a building
 			if (nextInstruction->getUnitToBuild().isBuilding())
 			{
-				builder = wm->getWorkerWithLowestLife();
-				TilePosition buildLocation = pm->getClosestBuildablePosition(unitToBuild, targetLocation);
+				if (builder == nullptr)
+				{
+					builder = wm->getWorkerWithLowestLife();
+				}
+
+				if (tileBuildLocation == TilePositions::Invalid)
+				{
+					tileBuildLocation = pm->getClosestBuildablePosition(unitToBuild, targetTilePosition);
+				}
 
 				//Specific vespene location
 				if (unitToBuild == UnitTypes::Zerg_Extractor)
@@ -103,25 +110,34 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 					if (closestVespene != nullptr)
 					{
-						buildLocation = closestVespene->getTilePosition();
+						tileBuildLocation = closestVespene->getTilePosition();
 					}
 				}
 
 				//Make building if having enough ressources
 				if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice())
 				{
-					if (!builder->isMoving() && !ToolBox::IsInCircle(p.x, p.y, 300, builder->getPosition().x, builder->getPosition().y, 10))
+					if (builder->isGatheringGas() || builder->isGatheringMinerals())
 					{
-						builder->move((Position)buildLocation);
+						builder->stop();
 					}
 
-					Broodwar->drawCircleMap((Position)buildLocation, 300, Colors::Cyan);
+					if (!builder->isMoving() && !ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
+					{
+						builder->move((Position)tileBuildLocation);
+						builderMovingToSpot = true;
+					}
+
+					Broodwar->drawCircleMap((Position)tileBuildLocation, 300, Colors::Cyan);
 					Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Red, true);
 
-					if (ToolBox::IsInCircle(p.x, p.y, 300, builder->getPosition().x, builder->getPosition().y, 10))
+					Broodwar->drawLineMap((Position)tileBuildLocation, builder->getPosition(), Colors::Red);
+
+					if (ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
 					{
-						pm->makeBuilding(unitToBuild, buildLocation, builder);
+						pm->makeBuilding(unitToBuild, tileBuildLocation, builder);
 						Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Green, true);
+						builderBuildingToSpot = true;
 					}
 				}
 			}
@@ -135,32 +151,29 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 						pm->hasUnitRequirements(unitToBuild) &&
 						(unitToBuild == UnitTypes::Zerg_Overlord || pm->realSupplyUsed() < pm->maxSupply()))
 					{
-						if (targetResourceDepot == nullptr || 
-							(targetResourceDepot != nullptr && !targetResourceDepot->canTrain()) ||
-							(targetResourceDepot != nullptr && !targetResourceDepot->isIdle()))
-						{
-							for (int i = 0; i < pm->getNbResourceDepots(); i++)
-							{
-								if (pm->canResourceDepotTrain(i))
-								{
-									targetResourceDepot = pm->getResourceDepot(i);
-									break;
-								}
-							}
-						}
-
 						if (targetResourceDepot->train(unitToBuild))
 						{
 							nextInstruction->decrementNbUnits();
+						}
+						else
+						{
+							for (int i = 0; i < pm->getNbResourceDepots(); i++)
+							{
+								if (ToolBox::IsInCircle(pm->getResourceDepot(i)->getPosition(), 10, targetPosition, 300))
+								{
+									targetResourceDepot = pm->getResourceDepot(i);
+									if (targetResourceDepot->train(unitToBuild))
+									{
+										nextInstruction->decrementNbUnits();
+										break;
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 		}
-		//else if (nextInstruction->getType() == BOInstruction::SUPPLY_USED && pm->realSupplyUsed() < nextInstruction->getSupplyCount())
-		//{
-		//	wm->buildWorker(pm->getResourceDepot(0));
-		//}
 
 		if (nextInstruction->getUnitToBuild().isBuilding())
 		{
@@ -174,6 +187,10 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 		if (executed)
 		{
 			nextInstruction->complete();
+			builder = nullptr;
+			builderBuildingToSpot = false;
+			builderMovingToSpot = false;
+			tileBuildLocation = TilePositions::Invalid;
 			currentInstruction++;
 		}
 	}

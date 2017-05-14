@@ -204,6 +204,11 @@ void GameManager::fillBases()
 		base->computePosition();
 		base->computeTilePosition();
 		base->setDistanceToMainBase(mainBase);
+
+		if (base->isStartingLocation && base->distanceToMainBase > 300)
+		{
+			base->isEnnemyLocation = true;
+		}
 	}
 	
 }
