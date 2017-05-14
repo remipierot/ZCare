@@ -39,39 +39,37 @@ void CombatManager::update()
 				{
 					if (terrainUnit->exists())
 					{
-<<<<<<< HEAD
 						//Faire le traitement
 						float distanceClose = 0;
 						Unit unitClose = 0;
 						for (Unit ennemy : unitToAttack)
-=======
-						float tempDist = (float)ennemy->getPosition().getDistance(terrainUnit->getPosition());
-						if (unitClose == 0)
->>>>>>> origin/release
 						{
-							float tempDist = ennemy->getPosition().getDistance(terrainUnit->getPosition());
+							float tempDist = (float)ennemy->getPosition().getDistance(terrainUnit->getPosition());
 							if (unitClose == 0)
 							{
-								distanceClose = tempDist;
-								unitClose = ennemy;
-							}
-							else
-							{
-								if (distanceClose > tempDist)
+								//float tempDist = ennemy->getPosition().getDistance(terrainUnit->getPosition());
+								if (unitClose == 0)
 								{
 									distanceClose = tempDist;
 									unitClose = ennemy;
 								}
+								else
+								{
+									if (distanceClose > tempDist)
+									{
+										distanceClose = tempDist;
+										unitClose = ennemy;
+									}
+								}
+							}
+							if (unitClose != 0)
+							{
+								terrainUnit->attack(unitClose);
+								Color color(0, 0, 255);
+								Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
+								Broodwar->drawLineMap(unitClose->getPosition(), terrainUnit->getPosition(), color);
 							}
 						}
-						if (unitClose != 0)
-						{
-							terrainUnit->attack(unitClose);
-							Color color(0, 0, 25);
-							Broodwar->drawCircleMap(unitClose->getPosition(), 30, color, true);
-							Broodwar->drawLineMap(unitClose->getPosition(), terrainUnit->getPosition(), color);
-						}
-
 					}
 					else unitToErase.insert(terrainUnit);
 				}
@@ -80,19 +78,9 @@ void CombatManager::update()
 				{
 					if (aerialUnit->exists())
 					{
-<<<<<<< HEAD
 						float distanceClose = 0;
 						Unit unitClose = 0;
 						for (Unit ennemy : unitToAttack)
-=======
-						float tempDist = (float)ennemy->getPosition().getDistance(aerialUnit->getPosition());
-						if (unitClose == 0)
-						{
-							distanceClose = tempDist;
-							unitClose = ennemy;
-						}
-						else
->>>>>>> origin/release
 						{
 							float tempDist = ennemy->getPosition().getDistance(aerialUnit->getPosition());
 							if (unitClose == 0)
@@ -115,7 +103,6 @@ void CombatManager::update()
 							Color color(0, 25, 0);
 							Broodwar->drawCircleMap(unitClose->getPosition(), 30, color, true);
 							Broodwar->drawLineMap(unitClose->getPosition(), aerialUnit->getPosition(), color);
-
 						}
 
 					}

@@ -136,8 +136,6 @@ void ZCareAI::onUnitShow(BWAPI::Unit unit)
 				buildingShow.insert(unit);
 			else unitShow.insert(unit);
 	}
-
-
 }
 
 void ZCareAI::onUnitHide(BWAPI::Unit unit)
