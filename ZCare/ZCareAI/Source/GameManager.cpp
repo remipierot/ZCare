@@ -29,6 +29,121 @@ void GameManager::update()
 
 	//Combat Manager update
 	_CombatManager.update();
+
+	int ableToFight = 0;
+	Base* enemyBase = nullptr;
+
+	for (auto& b : allBaseLocations)
+	{
+		if (b->isEnnemyLocation)
+		{
+			enemyBase = b;
+		}
+	}
+
+	for (Unit unit : Broodwar->self()->getUnits())
+	{
+		UnitType type = unit->getType();
+		if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
+		{
+			ableToFight++;
+		}
+	}
+
+	//MDR BEST STRAT WORLD BOYZ
+	if (ableToFight >= 6)
+	{
+		PositionOrUnit toAttack = nullptr;
+		bool toAttackSet = false;
+
+		for (Unit unit : Broodwar->self()->getUnits())
+		{
+			UnitType type = unit->getType();
+			bool threat = false;
+
+			if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
+			{
+				const Unitset& livingAttackableEnemyUnits =
+					unit->getUnitsInRadius(
+					256,
+					IsEnemy && IsVisible && IsDetected && Exists &&
+					CanAttack &&
+					!IsBuilding
+				);
+
+				const Unitset& notLivingAttackableEnemyUnits =
+					unit->getUnitsInRadius(
+					256,
+					IsEnemy && IsVisible && IsDetected && Exists &&
+					IsBuilding
+				);
+
+				//Priority to units that are a threat
+				for (Unit enemy : livingAttackableEnemyUnits)
+				{
+					if (!enemy->getType().isWorker())
+					{
+						toAttack = enemy;
+						toAttackSet = true;
+						break;
+					}
+				}
+
+				if (unit->canAttack())
+				{
+					if (unit->isUnderAttack() && !toAttackSet)
+					{
+						toAttack = unit->getOrderTarget();
+						toAttackSet = true;
+					}
+					else if (livingAttackableEnemyUnits.size() > 0 && !toAttackSet)
+					{
+						for (Unit enemy : livingAttackableEnemyUnits)
+						{
+							toAttack = enemy;
+							toAttackSet = true;
+							break;
+						}
+					}
+					else if (notLivingAttackableEnemyUnits.size() > 0 && !toAttackSet)
+					{
+						for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
+						{
+							toAttack = enemyBuilding;
+							toAttackSet = true;
+							break;
+						}
+					}
+					else
+					{
+						if (enemyBase != nullptr && !toAttackSet)
+						{
+							toAttack = enemyBase->position;
+							toAttackSet = true;
+						}
+
+						if (livingAttackableEnemyUnits.size() == 0 && 
+							notLivingAttackableEnemyUnits.size() == 0 && 
+							toAttack.getPosition().getDistance(unit->getPosition()) < 200)
+						{
+							unit->stop();
+
+							for (Base* b : allBaseLocations)
+							{
+								if (!Broodwar->isVisible(b->tilePosition))
+								{
+									toAttack = b->position;
+									toAttackSet = true;
+								}
+							}
+						}
+					}
+
+					unit->attack(toAttack);
+				}
+			}
+		}
+	}
 }
 
 // Number of locations to scout (no matter if they already have been or not)

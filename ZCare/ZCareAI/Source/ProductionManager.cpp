@@ -101,7 +101,9 @@ int ProductionManager::getVespeneCount()
 // Return the closest buildable position for a given building using the position given
 TilePosition ProductionManager::getClosestBuildablePosition(UnitType buildingType, TilePosition wantedPosition, int distance)
 {
-	return Broodwar->getBuildLocation(buildingType, wantedPosition, distance);
+	bool creepNeeded = (buildingType != UnitTypes::Zerg_Hatchery && buildingType != UnitTypes::Zerg_Extractor);
+
+	return Broodwar->getBuildLocation(buildingType, wantedPosition, distance, creepNeeded);
 }
 
 bool ProductionManager::hasUnitRequirements(UnitType unit)

@@ -31,6 +31,7 @@ void BuildOrder::reset()
 	builder = nullptr;
 	builderBuildingToSpot = false;
 	builderMovingToSpot = false;
+	tileBuildLocation = TilePositions::None;
 }
 
 bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm)
@@ -38,7 +39,6 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 	bool conditionsFulfilled = false;
 	bool executed = false;
 	BOInstruction* nextInstruction = getNextInstruction();
-	UnitType unitToBuild = nextInstruction->getUnitToBuild();
 	int originNbUnitsToBuild = nextInstruction->getNbUnitsToBuild();
 
 	//Run next instruction only if it is not completed
@@ -131,18 +131,25 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			//Make building
 			else if (nextInstruction->isBuilding())
 			{
+				UnitType wantedBuilding = nextInstruction->getUnitToBuild();
+
 				if (builder == nullptr)
 				{
 					builder = wm->getWorkerWithLowestLife();
 				}
 
-				if (tileBuildLocation == TilePositions::Invalid)
+				if (tileBuildLocation == TilePositions::None)
 				{
-					tileBuildLocation = pm->getClosestBuildablePosition(unitToBuild, targetTilePosition, 50);
+					tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 50);
+
+					Broodwar->sendText("ORIGIN [%d, %d]", targetTilePosition.x, targetTilePosition.y);
+					Broodwar->sendText("TARGET [%d, %d]", tileBuildLocation.x, tileBuildLocation.y);
 				}
 
+				Broodwar->drawCircleMap(targetPosition, 10, Colors::Red, true);
+
 				//Specific vespene location
-				if (unitToBuild == UnitTypes::Zerg_Extractor)
+				if (wantedBuilding == UnitTypes::Zerg_Extractor)
 				{
 					Unit closestVespene = pm->getClosestUnit(nextInstruction->getBaseIndex(), UnitTypes::Resource_Vespene_Geyser);
 
@@ -153,7 +160,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				}
 
 				//Make building if having enough ressources
-				if (mineralCount >= unitToBuild.mineralPrice() && vespeneCount >= unitToBuild.gasPrice())
+				if (mineralCount >= wantedBuilding.mineralPrice() && vespeneCount >= wantedBuilding.gasPrice())
 				{
 					if (builder->isGatheringGas() || builder->isGatheringMinerals())
 					{
@@ -173,7 +180,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 					if (ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
 					{
-						pm->makeBuilding(unitToBuild, tileBuildLocation, builder);
+						pm->makeBuilding(wantedBuilding, tileBuildLocation, builder);
 						Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Green, true);
 						builderBuildingToSpot = true;
 					}
@@ -182,14 +189,16 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			//Make unit
 			else if (nextInstruction->isUnit())
 			{
+				UnitType wantedUnit = nextInstruction->getUnitToBuild();
+
 				if (nextInstruction->getNbUnitsToBuild() > 0)
 				{
-					if (mineralCount >= unitToBuild.mineralPrice() &&
-						vespeneCount >= unitToBuild.gasPrice() &&
-						pm->hasUnitRequirements(unitToBuild) &&
-						(unitToBuild == UnitTypes::Zerg_Overlord || pm->realSupplyUsed() < pm->maxSupply()))
+					if (mineralCount >= wantedUnit.mineralPrice() &&
+						vespeneCount >= wantedUnit.gasPrice() &&
+						pm->hasUnitRequirements(wantedUnit) &&
+						(wantedUnit == UnitTypes::Zerg_Overlord || pm->realSupplyUsed() < pm->maxSupply()))
 					{
-						if (targetResourceDepot->train(unitToBuild))
+						if (targetResourceDepot->train(wantedUnit))
 						{
 							nextInstruction->decrementNbUnits();
 						}
@@ -200,7 +209,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 								if (ToolBox::IsInCircle(pm->getResourceDepot(i)->getPosition(), 10, targetPosition, 300))
 								{
 									targetResourceDepot = pm->getResourceDepot(i);
-									if (targetResourceDepot->train(unitToBuild))
+									if (targetResourceDepot->train(wantedUnit))
 									{
 										nextInstruction->decrementNbUnits();
 										break;
@@ -221,11 +230,11 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 		{
 			executed = pm->isUpgrading(nextInstruction->getUpgradeToMake()) || pm->hasUpgraded(nextInstruction->getUpgradeToMake());
 		}
-		else if (nextInstruction->getUnitToBuild().isBuilding())
+		else if (nextInstruction->isBuilding() || nextInstruction->isEvolution())
 		{
-			executed = pm->isAlreadyBuilt(unitToBuild, false, nextInstruction->getNbUnitsOfType());
+			executed = pm->isAlreadyBuilt(nextInstruction->getUnitToBuild(), false, nextInstruction->getNbUnitsOfType());
 		}
-		else if (nextInstruction->getNbUnitsToBuild() <= 0)
+		else if (nextInstruction->isUnit() && nextInstruction->getNbUnitsToBuild() <= 0)
 		{
 			executed = true;
 		}
@@ -236,7 +245,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			builder = nullptr;
 			builderBuildingToSpot = false;
 			builderMovingToSpot = false;
-			tileBuildLocation = TilePositions::Invalid;
+			tileBuildLocation = TilePositions::None;
 			currentInstruction++;
 		}
 	}
