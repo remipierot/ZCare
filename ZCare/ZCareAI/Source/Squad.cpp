@@ -5,7 +5,7 @@ Squad::Squad(int squad):
 	idSquad(squad),
 	numberUnitMax(20),
 	currentNumberUnit(0),
-	modeSquad(defenseMode),
+	modeSquad(attackMode),
 	positionObjective(0,0)
 {
 	
@@ -16,7 +16,7 @@ Squad::Squad(std::set<const BWAPI::Unit> terrainUnit, std::set<const BWAPI::Unit
 	this->aerialUnit = aerialUnit;
 	this->terrainUnit = terrainUnit;
 	currentNumberUnit = numberUnit();
-	modeSquad = defenseMode;
+	modeSquad = attackMode;
 }
 
 Squad::~Squad()
@@ -109,4 +109,9 @@ void Squad::setPositionObjective(BWAPI::Position position)
 BWAPI::Position Squad::getPositionObjective()
 {
 	return this->positionObjective;
+}
+
+Squad::SquadMode Squad::getModeSquad()
+{
+	return this->modeSquad;
 }

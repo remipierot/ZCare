@@ -29,8 +29,5 @@ private:
 	std::set<const BWAPI::Unit> *unitDiscover;
 	std::set<Base*> *baseStruct;
 	std::set<BWAPI::Unit> *unitToAttack;
-	bool finalAttackMode;
-	bool defenseMode;
-	bool attackMode;
 };
 

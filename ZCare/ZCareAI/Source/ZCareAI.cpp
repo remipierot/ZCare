@@ -63,7 +63,7 @@ void ZCareAI::onFrame()
 
 	for (Unit uni : unitShow)
 	{
-		Broodwar->drawCircleMap(uni->getPosition(),10, Color(0, 60, 0), true);
+	//	Broodwar->drawCircleMap(uni->getPosition(),20, Color(0, 255, 0), false);
 	}
 	/*for (Unit building : buildingShow)
 	{
@@ -116,6 +116,21 @@ void ZCareAI::onUnitDiscover(BWAPI::Unit unit)
 
 void ZCareAI::onUnitEvade(BWAPI::Unit unit)
 {
+	bool notOurUnit = true;
+	if (!unit->getType().isNeutral())
+	{
+		for (Unit usUnit : Broodwar->self()->getUnits())
+		{
+			if (usUnit == unit)
+			{
+				notOurUnit = false;
+				break;
+			}
+
+		}
+		if (notOurUnit)
+			unitShow.erase(unit);
+	}	
 }
 
 void ZCareAI::onUnitShow(BWAPI::Unit unit)
@@ -147,6 +162,84 @@ void ZCareAI::onUnitHide(BWAPI::Unit unit)
 
 void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 {
+	/*UnitType type = unit->getType();
+	if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
+	{
+		int squadNumber = _CombatManager->squadNumber();
+		Squad* squad = 0;
+		if (squadNumber == 0)
+		{
+			squadNumber = 1;
+			squad = new Squad(squadNumber);
+			squad->setModeSquad(Squad::attackMode);
+			BWAPI::Position pos;
+
+			for (Base *base : *_CombatManager->getBase())
+			{
+				if (base->isEnnemyLocation && base->isStartingLocation)
+				{
+					pos = base->position;
+					break;
+				}
+			}
+			squad->setPositionObjective(pos);
+			_CombatManager->addSquad(squad);
+		}
+
+		bool insertion = false;
+		int currentSquad = 1;
+		while (!insertion)
+		{
+			squad = _CombatManager->findSquad(currentSquad);
+			if (squad != 0)
+			{
+				//Broodwar->drawTextScreen(10, 60, "Squad %d : %d", currentSquad, _CombatManager->findSquad(currentSquad)->numberUnit());
+				if (squad->insertUnit(unit))
+				{
+					insertion = true;
+				}
+				else currentSquad += 1;
+			}
+
+			else
+			{
+				squad = new Squad(currentSquad);
+				squad->setModeSquad(Squad::attackMode);
+				BWAPI::Position pos;
+				for (Base *base : *_CombatManager->getBase())
+				{
+					if (base->isEnnemyLocation && base->isStartingLocation)
+					{
+						pos = base->position;
+						break;
+					}
+				}
+				_CombatManager->addSquad(squad);
+			}
+		}
+	}*/
+}
+
+void ZCareAI::onUnitDestroy(BWAPI::Unit unit)
+{
+}
+
+void ZCareAI::onUnitMorph(BWAPI::Unit unit)
+{
+	
+}
+
+void ZCareAI::onUnitRenegade(BWAPI::Unit unit)
+{
+}
+
+void ZCareAI::onSaveGame(std::string gameName)
+{
+  Broodwar << "The game was saved to \"" << gameName << "\"" << std::endl;
+}
+
+void ZCareAI::onUnitComplete(BWAPI::Unit unit)
+{
 	UnitType type = unit->getType();
 	if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
 	{
@@ -169,7 +262,7 @@ void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 			}
 			squad->setPositionObjective(pos);
 			_CombatManager->addSquad(squad);
-		}		
+		}
 
 		bool insertion = false;
 		int currentSquad = 1;
@@ -185,7 +278,7 @@ void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 				}
 				else currentSquad += 1;
 			}
-				
+
 			else
 			{
 				squad = new Squad(currentSquad);
@@ -199,42 +292,11 @@ void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 						break;
 					}
 				}
-				_CombatManager->addSquad(squad);		
+				squad->setPositionObjective(pos);
+				_CombatManager->addSquad(squad);
 			}
 		}
 	}
-}
-
-void ZCareAI::onUnitDestroy(BWAPI::Unit unit)
-{
-}
-
-void ZCareAI::onUnitMorph(BWAPI::Unit unit)
-{
-	if (Broodwar->isReplay())
-	{
-		// if we are in a replay, then we will print out the build order of the structures
-		if (unit->getType().isBuilding() && !unit->getPlayer()->isNeutral())
-		{
-			int seconds = Broodwar->getFrameCount()/24;
-			int minutes = seconds/60;
-			seconds %= 60;
-			Broodwar->sendText("%.2d:%.2d: %s morphs a %s", minutes, seconds, unit->getPlayer()->getName().c_str(), unit->getType().c_str());
-		}
-	}
-}
-
-void ZCareAI::onUnitRenegade(BWAPI::Unit unit)
-{
-}
-
-void ZCareAI::onSaveGame(std::string gameName)
-{
-  Broodwar << "The game was saved to \"" << gameName << "\"" << std::endl;
-}
-
-void ZCareAI::onUnitComplete(BWAPI::Unit unit)
-{
 }
 
 bool checkStateUnit(BWAPI::Unit unit)

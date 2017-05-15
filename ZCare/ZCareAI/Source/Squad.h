@@ -30,6 +30,7 @@ public:
 	std::set<const BWAPI::Unit>* getAerialUnit();
 
 	void setModeSquad(SquadMode mode);
+	Squad::SquadMode getModeSquad();
 
 	void setPositionObjective(BWAPI::Position position);
 	BWAPI::Position getPositionObjective();
