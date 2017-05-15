@@ -88,11 +88,33 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 			if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Lair)
 			{
-				pm->getResourceDepot(nextInstruction->getBaseIndex())->morph(UnitTypes::Zerg_Lair);
-			}
+				Unit hatchery = pm->getBuildingOfType(UnitTypes::Zerg_Hatchery);
 
+				if (hatchery != nullptr)
+				{
+					hatchery->morph(UnitTypes::Zerg_Lair);
+				}
+			}
+			else if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Hive)
+			{
+				Unit lair = pm->getBuildingOfType(UnitTypes::Zerg_Lair);
+
+				if (lair != nullptr)
+				{
+					lair->morph(UnitTypes::Zerg_Hive);
+				}
+			}
+			else if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Greater_Spire)
+			{
+				Unit spire = pm->getBuildingOfType(UnitTypes::Zerg_Spire);
+
+				if (spire != nullptr)
+				{
+					spire->morph(UnitTypes::Zerg_Greater_Spire);
+				}
+			}
 			//If nextInstruction is about making a research
-			if (nextInstruction->isResearch())
+			else if (nextInstruction->isResearch())
 			{
 				UnitType buildingType = ToolBox::getUnitAbleToResearch(nextInstruction->getResearchToMake());
 

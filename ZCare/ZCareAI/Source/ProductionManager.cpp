@@ -145,9 +145,14 @@ bool ProductionManager::checkForStartedConstruction()
 
 bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 {
+	bool specialCases = (type == UnitTypes::Zerg_Lair || type == UnitTypes::Zerg_Hive || type == UnitTypes::Zerg_Greater_Spire);
+	bool buildingToCount = false;
+
 	for (auto &b : Broodwar->self()->getUnits())
 	{
-		if (ToolBox::areUnitsLinkedByEvolution(b->getType(), type) && (!completed || (completed && b->isCompleted())))
+		buildingToCount = (specialCases) ? b->getType() == type : ToolBox::areUnitsLinkedByEvolution(b->getType(), type);
+
+		if (buildingToCount && (!completed || (completed && b->isCompleted())))
 		{
 			count--;
 
@@ -247,7 +252,7 @@ Unit ProductionManager::getBuildingOfType(UnitType wantedBuilding)
 
 	for (int i = 0; i < resourceDepots.size(); i++)
 	{
-		if (wantedBuilding == UnitTypes::Zerg_Hatchery)
+		if (wantedBuilding == getResourceDepot(i)->getType())
 		{
 			building = getResourceDepot(i);
 		}
