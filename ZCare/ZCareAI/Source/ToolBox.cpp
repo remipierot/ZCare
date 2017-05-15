@@ -186,3 +186,21 @@ UnitType ToolBox::getUnitAbleToUpgrade(UpgradeType upgradeToMake)
 
 	return unit;
 }
+
+UnitType ToolBox::getPreviousEvolution(UnitType currentEvolution)
+{
+	UnitType unit = UnitTypes::None;
+
+	if (currentEvolution == UnitTypes::Zerg_Lair)
+		unit = UnitTypes::Zerg_Hatchery;
+	else if (currentEvolution == UnitTypes::Zerg_Hive)
+		unit = UnitTypes::Zerg_Lair;
+	else if (currentEvolution == UnitTypes::Zerg_Sunken_Colony)
+		unit = UnitTypes::Zerg_Creep_Colony;
+	else if (currentEvolution == UnitTypes::Zerg_Spore_Colony)
+		unit = UnitTypes::Zerg_Creep_Colony;
+	else if (currentEvolution == UnitTypes::Zerg_Greater_Spire)
+		unit = UnitTypes::Zerg_Spire;
+
+	return unit;
+}

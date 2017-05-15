@@ -51,6 +51,10 @@ class ToolBox
 			BWAPI::UpgradeType upgradeToMake
 		);
 
+		static BWAPI::UnitType getPreviousEvolution(
+			BWAPI::UnitType currentEvolution
+		);
+
 		static const char YELLOW_CHAR = '\x03';
 		static const char WHITE_CHAR = '\x04';
 		static const char GREY_CHAR = '\x05';

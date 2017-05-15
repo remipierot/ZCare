@@ -202,3 +202,23 @@ bool BOInstruction::isUpgrade()
 {
 	return upgradeToMake != UpgradeTypes::None;
 }
+
+bool BOInstruction::isEvolution()
+{
+	return unitToBuild != UnitTypes::None &&
+		(unitToBuild == UnitTypes::Zerg_Lair ||
+		unitToBuild == UnitTypes::Zerg_Hive ||
+		unitToBuild == UnitTypes::Zerg_Sunken_Colony ||
+		unitToBuild == UnitTypes::Zerg_Spore_Colony ||
+		unitToBuild == UnitTypes::Zerg_Greater_Spire);
+}
+
+bool BOInstruction::isBuilding()
+{
+	return unitToBuild != UnitTypes::None && unitToBuild.isBuilding() &&!isEvolution();
+}
+
+bool BOInstruction::isUnit()
+{
+	return unitToBuild != UnitTypes::None && !isResearch() && !isUpgrade() && !isBuilding();
+}

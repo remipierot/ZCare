@@ -86,34 +86,19 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				}
 			}
 
-			if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Lair)
-			{
-				Unit hatchery = pm->getBuildingOfType(UnitTypes::Zerg_Hatchery);
 
-				if (hatchery != nullptr)
+			//Evolution of buildings
+			if (nextInstruction->isEvolution())
+			{
+				UnitType wantedEvolution = nextInstruction->getUnitToBuild();
+				Unit buildingToEvolve = pm->getBuildingOfType(ToolBox::getPreviousEvolution(wantedEvolution));
+
+				if (buildingToEvolve != nullptr)
 				{
-					hatchery->morph(UnitTypes::Zerg_Lair);
+					buildingToEvolve->morph(wantedEvolution);
 				}
 			}
-			else if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Hive)
-			{
-				Unit lair = pm->getBuildingOfType(UnitTypes::Zerg_Lair);
-
-				if (lair != nullptr)
-				{
-					lair->morph(UnitTypes::Zerg_Hive);
-				}
-			}
-			else if (nextInstruction->getUnitToBuild() == UnitTypes::Zerg_Greater_Spire)
-			{
-				Unit spire = pm->getBuildingOfType(UnitTypes::Zerg_Spire);
-
-				if (spire != nullptr)
-				{
-					spire->morph(UnitTypes::Zerg_Greater_Spire);
-				}
-			}
-			//If nextInstruction is about making a research
+			//Research
 			else if (nextInstruction->isResearch())
 			{
 				UnitType buildingType = ToolBox::getUnitAbleToResearch(nextInstruction->getResearchToMake());
@@ -128,7 +113,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					}
 				}
 			}
-			//If nextInstruction is about making an upgrade
+			//Upgrade
 			else if (nextInstruction->isUpgrade())
 			{
 				UnitType buildingType = ToolBox::getUnitAbleToUpgrade(nextInstruction->getUpgradeToMake());
@@ -143,8 +128,8 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					}
 				}
 			}
-			//If nextInstruction is about making a building
-			else if (nextInstruction->getUnitToBuild().isBuilding())
+			//Make building
+			else if (nextInstruction->isBuilding())
 			{
 				if (builder == nullptr)
 				{
@@ -194,13 +179,13 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					}
 				}
 			}
-			//If nextInstruction is about making a living unit
-			else
+			//Make unit
+			else if (nextInstruction->isUnit())
 			{
 				if (nextInstruction->getNbUnitsToBuild() > 0)
 				{
-					if (mineralCount >= unitToBuild.mineralPrice() && 
-						vespeneCount >= unitToBuild.gasPrice() && 
+					if (mineralCount >= unitToBuild.mineralPrice() &&
+						vespeneCount >= unitToBuild.gasPrice() &&
 						pm->hasUnitRequirements(unitToBuild) &&
 						(unitToBuild == UnitTypes::Zerg_Overlord || pm->realSupplyUsed() < pm->maxSupply()))
 					{

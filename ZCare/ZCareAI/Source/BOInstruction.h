@@ -95,6 +95,12 @@ public:
 
 	bool isUpgrade();
 
+	bool isEvolution();
+
+	bool isBuilding();
+
+	bool isUnit();
+
 private:
 	InstructionType type;
 	bool completed = false;
