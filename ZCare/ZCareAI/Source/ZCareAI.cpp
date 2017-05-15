@@ -59,14 +59,16 @@ void ZCareAI::onFrame()
 		y += 20;
 	}
 
+	_CombatManager->setUnitDiscover(&unitShow);
+
 	for (Unit uni : unitShow)
 	{
 		Broodwar->drawCircleMap(uni->getPosition(),10, Color(0, 60, 0), true);
 	}
-	for (Unit building : buildingShow)
+	/*for (Unit building : buildingShow)
 	{
 		Broodwar->drawCircleMap(building->getPosition(), 10, Color(0, 0, 60), true);
-	}
+	}*/
 	
 }
 
@@ -132,9 +134,10 @@ void ZCareAI::onUnitShow(BWAPI::Unit unit)
 		}
 
 		if (notOurUnit)
-			if (unit->getType().isBuilding())
-				buildingShow.insert(unit);
-			else unitShow.insert(unit);
+			unitShow.insert(unit);
+			//if (unit->getType().isBuilding())
+			//	buildingShow.insert(unit);
+			//else unitShow.insert(unit);
 	}
 }
 
@@ -153,6 +156,18 @@ void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 		{
 			squadNumber = 1;
 			squad = new Squad(squadNumber);
+			squad->setModeSquad(Squad::attackMode);
+			BWAPI::Position pos;
+
+			for (Base *base : *_CombatManager->getBase())
+			{
+				if (base->isEnnemyLocation && base->isStartingLocation)
+				{
+					pos = base->position;
+					break;
+				}
+			}
+			squad->setPositionObjective(pos);
 			_CombatManager->addSquad(squad);
 		}		
 
@@ -160,7 +175,7 @@ void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 		int currentSquad = 1;
 		while (!insertion)
 		{
-		/*Squad* */squad = _CombatManager->findSquad(currentSquad);
+			squad = _CombatManager->findSquad(currentSquad);
 			if (squad != 0)
 			{
 				//Broodwar->drawTextScreen(10, 60, "Squad %d : %d", currentSquad, _CombatManager->findSquad(currentSquad)->numberUnit());
@@ -173,7 +188,18 @@ void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 				
 			else
 			{
-				_CombatManager->addSquad(new Squad(currentSquad));		
+				squad = new Squad(currentSquad);
+				squad->setModeSquad(Squad::attackMode);
+				BWAPI::Position pos;
+				for (Base *base : *_CombatManager->getBase())
+				{
+					if (base->isEnnemyLocation && base->isStartingLocation)
+					{
+						pos = base->position;
+						break;
+					}
+				}
+				_CombatManager->addSquad(squad);		
 			}
 		}
 	}

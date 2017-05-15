@@ -2,6 +2,7 @@
 #include <BWAPI.h>
 #include "ToolBox.h"
 #include "Squad.h"
+#include "Base.h"
 
 class CombatManager
 {
@@ -12,10 +13,22 @@ public:
 	Squad* findSquad(int idSquad);
 	int squadNumber();
 	std::set<Squad*> getSquadList();
+	void modeDefense(Squad* squad);
+	void modeAttack(Squad* squad);
+
+	void setUnitDiscover(std::set<const BWAPI::Unit> *unit);
+
+	void setBase(std::set<Base*> *base);
+	std::set<Base*> *getBase();
+
+	void traitementAttack(std::set<BWAPI::Unit> *erase, std::set<const BWAPI::Unit> *unitType, Squad *squad);
 	
 
 private:
 	std::set<Squad*> squadList;
+	std::set<const BWAPI::Unit> *unitDiscover;
+	std::set<Base*> *baseStruct;
+	std::set<BWAPI::Unit> *unitToAttack;
 	bool finalAttackMode;
 	bool defenseMode;
 	bool attackMode;

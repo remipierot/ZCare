@@ -372,6 +372,7 @@ void GameManager::initBO()
 	fillBases();
 	_ScoutManager.init(&_ProductionManager);
 	_ProductionManager.setAllBaseLocations(allBaseLocations);
+	_CombatManager.setBase(&allBaseLocations);
 }
 
 void GameManager::drawDebug()

@@ -31,6 +31,8 @@ public:
 
 	void setModeSquad(SquadMode mode);
 
+	void setPositionObjective(BWAPI::Position position);
+	BWAPI::Position getPositionObjective();
 
 private :
 	int idSquad;
@@ -39,6 +41,7 @@ private :
 	std::set<const BWAPI::Unit> terrainUnit;
 	std::set<const BWAPI::Unit> aerialUnit;
 	SquadMode modeSquad;
+	BWAPI::Position positionObjective;
 
 };
 
