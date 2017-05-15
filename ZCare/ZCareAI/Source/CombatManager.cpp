@@ -22,12 +22,13 @@ void CombatManager::update()
 			isUnderAttack = true;
 			Unit target = unit->getOrderTarget();
 			if (target!=0)
-				this->unitToAttack->insert(unit->getOrderTarget());
+				this->unitToAttack->insert(target);
 		}	
 	}
 
 	for (Unit unit: *unitToAttack)
 	{
+		Broodwar->drawTextMap(unit->getPosition(), " ATTAQUANT");
 		Broodwar->drawCircleMap(unit->getPosition(), 20, Color(255, 0, 0));
 	}
 	//int ennemyUnitCount = this->unitToAttack->size();
@@ -209,46 +210,43 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 		{
 			if (unitClose == 0)
 			{
-				for (Unit ennemy : *unitToAttack)
-				{
-					float tempDist = (float)ennemy->getPosition().getDistance(unit->getPosition());
-					if (tempDist < 600)
-					{
-						if (unitClose == 0)
-						{
-							distanceClose = tempDist;
-							unitClose = ennemy;
-						}
-						else
-						{
-							if (distanceClose > tempDist)
-							{
-								distanceClose = tempDist;
-								unitClose = ennemy;
-							}
-						}
-					}
-				}
 				bool attack = false;
 				Unit temp = 0;
+				if (unitClose != 0)
+					attack = true;
+
+				bool attacker = false;
+				int distanceAttacker = 0;
+
 				for (Unit unitEnemy : *unitDiscover)
 				{
 					float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
 					if (distanceClose == 0)
 						distanceClose = tempDist;
 
-					if (tempDist < 600 && distanceClose >= tempDist && unitEnemy->canAttack())
+					if (unitEnemy->isAttacking())
+					{
+						if ((distanceAttacker == 0) || (tempDist < 600 && distanceAttacker >= tempDist))
+						{
+							distanceAttacker = tempDist;
+							unitClose = unitEnemy;
+							attacker = true;
+						}			
+					}
+
+					else if (tempDist < 600 && distanceClose >= tempDist && unitEnemy->canAttack() && unitEnemy->getType() != (BWAPI::UnitTypes::Zerg_Larva ||BWAPI::UnitTypes::Resource_Vespene_Geyser) && !attacker)
 					{
 						distanceClose = tempDist;
 						unitClose = unitEnemy;
 						attack = true;
 					}
-					else if (tempDist < 600 && !attack && distanceClose >= tempDist)
+					else if (tempDist < 600 && !attack && !attacker && distanceClose >= tempDist && unitEnemy->getType() != (BWAPI::UnitTypes::Zerg_Larva || BWAPI::UnitTypes::Resource_Vespene_Geyser))
 					{
 						temp = unitEnemy;
 					}
 				}
-				if (!attack)
+
+				if (!attack && !attacker)
 					unitClose = temp;
 
 				if (unitClose != 0)
@@ -283,75 +281,7 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 					Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
 				}
 			}
-		
-			/*if (unit->getUnitsInRadius(300, !BWAPI::Filter::IsWorker && BWAPI::Filter::IsEnemy && BWAPI::Filter::IsVisible && BWAPI::Filter::CanAttack && BWAPI::Filter::Exists).size() <= sizeUnit)
-			{
-				for (Unit ennemy : *unitToAttack)
-				{
-						float tempDist = (float)ennemy->getPosition().getDistance(unit->getPosition());
-						if (tempDist < 300)
-						{
-							if (unitClose == 0)
-							{
-								distanceClose = tempDist;
-								unitClose = ennemy;
-							}
-							else
-							{
-								if (distanceClose > tempDist)
-								{
-									distanceClose = tempDist;
-									unitClose = ennemy;
-								}
-							}
-						}
-					}
-					bool attack = false;
-					for (Unit unitEnemy : *unitDiscover)
-					{
-						float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
-						if (tempDist < 300 && distanceClose >= tempDist && unitEnemy->canAttack())
-						{
-							distanceClose = tempDist;
-							unitClose = unitEnemy;
-							attack = true;
-						}
-						else if (tempDist < 300 && !attack && distanceClose >= tempDist)
-						{
-							unitClose = unitEnemy;
-						}
-					}
-
-					if (unitClose != 0)
-					{
-						unit->attack(unitClose);
-						Color color(0, 0, 255);
-						Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
-						Broodwar->drawLineMap(unitClose->getPosition(), unit->getPosition(), color);
-					}
-					else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
-					{
-						unit->attack(squad->getPositionObjective());
-						Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
-					}
-
-				}
-				else
-				{
-					Broodwar->drawTextScreen(120, 120, "Run AWAY !");
-					BWAPI::Position posBase;
-					for (Base *base : *baseStruct)
-					{
-						if (base->isStartingLocation && !base->isEnnemyLocation)
-						{
-							posBase = base->position;
-							break;
-						}
-
-					}
-					unit->move(posBase);//ON FUIT A LA BASE
-				}*/
-			}
+		}
 		else erase->insert(unit);
 	}
 }
