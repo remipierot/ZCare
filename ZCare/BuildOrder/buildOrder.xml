@@ -1,0 +1,1438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>4</SupplyCount>
+		<Actions>Zerg_Spawning_Pool</Actions>
+		<UnitsOfType>1</UnitsOfType>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+</root>
