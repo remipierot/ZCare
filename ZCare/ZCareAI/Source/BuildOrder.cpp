@@ -86,7 +86,6 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				}
 			}
 
-
 			//Evolution of buildings
 			if (nextInstruction->isEvolution())
 			{
@@ -140,13 +139,8 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 				if (tileBuildLocation == TilePositions::None)
 				{
-					tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 50);
-
-					Broodwar->sendText("ORIGIN [%d, %d]", targetTilePosition.x, targetTilePosition.y);
-					Broodwar->sendText("TARGET [%d, %d]", tileBuildLocation.x, tileBuildLocation.y);
+					tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 15);
 				}
-
-				Broodwar->drawCircleMap(targetPosition, 10, Colors::Red, true);
 
 				//Specific vespene location
 				if (wantedBuilding == UnitTypes::Zerg_Extractor)
