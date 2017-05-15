@@ -110,20 +110,6 @@ void GameManager::update()
 					}
 				}
 
-				//Then attack buildings able to build threatening units
-				if (!toAttackSet)
-				{
-					for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
-					{
-						if (enemyBuilding->canTrain())
-						{
-							toAttack = enemyBuilding;
-							toAttackSet = true;
-							break;
-						}
-					}
-				}
-
 				//Then attack protoss pylons
 				if (!toAttackSet)
 				{
@@ -153,27 +139,10 @@ void GameManager::update()
 				}
 
 				//Then attack enemy base
-				if (enemyBase != nullptr && !toAttackSet && !ToolBox::IsInCircle(unit->getPosition(), 10, enemyBase->position, 300))
+				if (enemyBase != nullptr && !toAttackSet && !Broodwar->isVisible(enemyBase->tilePosition))
 				{
 					toAttack = enemyBase->position;
 					toAttackSet = true;
-				}
-
-				//Then attack other base
-				if (livingAttackableEnemyUnits.size() == 0 &&
-					notLivingAttackableEnemyUnits.size() == 0 &&
-					toAttack.getPosition().getDistance(unit->getPosition()) < 200)
-				{
-					unit->stop();
-
-					for (Base* b : allBaseLocations)
-					{
-						if (!Broodwar->isVisible(b->tilePosition))
-						{
-							toAttack = b->position;
-							toAttackSet = true;
-						}
-					}
 				}
 
 				unit->attack(toAttack);
