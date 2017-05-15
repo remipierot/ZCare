@@ -51,7 +51,7 @@ void GameManager::update()
 	}
 
 	//MDR BEST STRAT WORLD BOYZ
-	if (ableToFight >= 6)
+	/*if (ableToFight >= 6)
 	{
 		PositionOrUnit toAttack = nullptr;
 		bool toAttackSet = false;
@@ -143,7 +143,7 @@ void GameManager::update()
 				}
 			}
 		}
-	}
+	}*/
 }
 
 // Number of locations to scout (no matter if they already have been or not)

@@ -5,9 +5,6 @@ using namespace BWAPI;
 using namespace Filter;
 
 CombatManager::CombatManager():
-	finalAttackMode(false),
-	defenseMode(true),
-	attackMode(false),
 	unitToAttack(new std::set<Unit>()),
 	unitDiscover(new std::set<const Unit>())
 {
@@ -17,7 +14,6 @@ CombatManager::CombatManager():
 void CombatManager::update()
 {
 	bool isUnderAttack = false;
-	///std::set<Unit> unitToAttack;
 	this->unitToAttack->clear();
 	for (Unit unit : Broodwar->self()->getUnits())
 	{
@@ -29,20 +25,22 @@ void CombatManager::update()
 				this->unitToAttack->insert(unit->getOrderTarget());
 		}	
 	}
-	
-	int ennemyUnitCount = this->unitToAttack->size();
-	if (ennemyUnitCount > 0)
+
+	for (Unit unit: *unitToAttack)
 	{
-		for (Squad* squad : squadList)
+		Broodwar->drawCircleMap(unit->getPosition(), 20, Color(255, 0, 0));
+	}
+	//int ennemyUnitCount = this->unitToAttack->size();
+
+	for (Squad* squad : squadList)
+	{
+		if (squad->getModeSquad() == Squad::defenseMode)
 		{
-			if (squad->defenseMode)
-			{
-				modeDefense(squad);
-			}
-			else if (squad->attackMode)
-			{
-				modeAttack(squad);
-			}
+			modeDefense(squad);
+		}
+		else if (squad->getModeSquad() == Squad::attackMode)
+		{
+			modeAttack(squad);
 		}
 	}
 }
@@ -128,7 +126,7 @@ void CombatManager::modeDefense(Squad* squad)
 			for (Unit ennemy : *unitToAttack)
 			{
 				float tempDist = (float)ennemy->getPosition().getDistance(aerialUnit->getPosition());
-				if (tempDist < 300)
+				if (tempDist < 600)
 				{
 					if (unitClose == 0)
 					{
@@ -203,18 +201,18 @@ void CombatManager::setBase(std::set<Base*> *base)
 void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit> *unitType, Squad *squad)
 {
 	int sizeUnit = unitType->size();
+	Unit unitClose = 0;
+	float distanceClose = 0;
 	for (Unit unit : *unitType)
 	{
 		if (unit->exists())
 		{
-			if (unit->getUnitsInRadius(300).size() <= sizeUnit)
+			if (unitClose == 0)
 			{
-				float distanceClose = 0;
-				Unit unitClose = 0;
 				for (Unit ennemy : *unitToAttack)
 				{
 					float tempDist = (float)ennemy->getPosition().getDistance(unit->getPosition());
-					if (tempDist < 300)
+					if (tempDist < 600)
 					{
 						if (unitClose == 0)
 						{
@@ -231,19 +229,27 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 						}
 					}
 				}
-
+				bool attack = false;
+				Unit temp = 0;
 				for (Unit unitEnemy : *unitDiscover)
 				{
 					float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
-					if (tempDist < 300 && distanceClose > tempDist)
+					if (distanceClose == 0)
+						distanceClose = tempDist;
+
+					if (tempDist < 600 && distanceClose >= tempDist && unitEnemy->canAttack())
 					{
-						if (unitEnemy->canAttack() || unitClose == 0)
-						{
-							distanceClose = tempDist;
-							unitClose = unitEnemy;
-						}
+						distanceClose = tempDist;
+						unitClose = unitEnemy;
+						attack = true;
+					}
+					else if (tempDist < 600 && !attack && distanceClose >= tempDist)
+					{
+						temp = unitEnemy;
 					}
 				}
+				if (!attack)
+					unitClose = temp;
 
 				if (unitClose != 0)
 				{
@@ -252,25 +258,100 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 					Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
 					Broodwar->drawLineMap(unitClose->getPosition(), unit->getPosition(), color);
 				}
-				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y !=0)
+				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
+				{
 					unit->attack(squad->getPositionObjective());
+					Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
+				}
 			}
+			else if (!unitClose->exists() && (float)unitClose->getPosition().getDistance(unit->getPosition()) > 600)
+			{
+				unitClose = 0;
+			}	
 			else
 			{
-				BWAPI::Position posBase;
-				for (Base *base : *baseStruct)
+				if (unitClose != 0)
 				{
-					if (base->isStartingLocation && !base->isEnnemyLocation)
-					{
-						posBase = base->position;
-						break;
-					}
-						
+					unit->attack(unitClose);
+					Color color(0, 0, 255);
+					Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
+					Broodwar->drawLineMap(unitClose->getPosition(), unit->getPosition(), color);
 				}
-				unit->move(posBase);//ON FUIT A LA BASE
+				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
+				{
+					unit->attack(squad->getPositionObjective());
+					Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
+				}
 			}
+		
+			/*if (unit->getUnitsInRadius(300, !BWAPI::Filter::IsWorker && BWAPI::Filter::IsEnemy && BWAPI::Filter::IsVisible && BWAPI::Filter::CanAttack && BWAPI::Filter::Exists).size() <= sizeUnit)
+			{
+				for (Unit ennemy : *unitToAttack)
+				{
+						float tempDist = (float)ennemy->getPosition().getDistance(unit->getPosition());
+						if (tempDist < 300)
+						{
+							if (unitClose == 0)
+							{
+								distanceClose = tempDist;
+								unitClose = ennemy;
+							}
+							else
+							{
+								if (distanceClose > tempDist)
+								{
+									distanceClose = tempDist;
+									unitClose = ennemy;
+								}
+							}
+						}
+					}
+					bool attack = false;
+					for (Unit unitEnemy : *unitDiscover)
+					{
+						float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
+						if (tempDist < 300 && distanceClose >= tempDist && unitEnemy->canAttack())
+						{
+							distanceClose = tempDist;
+							unitClose = unitEnemy;
+							attack = true;
+						}
+						else if (tempDist < 300 && !attack && distanceClose >= tempDist)
+						{
+							unitClose = unitEnemy;
+						}
+					}
 
-		}
+					if (unitClose != 0)
+					{
+						unit->attack(unitClose);
+						Color color(0, 0, 255);
+						Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
+						Broodwar->drawLineMap(unitClose->getPosition(), unit->getPosition(), color);
+					}
+					else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
+					{
+						unit->attack(squad->getPositionObjective());
+						Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
+					}
+
+				}
+				else
+				{
+					Broodwar->drawTextScreen(120, 120, "Run AWAY !");
+					BWAPI::Position posBase;
+					for (Base *base : *baseStruct)
+					{
+						if (base->isStartingLocation && !base->isEnnemyLocation)
+						{
+							posBase = base->position;
+							break;
+						}
+
+					}
+					unit->move(posBase);//ON FUIT A LA BASE
+				}*/
+			}
 		else erase->insert(unit);
 	}
 }

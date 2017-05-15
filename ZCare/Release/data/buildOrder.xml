@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+	<Instruction1>
+		<Type>NB_WORKERS</Type>
+		<WorkerCount>9</WorkerCount>
+		<Actions>Zerg_Overlord</Actions>
+	</Instruction1>
+
+	<Instruction2>
+		<Type>NB_WORKERS</Type>
+		<WorkerCount>11</WorkerCount>
+		<Actions>Zerg_Hatchery</Actions>
+	</Instruction2>
+
+	<Instruction3>
+		<Type>NB_WORKERS</Type>
+		<WorkerCount>12</WorkerCount>
+		<Actions>Zerg_Spawning_Pool</Actions>
+	</Instruction3>
+	
+</root>
