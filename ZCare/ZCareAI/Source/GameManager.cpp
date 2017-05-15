@@ -38,6 +38,7 @@ void GameManager::update()
 		if (b->isEnnemyLocation)
 		{
 			enemyBase = b;
+			break;
 		}
 	}
 
@@ -59,9 +60,8 @@ void GameManager::update()
 		for (Unit unit : Broodwar->self()->getUnits())
 		{
 			UnitType type = unit->getType();
-			bool threat = false;
 
-			if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
+			if (!type.isWorker() && !type.isBuilding())
 			{
 				const Unitset& livingAttackableEnemyUnits =
 					unit->getUnitsInRadius(
@@ -89,58 +89,94 @@ void GameManager::update()
 					}
 				}
 
-				if (unit->canAttack())
+				//Then attack units that attack us
+				if (unit->isUnderAttack() && !toAttackSet)
 				{
-					if (unit->isUnderAttack() && !toAttackSet)
+					toAttack = unit->getOrderTarget();
+					toAttackSet = true;
+				}
+
+				//Then attack workers
+				if (!toAttackSet)
+				{
+					for (Unit enemy : livingAttackableEnemyUnits)
 					{
-						toAttack = unit->getOrderTarget();
-						toAttackSet = true;
-					}
-					else if (livingAttackableEnemyUnits.size() > 0 && !toAttackSet)
-					{
-						for (Unit enemy : livingAttackableEnemyUnits)
+						if (enemy->getType().isWorker())
 						{
 							toAttack = enemy;
 							toAttackSet = true;
 							break;
 						}
 					}
-					else if (notLivingAttackableEnemyUnits.size() > 0 && !toAttackSet)
+				}
+
+				//Then attack buildings able to build threatening units
+				if (!toAttackSet)
+				{
+					for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
 					{
-						for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
+						if (enemyBuilding->canTrain())
 						{
 							toAttack = enemyBuilding;
 							toAttackSet = true;
 							break;
 						}
 					}
-					else
+				}
+
+				//Then attack protoss pylons
+				if (!toAttackSet)
+				{
+					for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
 					{
-						if (enemyBase != nullptr && !toAttackSet)
+						if (enemyBuilding->getType() == UnitTypes::Protoss_Pylon)
 						{
-							toAttack = enemyBase->position;
+							toAttack = enemyBuilding;
 							toAttackSet = true;
-						}
-
-						if (livingAttackableEnemyUnits.size() == 0 && 
-							notLivingAttackableEnemyUnits.size() == 0 && 
-							toAttack.getPosition().getDistance(unit->getPosition()) < 200)
-						{
-							unit->stop();
-
-							for (Base* b : allBaseLocations)
-							{
-								if (!Broodwar->isVisible(b->tilePosition))
-								{
-									toAttack = b->position;
-									toAttackSet = true;
-								}
-							}
+							break;
 						}
 					}
-
-					unit->attack(toAttack);
 				}
+
+				//Then attack any building
+				if (!toAttackSet)
+				{
+					for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
+					{
+						if (enemyBuilding->getType() != UnitTypes::Protoss_Pylon && !enemyBuilding->canTrain())
+						{
+							toAttack = enemyBuilding;
+							toAttackSet = true;
+							break;
+						}
+					}
+				}
+
+				//Then attack enemy base
+				if (enemyBase != nullptr && !toAttackSet && !ToolBox::IsInCircle(unit->getPosition(), 10, enemyBase->position, 300))
+				{
+					toAttack = enemyBase->position;
+					toAttackSet = true;
+				}
+
+				//Then attack other base
+				if (livingAttackableEnemyUnits.size() == 0 &&
+					notLivingAttackableEnemyUnits.size() == 0 &&
+					toAttack.getPosition().getDistance(unit->getPosition()) < 200)
+				{
+					unit->stop();
+
+					for (Base* b : allBaseLocations)
+					{
+						if (!Broodwar->isVisible(b->tilePosition))
+						{
+							toAttack = b->position;
+							toAttackSet = true;
+						}
+					}
+				}
+
+				unit->attack(toAttack);
 			}
 		}
 	}*/
