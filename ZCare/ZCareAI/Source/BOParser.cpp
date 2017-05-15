@@ -44,6 +44,9 @@ BOParser::BOParser(BuildOrder *buildOrder)
 				if (nomElement == "Type")
 				{
 					tmp = new BOInstruction(BOInstruction::strToType(text));
+					tmp->setResearch(TechTypes::None);
+					tmp->setUpgrade(UpgradeTypes::None);
+					tmp->setActions(UnitTypes::None, 0);
 				}
 				else if (nomElement == "SupplyCount")
 				{
@@ -60,6 +63,14 @@ BOParser::BOParser(BuildOrder *buildOrder)
 				else if (nomElement == "Location")
 				{
 					tmp->setBaseIndex(atoi(text));
+				}
+				else if (nomElement == "Research")
+				{
+					tmp->setResearch(TechType::getType(text));
+				}
+				else if (nomElement == "Upgrade")
+				{
+					tmp->setUpgrade(UpgradeType::getType(text));
 				}
 			}
 

@@ -43,6 +43,14 @@ class ToolBox
 			const BWAPI::UnitType unit2
 		);
 
+		static BWAPI::UnitType getUnitAbleToResearch(
+			BWAPI::TechType researchToMake
+		);
+
+		static BWAPI::UnitType getUnitAbleToUpgrade(
+			BWAPI::UpgradeType upgradeToMake
+		);
+
 		static const char YELLOW_CHAR = '\x03';
 		static const char WHITE_CHAR = '\x04';
 		static const char GREY_CHAR = '\x05';

@@ -35,6 +35,14 @@ public:
 		int newNbUnitsToBuild = 1
 	);
 
+	void setResearch(
+		BWAPI::TechType newResearchToMake
+	);
+
+	void setUpgrade(
+		BWAPI::UpgradeType newUpgradeToMake
+	);
+
 	void setNbUnitsOfType(
 		int newNbUnitsOfType
 	);
@@ -63,6 +71,10 @@ public:
 
 	BWAPI::TilePosition getBuildLocation();
 
+	BWAPI::TechType getResearchToMake();
+
+	BWAPI::UpgradeType getUpgradeToMake();
+
 	int getBaseIndex();
 
 	void decrementNbUnits();
@@ -78,6 +90,10 @@ public:
 	void complete();
 
 	bool isCompleted();
+
+	bool isResearch();
+
+	bool isUpgrade();
 
 private:
 	InstructionType type;
@@ -95,6 +111,8 @@ private:
 	int baseIndex;
 	BWAPI::UnitType unitToBuild;
 	BWAPI::TilePosition buildLocation;
+	BWAPI::TechType researchToMake;
+	BWAPI::UpgradeType upgradeToMake;
 
 	// Additional infos
 	int nbUnitsOfType;

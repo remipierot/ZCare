@@ -81,9 +81,9 @@ bool ProductionManager::isUnitBeingCreated()
 }
 
 // Return the closest unit of the given type using the base at the given index
-Unit ProductionManager::getClosestUnit(int resourceDepotIndex, BWAPI::UnitType unitType)
+Unit ProductionManager::getClosestUnit(int resourceDepotIndex, UnitType unitType, int distance)
 {
-	return getResourceDepot(resourceDepotIndex)->getClosestUnit(GetType == unitType && Exists, 256);
+	return getResourceDepot(resourceDepotIndex)->getClosestUnit(GetType == unitType && Exists, distance);
 }
 
 // Return the quantity of mineral possessed by the player
@@ -99,9 +99,9 @@ int ProductionManager::getVespeneCount()
 }
 
 // Return the closest buildable position for a given building using the position given
-TilePosition ProductionManager::getClosestBuildablePosition(UnitType buildingType, TilePosition wantedPosition)
+TilePosition ProductionManager::getClosestBuildablePosition(UnitType buildingType, TilePosition wantedPosition, int distance)
 {
-	return Broodwar->getBuildLocation(buildingType, wantedPosition);
+	return Broodwar->getBuildLocation(buildingType, wantedPosition, distance);
 }
 
 bool ProductionManager::hasUnitRequirements(UnitType unit)
@@ -223,4 +223,75 @@ Base* ProductionManager::getExpansionOrderedByDistance(int index)
 	}
 
 	return expansion;
+}
+
+Unit ProductionManager::getBuildingOfType(UnitType wantedBuilding)
+{
+	Unit building = nullptr;
+	UnitType alternateBuilding0 = UnitTypes::None;
+	UnitType alternateBuilding1 = UnitTypes::None;
+
+	if (wantedBuilding == UnitTypes::Zerg_Hatchery)
+	{
+		alternateBuilding0 = UnitTypes::Zerg_Lair;
+		alternateBuilding1 = UnitTypes::Zerg_Hive;
+	}
+	else if (wantedBuilding == UnitTypes::Zerg_Lair)
+	{
+		alternateBuilding0 = UnitTypes::Zerg_Hive;
+	}
+	else if (wantedBuilding == UnitTypes::Zerg_Spire)
+	{
+		alternateBuilding0 = UnitTypes::Zerg_Greater_Spire;
+	}
+
+	for (int i = 0; i < resourceDepots.size(); i++)
+	{
+		if (wantedBuilding == UnitTypes::Zerg_Hatchery)
+		{
+			building = getResourceDepot(i);
+		}
+
+		if (building == nullptr)
+		{
+			building = getClosestUnit(i, wantedBuilding);
+
+			if (building == nullptr && alternateBuilding0 != UnitTypes::None)
+			{
+				building = getClosestUnit(i, alternateBuilding0);
+
+				if (building == nullptr && alternateBuilding1 != UnitTypes::None)
+				{
+					building = getClosestUnit(i, alternateBuilding1);
+				}
+			}
+		}
+
+		if (building != nullptr)
+		{
+			break;
+		}
+	}
+
+	return building;
+}
+
+bool ProductionManager::isResearching(TechType wantedResearch)
+{
+	return Broodwar->self()->isResearching(wantedResearch);
+}
+
+bool ProductionManager::isUpgrading(UpgradeType wantedUpgrade)
+{
+	return Broodwar->self()->isUpgrading(wantedUpgrade);
+}
+
+bool ProductionManager::hasResearched(TechType wantedResearch)
+{
+	return Broodwar->self()->hasResearched(wantedResearch);
+}
+
+bool ProductionManager::hasUpgraded(UpgradeType wantedUpgrade)
+{
+	return Broodwar->self()->getUpgradeLevel(wantedUpgrade) == Broodwar->self()->getMaxUpgradeLevel(wantedUpgrade);
 }

@@ -98,3 +98,91 @@ bool ToolBox::areUnitsLinkedByEvolution(const UnitType unit1, const UnitType uni
 
 	return linkedByEvolution;
 }
+
+UnitType ToolBox::getUnitAbleToResearch(TechType researchToMake)
+{
+	UnitType unit = UnitTypes::None;
+
+	bool hatchery = false;
+	bool lair = false;
+	bool hive = false;
+	bool hydraliskDen = false;
+	bool queensNest = false;
+	bool defilerMound = false;
+
+	hatchery |= researchToMake == TechTypes::Burrowing;
+	lair |= hatchery;
+	hive |= hatchery;
+
+	hydraliskDen |= researchToMake == TechTypes::Lurker_Aspect;
+
+	queensNest |= researchToMake == TechTypes::Spawn_Broodlings;
+	queensNest |= researchToMake == TechTypes::Ensnare;
+
+	defilerMound |= researchToMake == TechTypes::Plague;
+	defilerMound |= researchToMake == TechTypes::Consume;
+
+	unit = 
+		(hatchery || lair || hive)	? UnitTypes::Zerg_Hatchery		:
+		(hydraliskDen)				? UnitTypes::Zerg_Hydralisk_Den :
+		(queensNest)				? UnitTypes::Zerg_Queens_Nest	:
+		(defilerMound)				? UnitTypes::Zerg_Defiler_Mound :
+		UnitTypes::None;
+
+	return unit;
+}
+
+UnitType ToolBox::getUnitAbleToUpgrade(UpgradeType upgradeToMake)
+{
+	UnitType unit = UnitTypes::None;
+
+	bool lair = false;
+	bool hive = false;
+	bool evolutionChamber = false;
+	bool spawningPool = false;
+	bool hydraliskDen = false;
+	bool queensNest = false;
+	bool spire = false;
+	bool greaterSpire = false;
+	bool defilerMound = false;
+	bool ultraliskCavern = false;
+
+	lair |= upgradeToMake == UpgradeTypes::Ventral_Sacs;
+	lair |= upgradeToMake == UpgradeTypes::Antennae;
+	lair |= upgradeToMake == UpgradeTypes::Pneumatized_Carapace;
+	hive |= lair;
+
+	evolutionChamber |= upgradeToMake == UpgradeTypes::Zerg_Melee_Attacks;
+	evolutionChamber |= upgradeToMake == UpgradeTypes::Zerg_Missile_Attacks;
+	evolutionChamber |= upgradeToMake == UpgradeTypes::Zerg_Carapace;
+
+	spawningPool |= upgradeToMake == UpgradeTypes::Metabolic_Boost;
+	spawningPool |= upgradeToMake == UpgradeTypes::Adrenal_Glands;
+
+	hydraliskDen |= upgradeToMake == UpgradeTypes::Muscular_Augments;
+	hydraliskDen |= upgradeToMake == UpgradeTypes::Grooved_Spines;
+
+	queensNest |= upgradeToMake == UpgradeTypes::Gamete_Meiosis;
+
+	spire |= upgradeToMake == UpgradeTypes::Zerg_Flyer_Attacks;
+	spire |= upgradeToMake == UpgradeTypes::Zerg_Flyer_Carapace;
+	greaterSpire |= spire;
+
+	defilerMound |= upgradeToMake == UpgradeTypes::Metasynaptic_Node;
+
+	ultraliskCavern |= upgradeToMake == UpgradeTypes::Anabolic_Synthesis;
+	ultraliskCavern |= upgradeToMake == UpgradeTypes::Chitinous_Plating;
+
+	unit =
+		(lair || hive)			? UnitTypes::Zerg_Lair				:
+		(evolutionChamber)		? UnitTypes::Zerg_Evolution_Chamber :
+		(spawningPool)			? UnitTypes::Zerg_Spawning_Pool		:
+		(hydraliskDen)			? UnitTypes::Zerg_Hydralisk_Den		:
+		(queensNest)			? UnitTypes::Zerg_Queens_Nest		:
+		(spire || greaterSpire) ? UnitTypes::Zerg_Spire				:
+		(defilerMound)			? UnitTypes::Zerg_Defiler_Mound		:
+		(ultraliskCavern)		? UnitTypes::Zerg_Ultralisk_Cavern	:
+		UnitTypes::None;
+
+	return unit;
+}

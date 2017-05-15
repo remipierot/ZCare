@@ -90,8 +90,39 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			{
 				pm->getResourceDepot(nextInstruction->getBaseIndex())->morph(UnitTypes::Zerg_Lair);
 			}
+
+			//If nextInstruction is about making a research
+			if (nextInstruction->isResearch())
+			{
+				UnitType buildingType = ToolBox::getUnitAbleToResearch(nextInstruction->getResearchToMake());
+
+				if (buildingType != UnitTypes::None)
+				{
+					Unit building = pm->getBuildingOfType(buildingType);
+
+					if (building != nullptr)
+					{
+						building->research(nextInstruction->getResearchToMake());
+					}
+				}
+			}
+			//If nextInstruction is about making an upgrade
+			else if (nextInstruction->isUpgrade())
+			{
+				UnitType buildingType = ToolBox::getUnitAbleToUpgrade(nextInstruction->getUpgradeToMake());
+
+				if (buildingType != UnitTypes::None)
+				{
+					Unit building = pm->getBuildingOfType(buildingType);
+
+					if (building != nullptr)
+					{
+						building->upgrade(nextInstruction->getUpgradeToMake());
+					}
+				}
+			}
 			//If nextInstruction is about making a building
-			if (nextInstruction->getUnitToBuild().isBuilding())
+			else if (nextInstruction->getUnitToBuild().isBuilding())
 			{
 				if (builder == nullptr)
 				{
@@ -100,7 +131,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 				if (tileBuildLocation == TilePositions::Invalid)
 				{
-					tileBuildLocation = pm->getClosestBuildablePosition(unitToBuild, targetTilePosition);
+					tileBuildLocation = pm->getClosestBuildablePosition(unitToBuild, targetTilePosition, 50);
 				}
 
 				//Specific vespene location
@@ -175,7 +206,15 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			}
 		}
 
-		if (nextInstruction->getUnitToBuild().isBuilding())
+		if (nextInstruction->isResearch())
+		{
+			executed = pm->isResearching(nextInstruction->getResearchToMake()) || pm->hasResearched(nextInstruction->getResearchToMake());
+		}
+		else if (nextInstruction->isUpgrade())
+		{
+			executed = pm->isUpgrading(nextInstruction->getUpgradeToMake()) || pm->hasUpgraded(nextInstruction->getUpgradeToMake());
+		}
+		else if (nextInstruction->getUnitToBuild().isBuilding())
 		{
 			executed = pm->isAlreadyBuilt(unitToBuild, false, nextInstruction->getNbUnitsOfType());
 		}
@@ -203,6 +242,7 @@ void BuildOrder::drawDebug()
 	BOInstruction* toPrint = NULL;
 	char color = ' ';
 	string baseLocationInfo = "";
+	string unitInfo = "";
 
 	Broodwar->drawTextScreen(5, 20, "Build Order data");
 
@@ -233,13 +273,20 @@ void BuildOrder::drawDebug()
 			else
 				baseLocationInfo = '@' + to_string(baseIndex) + "TH EXP";
 
+			if (toPrint->isResearch())
+				unitInfo = toPrint->getResearchToMake().c_str();
+			else if (toPrint->isUpgrade())
+				unitInfo = toPrint->getUpgradeToMake().c_str();
+			else
+				unitInfo = toPrint->getUnitToBuild().c_str();
+
 			Broodwar->drawTextScreen(
 				10,
 				20 + (i - (currentInstruction + 1) + 1) * 10,
 				"%c %d - %s %s",
 				color,
 				toPrint->getSupplyCount(),
-				toPrint->getUnitToBuild().c_str(),
+				unitInfo.c_str(),
 				baseLocationInfo.c_str()
 			);
 		}

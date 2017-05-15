@@ -5,6 +5,7 @@ using namespace BWAPI;
 BOInstruction::BOInstruction()
 {
 	type = END_OF_BO;
+	researchToMake = TechTypes::None;
 }
 
 BOInstruction::BOInstruction(InstructionType newType)
@@ -12,6 +13,8 @@ BOInstruction::BOInstruction(InstructionType newType)
 	type = newType;
 	completed = (newType == END_OF_BO) ? true : false;
 	baseIndex = 0;
+	researchToMake = TechTypes::None;
+	upgradeToMake = UpgradeTypes::None;
 }
 
 void BOInstruction::setSupplyCount(int newSupplyCount)
@@ -39,6 +42,16 @@ void BOInstruction::setActions(UnitType newUnitToBuild, int newNbUnitsToBuild)
 {
 	unitToBuild = newUnitToBuild;
 	nbUnitsToBuild = newNbUnitsToBuild;
+}
+
+void BOInstruction::setResearch(TechType newResearchToMake)
+{
+	researchToMake = newResearchToMake;
+}
+
+void BOInstruction::setUpgrade(UpgradeType newUpgradeToMake)
+{
+	upgradeToMake = newUpgradeToMake;
 }
 
 void BOInstruction::setBaseIndex(int baseLocationId)
@@ -89,6 +102,16 @@ UnitType BOInstruction::getUnitToBuild()
 TilePosition BOInstruction::getBuildLocation()
 {
 	return buildLocation;
+}
+
+TechType BOInstruction::getResearchToMake()
+{
+	return researchToMake;
+}
+
+UpgradeType BOInstruction::getUpgradeToMake()
+{
+	return upgradeToMake;
 }
 
 int BOInstruction::getBaseIndex()
@@ -168,4 +191,14 @@ void BOInstruction::setNbUnitsOfType(int newNbUnitsOfType)
 int BOInstruction::getNbUnitsOfType()
 {
 	return nbUnitsOfType;
+}
+
+bool BOInstruction::isResearch()
+{
+	return researchToMake != TechTypes::None;
+}
+
+bool BOInstruction::isUpgrade()
+{
+	return upgradeToMake != UpgradeTypes::None;
 }

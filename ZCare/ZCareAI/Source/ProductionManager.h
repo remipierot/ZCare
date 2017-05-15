@@ -47,7 +47,8 @@ public:
 	// Return the closest unit of the given type using the base at the given index
 	BWAPI::Unit getClosestUnit(
 		int resourceDepotIndex, 
-		BWAPI::UnitType unitType
+		BWAPI::UnitType unitType,
+		int distance = 256
 	);
 
 	// Return the quantity of mineral possessed by the player
@@ -59,7 +60,8 @@ public:
 	// Return the closest buildable position for a given building using the position given
 	BWAPI::TilePosition getClosestBuildablePosition(
 		BWAPI::UnitType buildingType, 
-		BWAPI::TilePosition wantedPosition
+		BWAPI::TilePosition wantedPosition,
+		int distance = 64
 	);
 
 	bool hasUnitRequirements(
@@ -86,6 +88,26 @@ public:
 
 	Base* getExpansionOrderedByDistance(
 		int index
+	);
+
+	BWAPI::Unit getBuildingOfType(
+		BWAPI::UnitType wantedBuilding
+	);
+
+	bool isResearching(
+		BWAPI::TechType wantedResearch
+	);
+
+	bool isUpgrading(
+		BWAPI::UpgradeType wantedUpgrade
+	);
+
+	bool hasResearched(
+		BWAPI::TechType wantedResearch
+	);
+
+	bool hasUpgraded(
+		BWAPI::UpgradeType wantedUpgrade
 	);
 
 
