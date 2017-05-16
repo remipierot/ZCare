@@ -6,9 +6,6 @@ using namespace Filter;
 
 void ZCareAI::onStart()
 {
-	// Hello World!
-	Broodwar->sendText("Préparez vous à mourir!");
-
 	// Enable the UserInput flag, which allows us to control the bot and type messages.
 	Broodwar->enableFlag(Flag::UserInput);
 
@@ -60,16 +57,6 @@ void ZCareAI::onFrame()
 	}
 
 	_CombatManager->setUnitDiscover(&unitShow);
-
-	for (Unit uni : unitShow)
-	{
-	//	Broodwar->drawCircleMap(uni->getPosition(),20, Color(0, 255, 0), false);
-	}
-	/*for (Unit building : buildingShow)
-	{
-		Broodwar->drawCircleMap(building->getPosition(), 10, Color(0, 0, 60), true);
-	}*/
-	
 }
 
 void ZCareAI::onSendText(std::string text)
@@ -214,7 +201,6 @@ void ZCareAI::onUnitComplete(BWAPI::Unit unit)
 			squad = _CombatManager->findSquad(currentSquad);
 			if (squad != 0)
 			{
-				//Broodwar->drawTextScreen(10, 60, "Squad %d : %d", currentSquad, _CombatManager->findSquad(currentSquad)->numberUnit());
 				if (squad->insertUnit(unit))
 				{
 					insertion = true;

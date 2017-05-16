@@ -16,7 +16,7 @@ public:
 
 	bool executeNextInstruction(WorkerManager* wm, ProductionManager* pm);
 
-	void drawDebug();
+	int drawDebug(int startinX = 10, int startingY = 40);
 
 private:
 	std::vector<BOInstruction*> instructionSet;

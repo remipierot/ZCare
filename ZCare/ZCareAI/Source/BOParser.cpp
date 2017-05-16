@@ -14,17 +14,12 @@ BOParser::BOParser(BuildOrder *buildOrder)
 	bo = buildOrder;
 	const UnitType::set& allUnitTypes = UnitTypes::allUnitTypes();
 
-	Broodwar->sendText("Trying to load BO");
-
 	char result[MAX_PATH];
 	GetModuleFileName(NULL, result, MAX_PATH);
-	Broodwar->sendText("DLL running at : %s", result);
 
 	tinyxml2::XMLDocument doc;
 	if (doc.LoadFile("bwapi-data/data/buildOrder.xml") != tinyxml2::XML_ERROR_FILE_NOT_FOUND)
 	{
-		Broodwar->sendText("BO loading");
-		std::cout << "Charge" << std::endl;
 		tinyxml2::XMLElement* root = doc.RootElement();
 		tinyxml2::XMLElement* element = root->FirstChildElement();
 		tinyxml2::XMLElement* sauvegarde = root->LastChildElement();
@@ -78,7 +73,6 @@ BOParser::BOParser(BuildOrder *buildOrder)
 		}
 
 		bo->reset();
-		Broodwar->sendText("%d instructions loaded", nbInstruction);
 	}
 	else
 	{

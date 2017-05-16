@@ -234,72 +234,89 @@ void GameManager::initBO()
 
 void GameManager::drawDebug()
 {
-	_BuildOrder.drawDebug();
+	//First we handle textual debug on screen space
+	int x = 460;
+	int y = 20;
+	char textColor = ' ';
 
-	Broodwar->drawTextScreen(200, 20, "FPS: %d", Broodwar->getFPS());
-	Broodwar->drawTextScreen(200, 30, "Average FPS: %f", Broodwar->getAverageFPS());
+	//FPS debug info
+	Broodwar->drawTextScreen(x + 5, y, "%c FPS", ToolBox::WHITE_CHAR);
+	y += 10;
+	Broodwar->drawTextScreen(x + 10, y, "%c %d", ToolBox::BRIGHT_GREEN_CHAR, Broodwar->getFPS());
+	y += 20;
 
-	Broodwar->drawTextScreen(500, 20, "Bases data");
+	//Build order debug info
+	y = _BuildOrder.drawDebug(x + 5, y);
+	y += 20;
 
-	Position mainBase = _ProductionManager.getResourceDepot(0)->getPosition();
-
-	//Resources and bases debug
+	//Bases debug info
+	Broodwar->drawTextScreen(x + 5, y, "%c BASES", ToolBox::WHITE_CHAR);
+	y += 10;
+	Broodwar->drawTextScreen(x + 10, y, "%c ID - POS - DIST - CHECK", ToolBox::WHITE_CHAR);
+	y += 10;
 	for (auto &base : allBaseLocations)
 	{
-		Color color(0, 0, 0);
-		char textColor = ' ';
-
-		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR : 
-					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
-					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
-					ToolBox::WHITE_CHAR;
-
-		color = (base->isEnnemyLocation) ? Colors::Red :
-				(base->isStartingLocation) ? Colors::Yellow :
-				(base->isExpansionInteresting) ? Colors::Green :
-				Colors::White;
-
-		string s = to_string(base->idBase);
-		char const *pchar = s.c_str();
-		Broodwar->drawTextMap(base->position.x - 23, base->position.y - 35, "%c %s %d", textColor, "Base", base->idBase);
-		Broodwar->drawCircleMap(base->position, 20, color, true);
-
-		for (Resource* posMineral : base->mineralFields)
-		{
-			Position &positionMineral = posMineral->resourceUnit->getPosition();
-			Broodwar->drawText(CoordinateType::Map, positionMineral.x, positionMineral.y, "%c %s", textColor, pchar);
-		}
-
-		if (base->gazField != 0)
-		{
-			Resource* posGaz = base->gazField;
-			Position positionGaz = posGaz->resourceUnit->getPosition();
-			Broodwar->drawText(CoordinateType::Map, positionGaz.x - 5, positionGaz.y, "%c %s", textColor, "Vespene");
-		}
+		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR :
+			(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+			(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+			ToolBox::GREY_CHAR;
 
 		Broodwar->drawTextScreen(
-			505,
-			20 + base->idBase * 10,
-			"%c %d - [%d, %d] - %d",
+			x + 15,
+			y,
+			"%c %d - [%d, %d] - %d - %d",
 			textColor,
 			base->idBase,
 			base->position.x,
 			base->position.y,
-			base->distanceToMainBase
-		);
-
-		Broodwar->drawTextScreen(
-			505,
-			20 + allBaseLocations.size() * 10 + base->idBase * 10 + 10,
-			"%c %d - CHECK - %d",
-			textColor,
-			base->idBase,
+			base->distanceToMainBase,
 			base->lastTimeChecked
 		);
 
+		y += 10;
+	}
+
+	//Then we handle textual and visual debug on game space
+	Position mainBase = _ProductionManager.getResourceDepot(0)->getPosition();
+	for (auto &base : allBaseLocations)
+	{
+		Color drawColor(0, 0, 0);
+
+		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR : 
+					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+					ToolBox::GREY_CHAR;
+
+		drawColor = (base->isEnnemyLocation) ? Colors::Red :
+					(base->isStartingLocation) ? Colors::Yellow :
+					(base->isExpansionInteresting) ? Colors::Green :
+					Colors::Grey;
+
+		string s = to_string(base->idBase);
+		char const *pchar = s.c_str();
+
+		//Draw circle + text with idBase to locate the base in game
+		Broodwar->drawTextMap(base->position.x - 23, base->position.y - 35, "%c %s %d", textColor, "Base", base->idBase);
+		Broodwar->drawCircleMap(base->position, 20, drawColor, true);
+
+		//Draw idBase on each mineral linked to a specific base, only if minerals are visible
+		for (Resource* posMineral : base->mineralFields)
+		{
+			Position &positionMineral = posMineral->resourceUnit->getPosition();
+			Broodwar->drawTextMap(positionMineral.x, positionMineral.y, "%c %s", textColor, pchar);
+		}
+
+		//Write vespene on the vespene geyser linked to a specific base, only if geyser is visible
+		if (base->gazField != 0)
+		{
+			Position positionGaz = base->gazField->resourceUnit->getPosition();
+			Broodwar->drawTextMap(positionGaz.x - 5, positionGaz.y, "%c %s", textColor, "Vespene");
+		}
+
+		//Draw lines between current base and the main one
 		if (base->distanceToMainBase > 200)
 		{
-			Broodwar->drawLineMap(mainBase, base->position, color);
+			Broodwar->drawLineMap(mainBase, base->position, drawColor);
 		}
 	}
 }

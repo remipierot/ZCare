@@ -268,14 +268,15 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 	return executed;
 }
 
-void BuildOrder::drawDebug()
+int BuildOrder::drawDebug(int startingX, int startingY)
 {
 	BOInstruction* toPrint = NULL;
 	char color = ' ';
 	string baseLocationInfo = "";
 	string unitInfo = "";
+	int y = 0;
 
-	Broodwar->drawTextScreen(5, 20, "Build Order data");
+	Broodwar->drawTextScreen(startingX, startingY, "%c BO", ToolBox::WHITE_CHAR);
 
 	for (int i = (currentInstruction + 1); i < (currentInstruction + 6); i++)
 	{
@@ -311,9 +312,11 @@ void BuildOrder::drawDebug()
 			else
 				unitInfo = toPrint->getUnitToBuild().c_str();
 
+			y = startingY + (i - (currentInstruction + 1) + 1) * 10;
+
 			Broodwar->drawTextScreen(
-				10,
-				20 + (i - (currentInstruction + 1) + 1) * 10,
+				startingX + 5,
+				y,
 				"%c %d - %s %s",
 				color,
 				toPrint->getSupplyCount(),
@@ -322,4 +325,6 @@ void BuildOrder::drawDebug()
 			);
 		}
 	}
+
+	return y;
 }
