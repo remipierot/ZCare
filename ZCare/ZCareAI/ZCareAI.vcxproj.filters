@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\BOInstruction.cpp" />
-    <ClCompile Include="Source\BOParser.cpp" />
-    <ClCompile Include="Source\BuildOrder.cpp" />
-    <ClCompile Include="Source\CombatManager.cpp" />
-    <ClCompile Include="Source\GameManager.cpp" />
-    <ClCompile Include="Source\ProductionManager.cpp" />
-    <ClCompile Include="Source\ToolBox.cpp" />
-    <ClCompile Include="Source\WorkerManager.cpp" />
     <ClCompile Include="Source\tinyxml2.cpp">
       <Filter>External</Filter>
     </ClCompile>
@@ -18,30 +10,86 @@
     <ClCompile Include="Source\ZCareAI.cpp">
       <Filter>Final %28DLL%29</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Base.cpp" />
-    <ClCompile Include="Source\Resource.cpp" />
-    <ClCompile Include="Source\Squad.cpp" />
-    <ClCompile Include="Source\ForbiddenPlaces.cpp" />
+    <ClCompile Include="Source\CombatManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProductionManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WorkerManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Base.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BOInstruction.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ForbiddenPlaces.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Squad.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolBox.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BOParser.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BuildOrder.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\BOInstruction.h" />
-    <ClInclude Include="Source\BOParser.h" />
-    <ClInclude Include="Source\BuildOrder.h" />
-    <ClInclude Include="Source\CombatManager.h" />
-    <ClInclude Include="Source\GameManager.h" />
-    <ClInclude Include="Source\ProductionManager.h" />
-    <ClInclude Include="Source\ToolBox.h" />
-    <ClInclude Include="Source\WorkerManager.h" />
     <ClInclude Include="Source\tinyxml2.h">
       <Filter>External</Filter>
     </ClInclude>
     <ClInclude Include="Source\ZCareAI.h">
       <Filter>Final %28DLL%29</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Base.h" />
-    <ClInclude Include="Source\Resource.h" />
-    <ClInclude Include="Source\Squad.h" />
-    <ClInclude Include="Source\ForbiddenPlaces.h" />
+    <ClInclude Include="Source\CombatManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ProductionManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WorkerManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Base.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BOInstruction.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ForbiddenPlaces.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Squad.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolBox.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BOParser.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BuildOrder.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -49,6 +97,12 @@
     </Filter>
     <Filter Include="Final %28DLL%29">
       <UniqueIdentifier>{c17249c3-1c9f-4d7a-bf84-609af59f7e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{d0a1ae54-3207-4466-b0a1-93740ef9a50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{c8610ee8-6d81-4933-b9cb-650a1516e216}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
