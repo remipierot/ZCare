@@ -90,6 +90,8 @@ public:
 		int index
 	);
 
+	Base* getMostNeededExpansionToCheck();
+
 	BWAPI::Unit getBuildingOfType(
 		BWAPI::UnitType wantedBuilding
 	);
@@ -109,7 +111,6 @@ public:
 	bool hasUpgraded(
 		BWAPI::UpgradeType wantedUpgrade
 	);
-
 
 private:
 	std::vector<const BWAPI::Unit> resourceDepots;				// Every base

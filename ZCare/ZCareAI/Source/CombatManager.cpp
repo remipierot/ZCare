@@ -28,10 +28,8 @@ void CombatManager::update()
 
 	for (Unit unit: *unitToAttack)
 	{
-		Broodwar->drawTextMap(unit->getPosition(), " ATTAQUANT");
 		Broodwar->drawCircleMap(unit->getPosition(), 20, Color(255, 0, 0));
 	}
-	//int ennemyUnitCount = this->unitToAttack->size();
 
 	for (Squad* squad : squadList)
 	{
@@ -223,6 +221,7 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 				{
 					if (unitEnemy->getType() != UnitTypes::Resource_Vespene_Geyser &&
 						unitEnemy->getType() != UnitTypes::Zerg_Larva && 
+						unitEnemy->getType() != UnitTypes::Zerg_Egg &&
 						((isGrounded && !unitEnemy->isFlying()) || !isGrounded))
 					{
 						float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
@@ -262,10 +261,21 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 					Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
 					Broodwar->drawLineMap(unitClose->getPosition(), unit->getPosition(), color);
 				}
-				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
+				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0 && !ToolBox::IsInCircle(squad->getPositionObjective(), 100, unit->getPosition(), 10))
 				{
 					unit->attack(squad->getPositionObjective());
 					Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
+				}
+				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
+				{
+					for (Base* b : *baseStruct)
+					{
+						if (b->hasToBeChecked())
+						{
+							squad->setPositionObjective(b->position);
+							break;
+						}
+					}
 				}
 			}
 			else if (!unitClose->exists() && (float)unitClose->getPosition().getDistance(unit->getPosition()) > 600)

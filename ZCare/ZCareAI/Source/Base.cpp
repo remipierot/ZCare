@@ -13,6 +13,7 @@ Base::Base()
 	distanceToMainBase = 0;
 	position = Positions::None;
 	tilePosition = TilePositions::None;
+	lastTimeChecked = 0;
 }
 
 Base::Base(Base* b)
@@ -31,6 +32,7 @@ Base::Base(Base* b)
 	distanceToMainBase = b->distanceToMainBase;
 	position = b->position;
 	tilePosition = b->tilePosition;
+	lastTimeChecked = 0;
 }
 
 void Base::computePosition()
@@ -122,4 +124,9 @@ void Base::printBase()
 		position.y,
 		distanceToMainBase
 	);
+}
+
+bool Base::hasToBeChecked()
+{
+	return (Broodwar->getFrameCount() - lastTimeChecked) > FRAMES_UNTIL_CHECK_BASE;
 }

@@ -30,125 +30,13 @@ void GameManager::update()
 	//Combat Manager update
 	_CombatManager.update();
 
-	int ableToFight = 0;
-	Base* enemyBase = nullptr;
-
 	for (auto& b : allBaseLocations)
 	{
-		if (b->isEnnemyLocation)
+		if (Broodwar->isVisible(b->tilePosition))
 		{
-			enemyBase = b;
-			break;
+			b->lastTimeChecked = Broodwar->getFrameCount();
 		}
 	}
-
-	for (Unit unit : Broodwar->self()->getUnits())
-	{
-		UnitType type = unit->getType();
-		if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
-		{
-			ableToFight++;
-		}
-	}
-
-	//MDR BEST STRAT WORLD BOYZ
-	/*if (ableToFight >= 6)
-	{
-		PositionOrUnit toAttack = nullptr;
-		bool toAttackSet = false;
-
-		for (Unit unit : Broodwar->self()->getUnits())
-		{
-			UnitType type = unit->getType();
-
-			if (!type.isWorker() && !type.isBuilding())
-			{
-				const Unitset& livingAttackableEnemyUnits =
-					unit->getUnitsInRadius(
-					256,
-					IsEnemy && IsVisible && IsDetected && Exists &&
-					CanAttack &&
-					!IsBuilding
-				);
-
-				const Unitset& notLivingAttackableEnemyUnits =
-					unit->getUnitsInRadius(
-					256,
-					IsEnemy && IsVisible && IsDetected && Exists &&
-					IsBuilding
-				);
-
-				//Priority to units that are a threat
-				for (Unit enemy : livingAttackableEnemyUnits)
-				{
-					if (!enemy->getType().isWorker())
-					{
-						toAttack = enemy;
-						toAttackSet = true;
-						break;
-					}
-				}
-
-				//Then attack units that attack us
-				if (unit->isUnderAttack() && !toAttackSet)
-				{
-					toAttack = unit->getOrderTarget();
-					toAttackSet = true;
-				}
-
-				//Then attack workers
-				if (!toAttackSet)
-				{
-					for (Unit enemy : livingAttackableEnemyUnits)
-					{
-						if (enemy->getType().isWorker())
-						{
-							toAttack = enemy;
-							toAttackSet = true;
-							break;
-						}
-					}
-				}
-
-				//Then attack protoss pylons
-				if (!toAttackSet)
-				{
-					for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
-					{
-						if (enemyBuilding->getType() == UnitTypes::Protoss_Pylon)
-						{
-							toAttack = enemyBuilding;
-							toAttackSet = true;
-							break;
-						}
-					}
-				}
-
-				//Then attack any building
-				if (!toAttackSet)
-				{
-					for (Unit enemyBuilding : notLivingAttackableEnemyUnits)
-					{
-						if (enemyBuilding->getType() != UnitTypes::Protoss_Pylon && !enemyBuilding->canTrain())
-						{
-							toAttack = enemyBuilding;
-							toAttackSet = true;
-							break;
-						}
-					}
-				}
-
-				//Then attack enemy base
-				if (enemyBase != nullptr && !toAttackSet && !Broodwar->isVisible(enemyBase->tilePosition))
-				{
-					toAttack = enemyBase->position;
-					toAttackSet = true;
-				}
-
-				unit->attack(toAttack);
-			}
-		}
-	}*/
 }
 
 // Number of locations to scout (no matter if they already have been or not)
@@ -400,6 +288,15 @@ void GameManager::drawDebug()
 			base->distanceToMainBase
 		);
 
+		Broodwar->drawTextScreen(
+			505,
+			20 + allBaseLocations.size() * 10 + base->idBase * 10 + 10,
+			"%c %d - CHECK - %d",
+			textColor,
+			base->idBase,
+			base->lastTimeChecked
+		);
+
 		if (base->distanceToMainBase > 200)
 		{
 			Broodwar->drawLineMap(mainBase, base->position, color);
@@ -410,4 +307,14 @@ void GameManager::drawDebug()
 CombatManager* GameManager::getCombatManager()
 {
 	return &_CombatManager;
+}
+
+ProductionManager* GameManager::getProductionManager()
+{
+	return &_ProductionManager;
+}
+
+set<Base*> GameManager::getAllBases()
+{
+	return allBaseLocations;
 }

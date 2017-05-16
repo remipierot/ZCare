@@ -170,7 +170,6 @@ void ZCareAI::onUnitDestroy(BWAPI::Unit unit)
 
 void ZCareAI::onUnitMorph(BWAPI::Unit unit)
 {
-	
 }
 
 void ZCareAI::onUnitRenegade(BWAPI::Unit unit)

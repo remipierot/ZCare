@@ -40,6 +40,10 @@ class GameManager
 
 		CombatManager* getCombatManager();
 
+		ProductionManager* getProductionManager();
+
+		std::set<Base*> getAllBases();
+
 	private:
 		ScoutManager _ScoutManager;						// Scouting manager
 		WorkerManager _WorkerManager;					// Worker manager

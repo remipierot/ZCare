@@ -232,6 +232,36 @@ Base* ProductionManager::getExpansionOrderedByDistance(int index)
 	return expansion;
 }
 
+Base* ProductionManager::getMostNeededExpansionToCheck()
+{
+	vector<float> sortedBaseTimes;
+	Base* expansion = nullptr;
+
+	//Get frame check of every location
+	for (Base* b : allBaseLocations)
+	{
+		if (b->hasToBeChecked())
+		{
+			sortedBaseTimes.push_back((float)b->lastTimeChecked);
+		}
+	}
+
+	//Sort the list by ascending times
+	sort(sortedBaseTimes.begin(), sortedBaseTimes.end());
+
+	//Get the base that has to be checked the most
+	for (Base* b : allBaseLocations)
+	{
+		if (b->lastTimeChecked == sortedBaseTimes[sortedBaseTimes.size()-1])
+		{
+			expansion = b;
+			break;
+		}
+	}
+
+	return expansion;
+}
+
 Unit ProductionManager::getBuildingOfType(UnitType wantedBuilding)
 {
 	Unit building = nullptr;
