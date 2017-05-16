@@ -159,7 +159,7 @@ void GameManager::fillBases()
 				if (mineral != linkedMineral)
 				{
 					Position linkedMineralPosition = linkedMineral->resourceUnit->getPosition();
-					if (ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 10, linkedMineralPosition.x, linkedMineralPosition.y, 300))
+					if (ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 100, linkedMineralPosition.x, linkedMineralPosition.y, 400))
 					{
 						if (linkedMineral->idParent == -1)
 						{
@@ -193,7 +193,7 @@ void GameManager::fillBases()
 				{
 					Position mineralPosition = mineral->resourceUnit->getPosition();
 
-					if (ToolBox::IsInCircle(geyserPosition.x, geyserPosition.y, 10, mineralPosition.x, mineralPosition.y, 300))
+					if (ToolBox::IsInCircle(geyserPosition.x, geyserPosition.y, 100, mineralPosition.x, mineralPosition.y, 400))
 					{
 						base->gazField = new Resource(gazUnit);
 						expansion = true;
