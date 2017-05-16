@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
+<!-- POOL -->
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>4</SupplyCount>
@@ -8,6 +9,7 @@
 		<Location>0</Location>
 	</Instruction>
 
+<!-- LING_1 -->
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
@@ -15,164 +17,190 @@
 		<Location>0</Location>
 	</Instruction>
 
+<!-- LING_2 -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>4</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- LING_3 -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>5</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- LING_4 -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>6</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- LING_5 -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>7</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- LING_6 -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>8</SupplyCount>
+		<Actions>Zerg_Zergling</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- POP -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>9</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- DRONE -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+<!-- HATCH -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Hatchery</Actions>
+		<UnitsOfType>2</UnitsOfType>
+		<Location>2</Location>
+	</Instruction>
+
+<!-- EXTRACTOR -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Extractor</Actions>
+		<UnitsOfType>1</UnitsOfType>
+		<Location>2</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>3</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
 		<Location>0</Location>
 	</Instruction>
 
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
 	</Instruction>
 
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
 	</Instruction>
 
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
 	</Instruction>
 
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
 	</Instruction>
 
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
 	</Instruction>
 
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
+		<Actions>Zerg_Hatchery</Actions>
+		<UnitsOfType>3</UnitsOfType>
+		<Location>2</Location>
 	</Instruction>
 
 	<Instruction>
 		<Type>SUPPLY_USED</Type>
 		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
-		<Location>0</Location>
-	</Instruction>
-
-	<Instruction>
-		<Type>SUPPLY_USED</Type>
-		<SupplyCount>3</SupplyCount>
-		<Actions>Zerg_Zergling</Actions>
+		<Actions>Zerg_Overlord</Actions>
 		<Location>0</Location>
 	</Instruction>
 
