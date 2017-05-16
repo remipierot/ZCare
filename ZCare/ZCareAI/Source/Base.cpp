@@ -6,7 +6,7 @@ using namespace BWAPI;
 Base::Base()
 {
 	idBase = 0;
-	gazField = 0;
+	geyser = 0;
 	isExpansionInteresting = false;
 	isStartingLocation = false;
 	isEnnemyLocation = false;
@@ -14,13 +14,13 @@ Base::Base()
 	distanceToMainBase = 0;
 	position = Positions::None;
 	tilePosition = TilePositions::None;
-	lastTimeChecked = 0;
+	lastFrameChecked = 0;
 }
 
 Base::Base(Base* b)
 {
 	idBase = b->idBase;
-	gazField = b->gazField;
+	geyser = b->geyser;
 
 	for (Resource* mineral : b->mineralFields)
 	{
@@ -34,9 +34,10 @@ Base::Base(Base* b)
 	distanceToMainBase = b->distanceToMainBase;
 	position = b->position;
 	tilePosition = b->tilePosition;
-	lastTimeChecked = b->lastTimeChecked;
+	lastFrameChecked = b->lastFrameChecked;
 }
 
+// Compute the position based on each resource (minerals + gas)
 void Base::computePosition()
 {
 	if (position == Positions::None)
@@ -46,9 +47,9 @@ void Base::computePosition()
 
 		int resourceCount = 0;
 
-		if (gazField != 0)
+		if (geyser != 0)
 		{
-			tmp = gazField->resourceUnit->getPosition();
+			tmp = geyser->resourceUnit->getPosition();
 			p.x += tmp.x;
 			p.y += tmp.y;
 			resourceCount++;
@@ -69,6 +70,7 @@ void Base::computePosition()
 	}
 }
 
+// Compute the tilePosition based on each resource (minerals + gas)
 void Base::computeTilePosition()
 {
 	if (tilePosition == TilePositions::None)
@@ -78,9 +80,9 @@ void Base::computeTilePosition()
 
 		int resourceCount = 0;
 
-		if (gazField != 0)
+		if (geyser != 0)
 		{
-			tmp = gazField->resourceUnit->getTilePosition();
+			tmp = geyser->resourceUnit->getTilePosition();
 			tp.x += tmp.x;
 			tp.y += tmp.y;
 			resourceCount++;
@@ -101,34 +103,44 @@ void Base::computeTilePosition()
 	}
 }
 
-float Base::getDistanceToUnit(Unit u)
+// Insert a new mineral inside mineralFields
+void Base::insertMineral(Resource* newMineral)
 {
-	return (float)position.getDistance(u->getPosition());
+	mineralFields.insert(newMineral);
 }
 
-void Base::setDistanceToMainBase(Unit u)
+// Store the given geyser as the one linked to the base
+void Base::setGeyser(Resource* newGeyser)
 {
-	distanceToMainBase = (int)getDistanceToUnit(u);
+	geyser = newGeyser;
 }
 
-void Base::printBase()
+// Give the position of the base
+Position Base::getPosition()
 {
-	char textColor = (isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR :
-						(isStartingLocation) ? ToolBox::YELLOW_CHAR :
-						(isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
-						ToolBox::WHITE_CHAR;
-
-	Broodwar->sendText(
-		"%c %d - [%d, %d] - %d",
-		textColor,
-		idBase,
-		position.x,
-		position.y,
-		distanceToMainBase
-	);
+	return position;
 }
 
+// Give the tilePosition of the base
+TilePosition Base::getTilePosition()
+{
+	return tilePosition;
+}
+
+// Give the list of mineralFields
+set<Resource*> Base::getMineralFields()
+{
+	return mineralFields;
+}
+
+// Give the geyser
+Resource* Base::getGeyser()
+{
+	return geyser;
+}
+
+// True if the base has not been checked for a while (exact number set in ToolBox)
 bool Base::hasToBeChecked()
 {
-	return (Broodwar->getFrameCount() - lastTimeChecked) > FRAMES_UNTIL_CHECK_BASE;
+	return (Broodwar->getFrameCount() - lastFrameChecked) > ToolBox::FRAMES_UNTIL_CHECK_BASE;
 }

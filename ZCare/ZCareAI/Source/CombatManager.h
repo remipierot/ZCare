@@ -16,7 +16,7 @@ public:
 	void modeDefense(Squad* squad);
 	void modeAttack(Squad* squad);
 
-	void setUnitDiscover(std::set<const BWAPI::Unit> *unit);
+	void setDiscoveredUnits(std::set<const BWAPI::Unit> *unit);
 
 	void setBase(std::set<Base*> *base);
 	std::set<Base*> *getBase();

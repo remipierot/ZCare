@@ -5,31 +5,49 @@
 
 class Base
 {
-public:
-	Base();
-	Base(Base* b);
+	public:
+		int idBase;						// ID to identify the base
+		bool isExpansionInteresting;	// True if the base has minerals AND gas
+		bool isStartingLocation;		// True if it is one of the starting locations given by BWAPI
+		bool isEnnemyLocation;			// True if it can be an enemy starting location
+		bool isInvalidToGroundUnits;	// True if it can't be reached by grounded units
+		int distanceToMainBase;			// Distance between the base and our starting location
+		int lastFrameChecked;			// Last frame when the base was visible
 
-	int idBase;
-	std::set<Resource*> mineralFields;
-	Resource* gazField;
-	bool isExpansionInteresting;
-	bool isStartingLocation;
-	bool isEnnemyLocation;
-	bool isInvalidToGroundUnits;
-	int distanceToMainBase;
-	BWAPI::Position position;
-	BWAPI::TilePosition tilePosition;
-	int lastTimeChecked;
+		Base();
+		Base(Base* b);
 
-	void computePosition();
-	void computeTilePosition();
-	float getDistanceToUnit(BWAPI::Unit u);
-	void setDistanceToMainBase(BWAPI::Unit u);
-	void printBase();
-	bool hasToBeChecked();
+		// Compute the position based on each resource (minerals + gas)
+		void computePosition();
 
-	static const int BASE_FPS = 15;
-	static const int SEC_UNTIL_CHECK_BASE = 90;
-	static const int FRAMES_UNTIL_CHECK_BASE = BASE_FPS * SEC_UNTIL_CHECK_BASE;
+		// Compute the tilePosition based on each resource (minerals + gas)
+		void computeTilePosition();
+
+		// Insert a new mineral inside mineralFields
+		void insertMineral(Resource* newMineral);
+
+		// Store the given geyser as the one linked to the base
+		void setGeyser(Resource* newGeyser);
+
+		// Give the position of the base
+		BWAPI::Position getPosition();
+
+		// Give the tilePosition of the base
+		BWAPI::TilePosition getTilePosition();
+
+		// Give the list of mineralFields
+		std::set<Resource*> getMineralFields();
+
+		// Give the geyser
+		Resource* getGeyser();
+
+		// True if the base has not been checked for a while (exact number set in ToolBox)
+		bool hasToBeChecked();
+
+	private:
+		std::set<Resource*> mineralFields;	// Every mineral field linked to the base
+		Resource* geyser;					// Geyser linked to the base, can be null
+		BWAPI::Position position;			// Position of the base according to its resources
+		BWAPI::TilePosition tilePosition;	// TilePosition of the base according to its resources
 };
 

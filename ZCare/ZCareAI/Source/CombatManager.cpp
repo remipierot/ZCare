@@ -187,7 +187,7 @@ void CombatManager::modeAttack(Squad* squad)
 	}
 }
 
-void CombatManager::setUnitDiscover(std::set<const Unit> *unit)
+void CombatManager::setDiscoveredUnits(std::set<const Unit> *unit)
 {
 	this->unitDiscover = unit;
 }
@@ -274,16 +274,16 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 
 					for (Base* b : *baseStruct)
 					{
-						if (!b->isInvalidToGroundUnits && b->hasToBeChecked() && currentTarget.getDistance(b->position) < tmpDist)
+						if (!b->isInvalidToGroundUnits && b->hasToBeChecked() && currentTarget.getDistance(b->getPosition()) < tmpDist)
 						{
-							tmpDist = currentTarget.getDistance(b->position);
+							tmpDist = currentTarget.getDistance(b->getPosition());
 							baseToFocusNext = b;
 						}
 					}
 
 					if (baseToFocusNext != nullptr)
 					{
-						squad->setPositionObjective(baseToFocusNext->position);
+						squad->setPositionObjective(baseToFocusNext->getPosition());
 					}
 				}
 			}

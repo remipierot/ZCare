@@ -8,16 +8,10 @@ using namespace Filter;
 // Run the game loop
 void GameManager::update()
 {
-	// Scout logic
-	fillStartingLocations();
-	_ScoutManager.updateLocationsToScout(enemyStartLocations, otherStartLocations);
-	_ScoutManager.updateScouts();
-	_ScoutManager.scout();
-
-	// Worker logic
+	// Update listing of workers
 	_WorkerManager.updateWorkers();
 
-	// Production logic
+	// Update listing of resource depots
 	_ProductionManager.updateResourceDepots();
 
 	// Build order instruction execution
@@ -27,178 +21,25 @@ void GameManager::update()
 	_WorkerManager.sendWorkersToWork();
 	_WorkerManager.callWorkersBack();
 
-	//Combat Manager update
+	// Attacking units management
 	_CombatManager.update();
-	_CombatManager.setUnitDiscover(&visibleEnemyUnits);
+	_CombatManager.setDiscoveredUnits(&visibleEnemyUnits);
 
 	//Bases update
-	for (auto& b : allBaseLocations)
-	{
-		if (Broodwar->isVisible(b->tilePosition))
-		{
-			b->lastTimeChecked = Broodwar->getFrameCount();
-		}
-	}
+	updateBasesFrameCheck();
 }
 
-// Fill all the starting locations data sets
-void GameManager::fillStartingLocations()
-{
-	// Store all starting locations
-	for (const TilePosition tp : Broodwar->getStartLocations())
-	{
-		allStartLocations.insert(ToolBox::ConvertTilePosition(tp, UnitTypes::Special_Start_Location));
-
-		// Store our starting location
-		if (tp == Broodwar->self()->getStartLocation())
-		{
-			if (!ToolBox::IsPositionValid(personalStartLocation))
-			{
-				personalStartLocation = ToolBox::ConvertTilePosition(tp, UnitTypes::Special_Start_Location);
-			}
-		}
-		// Store the other starting locations
-		else
-		{
-			otherStartLocations.insert(ToolBox::ConvertTilePosition(tp, UnitTypes::Special_Start_Location));
-		}
-	}
-
-	// Store enemy starting locations
-	for (const Player& p : Broodwar->enemies())
-	{
-		const TilePosition enemyTilePosition = p->getStartLocation();
-		if (ToolBox::IsTilePositionValid(enemyTilePosition))
-		{
-			const Position enemyPosition = ToolBox::ConvertTilePosition(enemyTilePosition, UnitTypes::Special_Start_Location);
-			enemyStartLocations.insert(enemyPosition);
-		}
-	}
-}
-
-void GameManager::fillBases()
-{
-	bool isInCircle = false;
-	int idBase = 1;
-	Base *base;
-	Unit mainBase = _ProductionManager.getResourceDepot(0);
-
-	//Get every mineral field
-	for (Unit mineral : Broodwar->getStaticMinerals())
-	{
-		const TilePosition mineralsTilePosition = mineral->getTilePosition();
-		if (ToolBox::IsTilePositionValid(mineralsTilePosition))
-		{
-			const Position mineralsPosition = ToolBox::ConvertTilePosition(mineralsTilePosition, UnitTypes::Resource_Mineral_Field);
-			mineralHelper.insert(new Resource(mineral));
-		}
-	}
-
-	//Build bases using the mineral fields
-	for (Resource* mineral : mineralHelper)
-	{
-		if (mineral->idParent == -1)
-		{
-			base = new Base();
-			base->idBase = idBase;
-
-			Position mineralPosition = mineral->resourceUnit->getPosition();
-			base->mineralFields.insert(mineral);
-			mineral->idParent = idBase;
-
-			//Check if mineral is attached to one of the starting locations
-			for (const Position startPos : allStartLocations)
-			{
-				if (!isInCircle && ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 10, startPos.x, startPos.y, 300))
-				{
-					isInCircle = true;
-					break;
-				}
-			}
-
-			base->isStartingLocation = isInCircle;
-			isInCircle = false;
-
-			//Look for linked minerals
-			for (Resource* linkedMineral : mineralHelper)
-			{
-				if (mineral != linkedMineral)
-				{
-					Position linkedMineralPosition = linkedMineral->resourceUnit->getPosition();
-					if (ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 100, linkedMineralPosition.x, linkedMineralPosition.y, 400))
-					{
-						if (linkedMineral->idParent == -1)
-						{
-							linkedMineral->idParent = idBase;
-							base->mineralFields.insert(linkedMineral);
-						}
-					}
-				}
-			}
-
-			idBase++;
-			allBaseLocations.insert(base);
-		}
-	}
-
-	//If a geyser is inside a mineral circle, it's an interesting expansion 
-	for (auto &base : allBaseLocations)
-	{
-		bool expansion = false;
-
-		//Get every geyser
-		for (const Unit &gazUnit : Broodwar->getStaticGeysers())
-		{
-			const TilePosition geyserTilePosition = gazUnit->getTilePosition();
-
-			if (ToolBox::IsTilePositionValid(geyserTilePosition) && !expansion)
-			{
-				const Position geyserPosition = gazUnit->getPosition();
-
-				for (Resource* mineral : base->mineralFields)
-				{
-					Position mineralPosition = mineral->resourceUnit->getPosition();
-
-					if (ToolBox::IsInCircle(geyserPosition.x, geyserPosition.y, 100, mineralPosition.x, mineralPosition.y, 400))
-					{
-						base->gazField = new Resource(gazUnit);
-						expansion = true;
-						break;
-					}
-				}
-				
-				base->isExpansionInteresting = expansion && !base->isStartingLocation;
-			}
-		}
-	}
-
-	//Store positions and tilePositions
-	for (auto &base : allBaseLocations)
-	{
-		base->computePosition();
-		base->computeTilePosition();
-		base->setDistanceToMainBase(mainBase);
-		base->isInvalidToGroundUnits = ForbiddenPlaces::isPositionForbidden(base->position, Broodwar->mapFileName());
-
-		if (base->isStartingLocation && base->distanceToMainBase > 300)
-		{
-			base->isEnnemyLocation = true;
-		}
-	}
-	
-}
-
+// Load the build order
 void GameManager::initBuildOrder()
 {
 	_BOParser = BOParser(&_BuildOrder);
 	_ProductionManager.updateResourceDepots();
-	fillStartingLocations();
 	fillBases();
-	_ScoutManager.init(&_ProductionManager);
-	_ProductionManager.setAllBaseLocations(allBaseLocations);
-	_CombatManager.setBase(&allBaseLocations);
+	_ProductionManager.setAllBaseLocations(allPotentialBases);
+	_CombatManager.setBase(&allPotentialBases);
 }
 
+// Draw the debug of each manager
 void GameManager::drawDebug()
 {
 	//First we handle textual debug on screen space
@@ -221,13 +62,13 @@ void GameManager::drawDebug()
 	y += 10;
 	Broodwar->drawTextScreen(x + 10, y, "%c ID - POS - DIST - CHECK", ToolBox::WHITE_CHAR);
 	y += 10;
-	for (auto &base : allBaseLocations)
+	for (auto &base : allPotentialBases)
 	{
 		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR :
-					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
-					(base->isInvalidToGroundUnits) ? ToolBox::GREY_CHAR :
-					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
-					ToolBox::ORANGE_CHAR;
+			(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+			(base->isInvalidToGroundUnits) ? ToolBox::GREY_CHAR :
+			(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+			ToolBox::ORANGE_CHAR;
 
 		Broodwar->drawTextScreen(
 			x + 15,
@@ -235,76 +76,77 @@ void GameManager::drawDebug()
 			"%c %d - [%d, %d] - %d - %d",
 			textColor,
 			base->idBase,
-			base->position.x,
-			base->position.y,
+			base->getPosition().x,
+			base->getPosition().y,
 			base->distanceToMainBase,
-			base->lastTimeChecked
-		);
+			base->lastFrameChecked
+			);
 
 		y += 10;
 	}
 
 	//Then we handle textual and visual debug on game space
 	Position mainBase = _ProductionManager.getResourceDepot(0)->getPosition();
-	for (auto &base : allBaseLocations)
+	for (auto &base : allPotentialBases)
 	{
 		Color drawColor(0, 0, 0);
 
-		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR : 
-					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
-					(base->isInvalidToGroundUnits) ? ToolBox::GREY_CHAR :
-					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
-					ToolBox::ORANGE_CHAR;
+		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR :
+			(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+			(base->isInvalidToGroundUnits) ? ToolBox::GREY_CHAR :
+			(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+			ToolBox::ORANGE_CHAR;
 
 		drawColor = (base->isEnnemyLocation) ? Colors::Red :
-					(base->isStartingLocation) ? Colors::Yellow :
-					(base->isInvalidToGroundUnits) ? Colors::Grey :
-					(base->isExpansionInteresting) ? Colors::Green :
-					Colors::Orange;
+			(base->isStartingLocation) ? Colors::Yellow :
+			(base->isInvalidToGroundUnits) ? Colors::Grey :
+			(base->isExpansionInteresting) ? Colors::Green :
+			Colors::Orange;
 
 		string s = to_string(base->idBase);
 		char const *pchar = s.c_str();
 		string baseLegend = (base->isEnnemyLocation) ? " [ENEMY]" :
-							(base->isStartingLocation) ? " [START]" :
-							(base->isInvalidToGroundUnits) ? " [UNREACHABLE]" :
-							(base->isExpansionInteresting) ? " [HAS GAS]" :
-							" [NO GAS]";
+			(base->isStartingLocation) ? " [START]" :
+			(base->isInvalidToGroundUnits) ? " [UNREACHABLE]" :
+			(base->isExpansionInteresting) ? " [HAS GAS]" :
+			" [NO GAS]";
 
-		//Draw circle + text with idBase to locate the base in game
-		Broodwar->drawTextMap(base->position.x - 23, base->position.y - 45, "%c %s %d", textColor, "Base", base->idBase);
-		Broodwar->drawTextMap(base->position.x - 28, base->position.y - 35, "%c %s", textColor, baseLegend.c_str());
-		Broodwar->drawCircleMap(base->position, 20, drawColor, true);
+		//Draw circle + text to locate the base in game
+		Broodwar->drawTextMap(base->getPosition().x - 23, base->getPosition().y - 45, "%c %s %d", textColor, "Base", base->idBase);
+		Broodwar->drawTextMap(base->getPosition().x - 28, base->getPosition().y - 35, "%c %s", textColor, baseLegend.c_str());
+		Broodwar->drawCircleMap(base->getPosition(), 20, drawColor, true);
 
 		//Draw idBase on each mineral linked to a specific base, only if minerals are visible
-		for (Resource* posMineral : base->mineralFields)
+		for (Resource* posMineral : base->getMineralFields())
 		{
-			Position &positionMineral = posMineral->resourceUnit->getPosition();
-			Broodwar->drawTextMap(positionMineral.x, positionMineral.y, "%c %s", textColor, pchar);
+			Position &mineralPosition = posMineral->resourceUnit->getPosition();
+			Broodwar->drawTextMap(mineralPosition.x, mineralPosition.y, "%c %s", textColor, pchar);
 		}
 
 		//Write vespene on the vespene geyser linked to a specific base, only if geyser is visible
-		if (base->gazField != 0)
+		if (base->getGeyser() != 0)
 		{
-			Position positionGaz = base->gazField->resourceUnit->getPosition();
-			Broodwar->drawTextMap(positionGaz.x - 5, positionGaz.y, "%c %s", textColor, "Vespene");
+			Position geyserPosition = base->getGeyser()->resourceUnit->getPosition();
+			Broodwar->drawTextMap(geyserPosition.x - 5, geyserPosition.y, "%c %s", textColor, "Vespene");
 		}
 
 		//Draw lines between current base and the main one
 		if (base->distanceToMainBase > 200)
 		{
-			Broodwar->drawLineMap(mainBase, base->position, drawColor);
+			Broodwar->drawLineMap(mainBase, base->getPosition(), drawColor);
 		}
 	}
 }
 
-void GameManager::onUnitEvade(BWAPI::Unit unit)
+// Used to propagate the onUnitEvade BWAPI callback
+void GameManager::onUnitEvade(Unit unit)
 {
 	bool notOurUnit = true;
 	if (!unit->getType().isNeutral())
 	{
-		for (Unit usUnit : Broodwar->self()->getUnits())
+		for (Unit ourUnit : Broodwar->self()->getUnits())
 		{
-			if (usUnit == unit)
+			if (ourUnit == unit)
 			{
 				notOurUnit = false;
 				break;
@@ -316,16 +158,17 @@ void GameManager::onUnitEvade(BWAPI::Unit unit)
 	}
 }
 
-void GameManager::onUnitShow(BWAPI::Unit unit)
+// Used to propagate the onUnitShow BWAPI callback
+void GameManager::onUnitShow(Unit unit)
 {
 	bool notOurUnit = true;
 	if (!unit->getType().isNeutral())
 	{
 		if (unit->exists())
 		{
-			for (Unit usUnit : Broodwar->self()->getUnits())
+			for (Unit ourUnit : Broodwar->self()->getUnits())
 			{
-				if (usUnit == unit)
+				if (ourUnit == unit)
 				{
 					notOurUnit = false;
 					break;
@@ -339,7 +182,8 @@ void GameManager::onUnitShow(BWAPI::Unit unit)
 	}
 }
 
-void GameManager::onUnitComplete(BWAPI::Unit unit)
+// Used to propagate the onUnitComplete BWAPI callback
+void GameManager::onUnitComplete(Unit unit)
 {
 	UnitType type = unit->getType();
 	if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
@@ -351,13 +195,13 @@ void GameManager::onUnitComplete(BWAPI::Unit unit)
 			squadNumber = 1;
 			squad = new Squad(squadNumber);
 			squad->setModeSquad(Squad::attackMode);
-			BWAPI::Position pos;
+			Position pos;
 
 			for (Base *base : *_CombatManager.getBase())
 			{
 				if (base->isEnnemyLocation && base->isStartingLocation)
 				{
-					pos = base->position;
+					pos = base->getPosition();
 					break;
 				}
 			}
@@ -383,18 +227,151 @@ void GameManager::onUnitComplete(BWAPI::Unit unit)
 			{
 				squad = new Squad(currentSquad);
 				squad->setModeSquad(Squad::attackMode);
-				BWAPI::Position pos;
+				Position pos;
 				for (Base *base : *_CombatManager.getBase())
 				{
 					if (base->isEnnemyLocation && base->isStartingLocation)
 					{
-						pos = base->position;
+						pos = base->getPosition();
 						break;
 					}
 				}
 				squad->setPositionObjective(pos);
 				_CombatManager.addSquad(squad);
 			}
+		}
+	}
+}
+
+// Fill the bases data set
+void GameManager::fillBases()
+{
+	bool isInCircle = false;
+	int idBase = 1;
+	Base *base;
+	Unit mainBase = _ProductionManager.getResourceDepot(0);
+	set<Resource*> mineralHelper;
+	set<Position> allStartLocations;
+
+	// Store all starting locations
+	for (const TilePosition tp : Broodwar->getStartLocations())
+	{
+		allStartLocations.insert(ToolBox::ConvertTilePosition(tp, UnitTypes::Special_Start_Location));
+	}
+
+	// Get every mineral field
+	for (Unit mineral : Broodwar->getStaticMinerals())
+	{
+		const TilePosition mineralsTilePosition = mineral->getTilePosition();
+		if (ToolBox::IsTilePositionValid(mineralsTilePosition))
+		{
+			const Position mineralsPosition = ToolBox::ConvertTilePosition(mineralsTilePosition, UnitTypes::Resource_Mineral_Field);
+			mineralHelper.insert(new Resource(mineral));
+		}
+	}
+
+	// Build bases data set using the mineral fields
+	for (Resource* mineral : mineralHelper)
+	{
+		if (mineral->idParent == -1)
+		{
+			base = new Base();
+			base->idBase = idBase;
+
+			Position mineralPosition = mineral->resourceUnit->getPosition();
+			base->insertMineral(mineral);
+			mineral->idParent = idBase;
+
+			// Check if mineral is attached to one of the starting locations
+			for (const Position startPos : allStartLocations)
+			{
+				if (!isInCircle && ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 10, startPos.x, startPos.y, 300))
+				{
+					isInCircle = true;
+					break;
+				}
+			}
+
+			base->isStartingLocation = isInCircle;
+			isInCircle = false;
+
+			// Look for minerals linked to the same location
+			for (Resource* linkedMineral : mineralHelper)
+			{
+				if (mineral != linkedMineral)
+				{
+					Position linkedMineralPosition = linkedMineral->resourceUnit->getPosition();
+					if (ToolBox::IsInCircle(mineralPosition.x, mineralPosition.y, 100, linkedMineralPosition.x, linkedMineralPosition.y, 400))
+					{
+						if (linkedMineral->idParent == -1)
+						{
+							linkedMineral->idParent = idBase;
+							base->insertMineral(linkedMineral);
+						}
+					}
+				}
+			}
+
+			idBase++;
+			allPotentialBases.insert(base);
+		}
+	}
+
+	// If a geyser is inside a mineral circle, it's an interesting expansion because it has gas 
+	for (auto &base : allPotentialBases)
+	{
+		bool hasGas = false;
+
+		// Get every geyser
+		for (const Unit &gasUnit : Broodwar->getStaticGeysers())
+		{
+			const TilePosition geyserTilePosition = gasUnit->getTilePosition();
+
+			if (ToolBox::IsTilePositionValid(geyserTilePosition) && !hasGas)
+			{
+				const Position geyserPosition = gasUnit->getPosition();
+
+				for (Resource* mineral : base->getMineralFields())
+				{
+					Position mineralPosition = mineral->resourceUnit->getPosition();
+
+					if (ToolBox::IsInCircle(geyserPosition.x, geyserPosition.y, 100, mineralPosition.x, mineralPosition.y, 400))
+					{
+						base->setGeyser(new Resource(gasUnit));
+						hasGas = true;
+						break;
+					}
+				}
+				
+				base->isExpansionInteresting = hasGas && !base->isStartingLocation;
+			}
+		}
+	}
+
+	// Compute positions and tilePositions
+	for (auto &base : allPotentialBases)
+	{
+		base->computePosition();
+		base->computeTilePosition();
+		base->distanceToMainBase = mainBase->getPosition().getDistance(base->getPosition());
+		base->isInvalidToGroundUnits = ForbiddenPlaces::isPositionForbidden(base->getPosition(), Broodwar->mapFileName());
+
+		if (base->isStartingLocation && base->distanceToMainBase > 300)
+		{
+			base->isEnnemyLocation = true;
+		}
+	}
+	
+}
+
+// Update the lastFrameChecked of each base
+void GameManager::updateBasesFrameCheck()
+{
+	for (auto& b : allPotentialBases)
+	{
+		if (Broodwar->isVisible(b->getTilePosition()))
+		{
+			b->lastFrameChecked = Broodwar->getFrameCount();
 		}
 	}
 }

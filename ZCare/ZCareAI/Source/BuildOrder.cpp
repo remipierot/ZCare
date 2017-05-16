@@ -72,8 +72,8 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			int vespeneCount = pm->getVespeneCount();
 
 			Base* b = pm->getExpansionOrderedByDistance(nextInstruction->getBaseIndex());
-			TilePosition targetTilePosition = b->tilePosition;
-			Position targetPosition = b->position;
+			TilePosition targetTilePosition = b->getTilePosition();
+			Position targetPosition = b->getPosition();
 			Unit targetResourceDepot = nullptr;
 
 			for (int i = 0; i < pm->getNbResourceDepots(); i++)

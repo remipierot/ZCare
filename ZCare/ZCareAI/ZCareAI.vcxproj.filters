@@ -7,8 +7,6 @@
     <ClCompile Include="Source\CombatManager.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\ProductionManager.cpp" />
-    <ClCompile Include="Source\ScoutManager.cpp" />
-    <ClCompile Include="Source\StrategyManager.cpp" />
     <ClCompile Include="Source\ToolBox.cpp" />
     <ClCompile Include="Source\WorkerManager.cpp" />
     <ClCompile Include="Source\tinyxml2.cpp">
@@ -32,8 +30,6 @@
     <ClInclude Include="Source\CombatManager.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\ProductionManager.h" />
-    <ClInclude Include="Source\ScoutManager.h" />
-    <ClInclude Include="Source\StrategyManager.h" />
     <ClInclude Include="Source\ToolBox.h" />
     <ClInclude Include="Source\WorkerManager.h" />
     <ClInclude Include="Source\tinyxml2.h">

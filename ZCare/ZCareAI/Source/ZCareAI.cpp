@@ -4,6 +4,7 @@
 using namespace BWAPI;
 using namespace std;
 
+// USED CALLBACKS
 void ZCareAI::onStart()
 {
 	// Enable the UserInput flag, which allows us to control the bot and type messages.
@@ -76,8 +77,9 @@ void ZCareAI::onUnitComplete(Unit unit)
 {
 	_GameManager.onUnitComplete(unit);
 }
+// END OF USED CALLBACKS
 
-// Unused callbacks
+// UNUSED CALLBACKS
 void ZCareAI::onEnd(bool isWinner)
 {
 }
@@ -117,3 +119,4 @@ void ZCareAI::onUnitRenegade(Unit unit)
 void ZCareAI::onSaveGame(string gameName)
 {
 }
+// END OF UNUSED CALLBACKS

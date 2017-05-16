@@ -242,7 +242,7 @@ Base* ProductionManager::getMostNeededExpansionToCheck()
 	{
 		if (b->hasToBeChecked() && !b->isInvalidToGroundUnits)
 		{
-			sortedBaseTimes.push_back((float)b->lastTimeChecked);
+			sortedBaseTimes.push_back((float)b->lastFrameChecked);
 		}
 	}
 
@@ -252,7 +252,7 @@ Base* ProductionManager::getMostNeededExpansionToCheck()
 	//Get the base that has to be checked the most
 	for (Base* b : allBaseLocations)
 	{
-		if (b->lastTimeChecked == sortedBaseTimes[sortedBaseTimes.size()-1])
+		if (b->lastFrameChecked == sortedBaseTimes[sortedBaseTimes.size()-1])
 		{
 			expansion = b;
 			break;

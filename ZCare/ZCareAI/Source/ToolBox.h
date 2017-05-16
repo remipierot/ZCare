@@ -66,5 +66,8 @@ class ToolBox
 		static const char BLACK_CHAR = '\x14';
 		static const char BROWN_CHAR = '\x15';
 		static const char DARK_GREEN_CHAR = '\x18';
+		static const int BASE_FPS = 15;
+		static const int SEC_UNTIL_CHECK_BASE = 90;
+		static const int FRAMES_UNTIL_CHECK_BASE = BASE_FPS * SEC_UNTIL_CHECK_BASE;
 };
 
