@@ -29,7 +29,9 @@ void GameManager::update()
 
 	//Combat Manager update
 	_CombatManager.update();
+	_CombatManager.setUnitDiscover(&visibleEnemyUnits);
 
+	//Bases update
 	for (auto& b : allBaseLocations)
 	{
 		if (Broodwar->isVisible(b->tilePosition))
@@ -37,42 +39,6 @@ void GameManager::update()
 			b->lastTimeChecked = Broodwar->getFrameCount();
 		}
 	}
-}
-
-// Number of locations to scout (no matter if they already have been or not)
-int GameManager::toScoutCount()
-{
-	return _ScoutManager.toScoutCount();
-}
-
-// Number of scouted locations
-int GameManager::scoutedCount()
-{
-	return _ScoutManager.scoutedCount();
-}
-
-// Number of unscouted locations
-int GameManager::unscoutedCount()
-{
-	return _ScoutManager.unscoutedCount();
-}
-
-// Number of locations being scout
-int GameManager::beingScoutCount()
-{
-	return _ScoutManager.beingScoutCount();
-}
-
-// Number of scouts
-int GameManager::scoutsCount()
-{
-	return _ScoutManager.scoutsCount();
-}
-
-// Number of scouts currently scouting
-int GameManager::busyScoutsCount()
-{
-	return _ScoutManager.busyScoutsCount();
 }
 
 // Fill all the starting locations data sets
@@ -222,7 +188,7 @@ void GameManager::fillBases()
 	
 }
 
-void GameManager::initBO()
+void GameManager::initBuildOrder()
 {
 	_BOParser = BOParser(&_BuildOrder);
 	_ProductionManager.updateResourceDepots();
@@ -331,17 +297,104 @@ void GameManager::drawDebug()
 	}
 }
 
-CombatManager* GameManager::getCombatManager()
+void GameManager::onUnitEvade(BWAPI::Unit unit)
 {
-	return &_CombatManager;
+	bool notOurUnit = true;
+	if (!unit->getType().isNeutral())
+	{
+		for (Unit usUnit : Broodwar->self()->getUnits())
+		{
+			if (usUnit == unit)
+			{
+				notOurUnit = false;
+				break;
+			}
+
+		}
+		if (notOurUnit)
+			visibleEnemyUnits.erase(unit);
+	}
 }
 
-ProductionManager* GameManager::getProductionManager()
+void GameManager::onUnitShow(BWAPI::Unit unit)
 {
-	return &_ProductionManager;
+	bool notOurUnit = true;
+	if (!unit->getType().isNeutral())
+	{
+		if (unit->exists())
+		{
+			for (Unit usUnit : Broodwar->self()->getUnits())
+			{
+				if (usUnit == unit)
+				{
+					notOurUnit = false;
+					break;
+				}
+
+			}
+
+			if (notOurUnit)
+				visibleEnemyUnits.insert(unit);
+		}
+	}
 }
 
-set<Base*> GameManager::getAllBases()
+void GameManager::onUnitComplete(BWAPI::Unit unit)
 {
-	return allBaseLocations;
+	UnitType type = unit->getType();
+	if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
+	{
+		int squadNumber = _CombatManager.squadNumber();
+		Squad* squad = 0;
+		if (squadNumber == 0)
+		{
+			squadNumber = 1;
+			squad = new Squad(squadNumber);
+			squad->setModeSquad(Squad::attackMode);
+			BWAPI::Position pos;
+
+			for (Base *base : *_CombatManager.getBase())
+			{
+				if (base->isEnnemyLocation && base->isStartingLocation)
+				{
+					pos = base->position;
+					break;
+				}
+			}
+			squad->setPositionObjective(pos);
+			_CombatManager.addSquad(squad);
+		}
+
+		bool insertion = false;
+		int currentSquad = 1;
+		while (!insertion)
+		{
+			squad = _CombatManager.findSquad(currentSquad);
+			if (squad != 0)
+			{
+				if (squad->insertUnit(unit))
+				{
+					insertion = true;
+				}
+				else currentSquad += 1;
+			}
+
+			else
+			{
+				squad = new Squad(currentSquad);
+				squad->setModeSquad(Squad::attackMode);
+				BWAPI::Position pos;
+				for (Base *base : *_CombatManager.getBase())
+				{
+					if (base->isEnnemyLocation && base->isStartingLocation)
+					{
+						pos = base->position;
+						break;
+					}
+				}
+				squad->setPositionObjective(pos);
+				_CombatManager.addSquad(squad);
+			}
+		}
+	}
 }

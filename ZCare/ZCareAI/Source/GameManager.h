@@ -16,33 +16,20 @@ class GameManager
 		// Run the game loop
 		void update();	
 
-		// Number of locations to scout (no matter if they already have been or not)
-		int toScoutCount();
+		// Load the build order
+		void initBuildOrder();
 
-		// Number of scouted locations
-		int scoutedCount();
-
-		// Number of unscouted locations
-		int unscoutedCount();
-
-		// Number of locations being scout
-		int beingScoutCount();
-
-		// Number of scouts
-		int scoutsCount();
-
-		// Number of scouts currently scouting
-		int busyScoutsCount();
-
-		void initBO();
-
+		// Draw the debug of each manager
 		void drawDebug();
 
-		CombatManager* getCombatManager();
+		// Used to propagate the onUnitComplete BWAPI callback
+		void onUnitComplete(BWAPI::Unit unit);
 
-		ProductionManager* getProductionManager();
+		// Used to propagate the onUnitEvade BWAPI callback
+		void onUnitEvade(BWAPI::Unit unit);
 
-		std::set<Base*> getAllBases();
+		// Used to propagate the onUnitShow BWAPI callback
+		void onUnitShow(BWAPI::Unit unit);
 
 	private:
 		ScoutManager _ScoutManager;						// Scouting manager
@@ -50,19 +37,21 @@ class GameManager
 		ProductionManager _ProductionManager;			// Production manager
 		StrategyManager _StrategyManager;				// Strategy manager
 		CombatManager _CombatManager;					// Combat manager
-		BuildOrder _BuildOrder;
-		BOParser _BOParser;
+		BuildOrder _BuildOrder;							// Store instructions and handle build order execution
+		BOParser _BOParser;								// Used to read and load the build order from an external file
 		std::set<BWAPI::Position> allStartLocations;	// All the starting positions
 		std::set<BWAPI::Position> enemyStartLocations;	// Starting positions occupied by enemies
 		std::set<BWAPI::Position> otherStartLocations;	// Starting positions that are not occupied by me (but maybe by enemies)
-		std::set<Resource*> mineralHelper;		// List of mineral ressources (temporary)
-		std::set<Base*> allBaseLocations;		// List of struct base used to know all base on the map
+		std::set<Resource*> mineralHelper;				// List of mineral ressources (temporary)
+		std::set<Base*> allBaseLocations;				// List of struct base used to know all base on the map
+		std::set<const BWAPI::Unit> visibleEnemyUnits;	//Set of visible enemy units
 		BWAPI::Position personalStartLocation;			// My start position
 
 
 		// Fill all the starting locations data sets
 		void fillStartingLocations();
 
+		// Fill the bases data set
 		void fillBases();
 };
 

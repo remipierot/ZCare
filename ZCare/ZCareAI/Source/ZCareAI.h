@@ -26,12 +26,6 @@ class ZCareAI : public BWAPI::AIModule
 		virtual void onUnitComplete(BWAPI::Unit unit);
 		// Everything below this line is safe to modify.
 
-		bool checkStateUnit(BWAPI::Unit unit);
-		void setCombatManager(CombatManager *combatManager);
-
 	private:
-		GameManager _GameManager;
-		CombatManager * _CombatManager;
-		std::set<const BWAPI::Unit> unitShow;
-		//std::set<const BWAPI::Unit> buildingShow;
+		GameManager _GameManager;	// Manager responsible for the game loop
 };
