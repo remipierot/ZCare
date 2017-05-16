@@ -222,6 +222,7 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 				for (Unit unitEnemy : *unitDiscover)
 				{
 					if (unitEnemy->getType() != UnitTypes::Resource_Vespene_Geyser &&
+						unitEnemy->getType() != UnitTypes::Zerg_Larva && 
 						((isGrounded && !unitEnemy->isFlying()) || !isGrounded))
 					{
 						float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
