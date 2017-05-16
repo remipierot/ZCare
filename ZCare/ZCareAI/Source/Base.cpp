@@ -10,6 +10,7 @@ Base::Base()
 	isExpansionInteresting = false;
 	isStartingLocation = false;
 	isEnnemyLocation = false;
+	isInvalidToGroundUnits = false;
 	distanceToMainBase = 0;
 	position = Positions::None;
 	tilePosition = TilePositions::None;
@@ -29,10 +30,11 @@ Base::Base(Base* b)
 	isExpansionInteresting = b->isExpansionInteresting;
 	isStartingLocation = b->isStartingLocation;
 	isEnnemyLocation = b->isEnnemyLocation;
+	isInvalidToGroundUnits = b->isInvalidToGroundUnits;
 	distanceToMainBase = b->distanceToMainBase;
 	position = b->position;
 	tilePosition = b->tilePosition;
-	lastTimeChecked = 0;
+	lastTimeChecked = b->lastTimeChecked;
 }
 
 void Base::computePosition()

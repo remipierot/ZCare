@@ -102,6 +102,7 @@
     <ClCompile Include="Source\BuildOrder.cpp" />
     <ClCompile Include="Source\CombatManager.cpp" />
     <ClCompile Include="Source\Dll.cpp" />
+    <ClCompile Include="Source\ForbiddenPlaces.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ProductionManager.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Source\BOParser.h" />
     <ClInclude Include="Source\BuildOrder.h" />
     <ClInclude Include="Source\CombatManager.h" />
+    <ClInclude Include="Source\ForbiddenPlaces.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\ProductionManager.h" />

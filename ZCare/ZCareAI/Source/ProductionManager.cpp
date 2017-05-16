@@ -207,7 +207,7 @@ Base* ProductionManager::getExpansionOrderedByDistance(int index)
 	for (Base* b : allBaseLocations)
 	{
 		expansion = b;
-		if (!b->isEnnemyLocation)
+		if (!b->isEnnemyLocation && !b->isInvalidToGroundUnits)
 		{
 			sortedBaseDistances.push_back((float)b->distanceToMainBase);
 		}
@@ -240,7 +240,7 @@ Base* ProductionManager::getMostNeededExpansionToCheck()
 	//Get frame check of every location
 	for (Base* b : allBaseLocations)
 	{
-		if (b->hasToBeChecked())
+		if (b->hasToBeChecked() && !b->isInvalidToGroundUnits)
 		{
 			sortedBaseTimes.push_back((float)b->lastTimeChecked);
 		}

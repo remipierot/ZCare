@@ -268,13 +268,22 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 				}
 				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
 				{
+					Base* baseToFocusNext = nullptr;
+					Position currentTarget = squad->getPositionObjective();
+					float tmpDist = INFINITY;
+
 					for (Base* b : *baseStruct)
 					{
-						if (b->hasToBeChecked())
+						if (!b->isInvalidToGroundUnits && b->hasToBeChecked() && currentTarget.getDistance(b->position) < tmpDist)
 						{
-							squad->setPositionObjective(b->position);
-							break;
+							tmpDist = currentTarget.getDistance(b->position);
+							baseToFocusNext = b;
 						}
+					}
+
+					if (baseToFocusNext != nullptr)
+					{
+						squad->setPositionObjective(baseToFocusNext->position);
 					}
 				}
 			}

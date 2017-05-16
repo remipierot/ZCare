@@ -1,5 +1,5 @@
 #include "GameManager.h"
-
+#include "ForbiddenPlaces.h"
 
 using namespace std;
 using namespace BWAPI;
@@ -212,6 +212,7 @@ void GameManager::fillBases()
 		base->computePosition();
 		base->computeTilePosition();
 		base->setDistanceToMainBase(mainBase);
+		base->isInvalidToGroundUnits = ForbiddenPlaces::isPositionForbidden(base->position, Broodwar->mapFileName());
 
 		if (base->isStartingLocation && base->distanceToMainBase > 300)
 		{
@@ -257,9 +258,10 @@ void GameManager::drawDebug()
 	for (auto &base : allBaseLocations)
 	{
 		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR :
-			(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
-			(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
-			ToolBox::GREY_CHAR;
+					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+					(base->isInvalidToGroundUnits) ? ToolBox::GREY_CHAR :
+					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
+					ToolBox::ORANGE_CHAR;
 
 		Broodwar->drawTextScreen(
 			x + 15,
@@ -284,19 +286,27 @@ void GameManager::drawDebug()
 
 		textColor = (base->isEnnemyLocation) ? ToolBox::BRIGHT_RED_CHAR : 
 					(base->isStartingLocation) ? ToolBox::YELLOW_CHAR :
+					(base->isInvalidToGroundUnits) ? ToolBox::GREY_CHAR :
 					(base->isExpansionInteresting) ? ToolBox::BRIGHT_GREEN_CHAR :
-					ToolBox::GREY_CHAR;
+					ToolBox::ORANGE_CHAR;
 
 		drawColor = (base->isEnnemyLocation) ? Colors::Red :
 					(base->isStartingLocation) ? Colors::Yellow :
+					(base->isInvalidToGroundUnits) ? Colors::Grey :
 					(base->isExpansionInteresting) ? Colors::Green :
-					Colors::Grey;
+					Colors::Orange;
 
 		string s = to_string(base->idBase);
 		char const *pchar = s.c_str();
+		string baseLegend = (base->isEnnemyLocation) ? " [ENEMY]" :
+							(base->isStartingLocation) ? " [START]" :
+							(base->isInvalidToGroundUnits) ? " [UNREACHABLE]" :
+							(base->isExpansionInteresting) ? " [HAS GAS]" :
+							" [NO GAS]";
 
 		//Draw circle + text with idBase to locate the base in game
-		Broodwar->drawTextMap(base->position.x - 23, base->position.y - 35, "%c %s %d", textColor, "Base", base->idBase);
+		Broodwar->drawTextMap(base->position.x - 23, base->position.y - 45, "%c %s %d", textColor, "Base", base->idBase);
+		Broodwar->drawTextMap(base->position.x - 28, base->position.y - 35, "%c %s", textColor, baseLegend.c_str());
 		Broodwar->drawCircleMap(base->position, 20, drawColor, true);
 
 		//Draw idBase on each mineral linked to a specific base, only if minerals are visible

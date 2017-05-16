@@ -15,6 +15,7 @@ public:
 	bool isExpansionInteresting;
 	bool isStartingLocation;
 	bool isEnnemyLocation;
+	bool isInvalidToGroundUnits;
 	int distanceToMainBase;
 	BWAPI::Position position;
 	BWAPI::TilePosition tilePosition;
@@ -28,7 +29,7 @@ public:
 	bool hasToBeChecked();
 
 	static const int BASE_FPS = 15;
-	static const int SEC_UNTIL_CHECK_BASE = 30;
+	static const int SEC_UNTIL_CHECK_BASE = 90;
 	static const int FRAMES_UNTIL_CHECK_BASE = BASE_FPS * SEC_UNTIL_CHECK_BASE;
 };
 
