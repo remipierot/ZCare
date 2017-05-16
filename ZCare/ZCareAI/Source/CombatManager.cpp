@@ -204,6 +204,7 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 	int sizeUnit = unitType->size();
 	Unit unitClose = 0;
 	float distanceClose = 0;
+
 	for (Unit unit : *unitType)
 	{
 		if (unit->exists())
@@ -220,29 +221,32 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 
 				for (Unit unitEnemy : *unitDiscover)
 				{
-					float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
-					if (distanceClose == 0)
-						distanceClose = tempDist;
-
-					if (unitEnemy->isAttacking())
+					if (unitEnemy->getType() != UnitTypes::Resource_Vespene_Geyser)
 					{
-						if ((distanceAttacker == 0) || (tempDist < 600 && distanceAttacker >= tempDist))
+						float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
+						if (distanceClose == 0)
+							distanceClose = tempDist;
+
+						if (unitEnemy->isAttacking())
 						{
-							distanceAttacker = tempDist;
-							unitClose = unitEnemy;
-							attacker = true;
-						}			
-					}
+							if ((distanceAttacker == 0) || (tempDist < 600 && distanceAttacker >= tempDist))
+							{
+								distanceAttacker = tempDist;
+								unitClose = unitEnemy;
+								attacker = true;
+							}
+						}
 
-					else if (tempDist < 600 && distanceClose >= tempDist && unitEnemy->canAttack() && unitEnemy->getType() != (BWAPI::UnitTypes::Zerg_Larva ||BWAPI::UnitTypes::Resource_Vespene_Geyser) && !attacker)
-					{
-						distanceClose = tempDist;
-						unitClose = unitEnemy;
-						attack = true;
-					}
-					else if (tempDist < 600 && !attack && !attacker && distanceClose >= tempDist && unitEnemy->getType() != (BWAPI::UnitTypes::Zerg_Larva || BWAPI::UnitTypes::Resource_Vespene_Geyser))
-					{
-						temp = unitEnemy;
+						else if (tempDist < 600 && distanceClose >= tempDist && unitEnemy->canAttack() && unitEnemy->getType() != (BWAPI::UnitTypes::Zerg_Larva || BWAPI::UnitTypes::Resource_Vespene_Geyser) && !attacker)
+						{
+							distanceClose = tempDist;
+							unitClose = unitEnemy;
+							attack = true;
+						}
+						else if (tempDist < 600 && !attack && !attacker && distanceClose >= tempDist && unitEnemy->getType() != (BWAPI::UnitTypes::Zerg_Larva || BWAPI::UnitTypes::Resource_Vespene_Geyser))
+						{
+							temp = unitEnemy;
+						}
 					}
 				}
 

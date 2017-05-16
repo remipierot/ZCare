@@ -138,21 +138,21 @@ void ZCareAI::onUnitShow(BWAPI::Unit unit)
 	bool notOurUnit = true;
 	if (!unit->getType().isNeutral())
 	{
-		for (Unit usUnit : Broodwar->self()->getUnits())
+		if (unit->exists())
 		{
-			if (usUnit == unit)
+			for (Unit usUnit : Broodwar->self()->getUnits())
 			{
-				notOurUnit = false;
-				break;
+				if (usUnit == unit)
+				{
+					notOurUnit = false;
+					break;
+				}
+
 			}
 
+			if (notOurUnit)
+				unitShow.insert(unit);
 		}
-
-		if (notOurUnit)
-			unitShow.insert(unit);
-			//if (unit->getType().isBuilding())
-			//	buildingShow.insert(unit);
-			//else unitShow.insert(unit);
 	}
 }
 
@@ -162,62 +162,6 @@ void ZCareAI::onUnitHide(BWAPI::Unit unit)
 
 void ZCareAI::onUnitCreate(BWAPI::Unit unit)
 {
-	/*UnitType type = unit->getType();
-	if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
-	{
-		int squadNumber = _CombatManager->squadNumber();
-		Squad* squad = 0;
-		if (squadNumber == 0)
-		{
-			squadNumber = 1;
-			squad = new Squad(squadNumber);
-			squad->setModeSquad(Squad::attackMode);
-			BWAPI::Position pos;
-
-			for (Base *base : *_CombatManager->getBase())
-			{
-				if (base->isEnnemyLocation && base->isStartingLocation)
-				{
-					pos = base->position;
-					break;
-				}
-			}
-			squad->setPositionObjective(pos);
-			_CombatManager->addSquad(squad);
-		}
-
-		bool insertion = false;
-		int currentSquad = 1;
-		while (!insertion)
-		{
-			squad = _CombatManager->findSquad(currentSquad);
-			if (squad != 0)
-			{
-				//Broodwar->drawTextScreen(10, 60, "Squad %d : %d", currentSquad, _CombatManager->findSquad(currentSquad)->numberUnit());
-				if (squad->insertUnit(unit))
-				{
-					insertion = true;
-				}
-				else currentSquad += 1;
-			}
-
-			else
-			{
-				squad = new Squad(currentSquad);
-				squad->setModeSquad(Squad::attackMode);
-				BWAPI::Position pos;
-				for (Base *base : *_CombatManager->getBase())
-				{
-					if (base->isEnnemyLocation && base->isStartingLocation)
-					{
-						pos = base->position;
-						break;
-					}
-				}
-				_CombatManager->addSquad(squad);
-			}
-		}
-	}*/
 }
 
 void ZCareAI::onUnitDestroy(BWAPI::Unit unit)
