@@ -173,8 +173,8 @@ void CombatManager::modeDefense(Squad* squad)
 void CombatManager::modeAttack(Squad* squad)
 {
 	std::set<Unit> unitToErase;
-	traitementAttack(&unitToErase, squad->getTerrainUnit(),squad);
-	traitementAttack(&unitToErase, squad->getAerialUnit(),squad);
+	traitementAttack(&unitToErase, squad->getTerrainUnit(),squad, true);
+	traitementAttack(&unitToErase, squad->getAerialUnit(),squad, false);
 
 	for (Unit unitErase : unitToErase)
 	{
@@ -199,7 +199,7 @@ void CombatManager::setBase(std::set<Base*> *base)
 	this->baseStruct = base;
 }
 
-void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit> *unitType, Squad *squad)
+void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit> *unitType, Squad *squad, bool isGrounded)
 {
 	int sizeUnit = unitType->size();
 	Unit unitClose = 0;
@@ -221,7 +221,8 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 
 				for (Unit unitEnemy : *unitDiscover)
 				{
-					if (unitEnemy->getType() != UnitTypes::Resource_Vespene_Geyser)
+					if (unitEnemy->getType() != UnitTypes::Resource_Vespene_Geyser &&
+						((isGrounded && !unitEnemy->isFlying()) || !isGrounded))
 					{
 						float tempDist = (float)unitEnemy->getPosition().getDistance(unit->getPosition());
 						if (distanceClose == 0)

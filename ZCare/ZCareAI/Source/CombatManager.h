@@ -21,7 +21,7 @@ public:
 	void setBase(std::set<Base*> *base);
 	std::set<Base*> *getBase();
 
-	void traitementAttack(std::set<BWAPI::Unit> *erase, std::set<const BWAPI::Unit> *unitType, Squad *squad);
+	void traitementAttack(std::set<BWAPI::Unit> *erase, std::set<const BWAPI::Unit> *unitType, Squad *squad, bool isGrounded);
 	
 
 private:
