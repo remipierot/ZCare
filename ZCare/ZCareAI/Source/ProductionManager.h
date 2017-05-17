@@ -42,7 +42,9 @@ public:
 	int maxSupply();
 
 	// Tell if a unit is being built or not
-	bool isUnitBeingCreated();
+	bool isUnitBeingCreated(
+		BWAPI::UnitType unitType
+	);
 
 	// Return the closest unit of the given type using the base at the given index
 	BWAPI::Unit getClosestUnit(

@@ -80,12 +80,14 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			{
 				Unit tmpDepot = pm->getResourceDepot(i);
 
-				if (tmpDepot->isCompleted() &&
+				if ((tmpDepot->isCompleted() || tmpDepot->getType() == UnitTypes::Zerg_Lair || tmpDepot->getType() == UnitTypes::Zerg_Hive) &&
 					tmpDepot->canTrain() && 
 					ToolBox::IsInCircle(tmpDepot->getPosition(), 10, targetPosition, 300)
 				)
 				{
 					targetResourceDepot = tmpDepot;
+					targetPosition = tmpDepot->getPosition();
+					targetTilePosition = tmpDepot->getTilePosition();
 					break;
 				}
 			}
@@ -141,28 +143,39 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					builder = wm->getWorkerWithLowestLife();
 				}
 
-				//Make building if having enough ressources
-				if (mineralCount >= wantedBuilding.mineralPrice() && vespeneCount >= wantedBuilding.gasPrice())
+				if (!ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
 				{
 					if (builder->isGatheringGas() || builder->isGatheringMinerals())
 					{
 						builder->stop();
 					}
 
-					if (!builder->isMoving() && !ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
-					{
-						builder->move(targetPosition);
-						builderMovingToSpot = true;
-					}
+					builder->move(targetPosition);
+					builder->rightClick(targetPosition);
+					builderMovingToSpot = true;
+				}
 
-					Broodwar->drawCircleMap(targetPosition, 300, Colors::Cyan);
-					Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Red, true);
+				Broodwar->drawCircleMap(targetPosition, 300, Colors::Cyan);
+				Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Red, true);
 
-					if (ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
-					{
+				//Make building if having enough ressources
+				if (mineralCount >= wantedBuilding.mineralPrice() && vespeneCount >= wantedBuilding.gasPrice())
+				{
+					//if (ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
+					//{
 						if (tileBuildLocation == TilePositions::None)
 						{
 							tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 15);
+
+							if (!ToolBox::IsTilePositionValid(tileBuildLocation))
+							{
+								tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 30);
+
+								if (!ToolBox::IsTilePositionValid(tileBuildLocation))
+								{
+									tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition);
+								}
+							}
 						}
 
 						//Specific vespene location
@@ -179,7 +192,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 						pm->makeBuilding(wantedBuilding, tileBuildLocation, builder);
 						Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Green, true);
 						builderBuildingToSpot = true;
-					}
+					//}
 				}
 			}
 			//Make unit
@@ -205,7 +218,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 						{
 							for (int i = 0; i < pm->getNbResourceDepots(); i++)
 							{
-								if (pm->getResourceDepot(i)->isCompleted() &&
+								if ((pm->getResourceDepot(i)->isCompleted() || pm->getResourceDepot(i)->getType() == UnitTypes::Zerg_Lair || pm->getResourceDepot(i)->getType() == UnitTypes::Zerg_Hive) &&
 									ToolBox::IsInCircle(pm->getResourceDepot(i)->getPosition(), 10, targetPosition, 300))
 								{
 									targetResourceDepot = pm->getResourceDepot(i);
@@ -247,7 +260,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 		}
 		else if (nextInstruction->isBuilding() || nextInstruction->isEvolution())
 		{
-			executed = pm->isAlreadyBuilt(nextInstruction->getUnitToBuild(), false, nextInstruction->getNbUnitsOfType());
+			executed = (builder == nullptr && pm->isUnitBeingCreated(nextInstruction->getUnitToBuild())) || (builder != nullptr && (builder->isBeingConstructed() || builder->isMorphing()));
 		}
 		else if (nextInstruction->isUnit() && nextInstruction->getNbUnitsToBuild() <= 0)
 		{

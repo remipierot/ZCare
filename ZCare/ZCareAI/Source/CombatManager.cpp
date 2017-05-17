@@ -80,7 +80,6 @@ void CombatManager::modeDefense(Squad* squad)
 	{
 		if (terrainUnit->exists())
 		{
-			//Faire le traitement
 			float distanceClose = 0;
 			Unit unitClose = 0;
 			for (Unit ennemy : *unitToAttack)
@@ -202,6 +201,14 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 	int sizeUnit = unitType->size();
 	Unit unitClose = 0;
 	float distanceClose = 0;
+	
+	/*
+	// Units alive to have before starting an attack
+	if (sizeUnit < 6)
+	{
+		return;
+	}
+	*/
 
 	for (Unit unit : *unitType)
 	{

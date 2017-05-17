@@ -75,9 +75,20 @@ int ProductionManager::realSupplyUsed()
 }
 
 // Tell if a unit is being built or not
-bool ProductionManager::isUnitBeingCreated()
+bool ProductionManager::isUnitBeingCreated(UnitType unitType)
 {
-	return Broodwar->self()->incompleteUnitCount() > 0;
+	bool beingCreated = false;
+
+	for (Unit ourUnit : Broodwar->self()->getUnits())
+	{
+		if (ourUnit->getType() == unitType && !ourUnit->isCompleted())
+		{
+			beingCreated = true;
+			break;
+		}
+	}
+
+	return beingCreated;
 }
 
 // Return the closest unit of the given type using the base at the given index
