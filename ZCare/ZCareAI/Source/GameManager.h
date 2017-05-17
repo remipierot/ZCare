@@ -21,13 +21,19 @@ class GameManager
 		void drawDebug();
 
 		// Used to propagate the onUnitEvade BWAPI callback
-		void onUnitEvade(BWAPI::Unit unit);
+		void onUnitEvade(
+			BWAPI::Unit unit
+		);
 
 		// Used to propagate the onUnitShow BWAPI callback
-		void onUnitShow(BWAPI::Unit unit);
+		void onUnitShow(
+			BWAPI::Unit unit
+		);
 
 		// Used to propagate the onUnitComplete BWAPI callback
-		void onUnitComplete(BWAPI::Unit unit);
+		void onUnitComplete(
+			BWAPI::Unit unit
+		);
 
 	private:
 		WorkerManager		_WorkerManager;			// Worker manager

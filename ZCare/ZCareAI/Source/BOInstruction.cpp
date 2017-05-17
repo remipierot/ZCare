@@ -5,7 +5,10 @@ using namespace BWAPI;
 BOInstruction::BOInstruction()
 {
 	type = END_OF_BO;
+	completed = true;
+	baseIndex = 0;
 	researchToMake = TechTypes::None;
+	upgradeToMake = UpgradeTypes::None;
 }
 
 BOInstruction::BOInstruction(InstructionType newType)
@@ -59,113 +62,92 @@ void BOInstruction::setBaseIndex(int baseLocationId)
 	baseIndex = baseLocationId;
 }
 
+void BOInstruction::setNbUnitsOfType(int newNbUnitsOfType)
+{
+	nbUnitsOfType = newNbUnitsOfType;
+}
+
 BOInstruction::InstructionType BOInstruction::getType()
 {
-	return type;
+	return 
+		type;
 }
 
 int BOInstruction::getSupplyCount()
 {
-	return supplyCount;
+	return 
+		supplyCount;
 }
 
 int BOInstruction::getMineralCap()
 {
-	return mineralCap;
+	return 
+		mineralCap;
 }
 
 int BOInstruction::getVespeneCap()
 {
-	return vespeneCap;
+	return 
+		vespeneCap;
 }
 
 int BOInstruction::getBuildingCompletionPercentage()
 {
-	return buildingCompletionPercentage;
+	return 
+		buildingCompletionPercentage;
 }
 
 UnitType BOInstruction::getBuildingToTrack()
 {
-	return buildingToTrack;
+	return 
+		buildingToTrack;
 }
 
 int BOInstruction::getNbUnitsToBuild()
 {
-	return nbUnitsToBuild;
+	return 
+		nbUnitsToBuild;
 }
 
 UnitType BOInstruction::getUnitToBuild()
 {
-	return unitToBuild;
+	return 
+		unitToBuild;
 }
 
 TilePosition BOInstruction::getBuildLocation()
 {
-	return buildLocation;
+	return 
+		buildLocation;
 }
 
-TechType BOInstruction::getResearchToMake()
+TechType BOInstruction::getResearch()
 {
-	return researchToMake;
+	return 
+		researchToMake;
 }
 
-UpgradeType BOInstruction::getUpgradeToMake()
+UpgradeType BOInstruction::getUpgrade()
 {
-	return upgradeToMake;
+	return 
+		upgradeToMake;
 }
 
 int BOInstruction::getBaseIndex()
 {
-	return baseIndex;
+	return 
+		baseIndex;
+}
+
+int BOInstruction::getNbUnitsOfType()
+{
+	return
+		nbUnitsOfType;
 }
 
 void BOInstruction::decrementNbUnits()
 {
 	nbUnitsToBuild--;
-}
-
-const char* BOInstruction::typeToStr()
-{
-	switch (type)
-	{
-		case SUPPLY_USED:   
-			return "SUPPLY_USED";
-			break;
-		case BUILDING_COMPLETION:   
-			return "BUILDING_COMPLETION";
-			break;
-		case RESOURCE_CAP: 
-			return "RESOURCE_CAP";
-			break;
-		default :
-			return "END_OF_BO";
-			break;
-	}
-}
-
-const char* BOInstruction::typeToStr(BOInstruction instruction)
-{
-	return instruction.typeToStr();
-}
-
-BOInstruction::InstructionType BOInstruction::strToType(const char* str)
-{
-	if (strcmp(str, "SUPPLY_USED") == 0)
-	{
-		return SUPPLY_USED;
-	}
-	else if (strcmp(str, "BUILDING_COMPLETION") == 0)
-	{
-		return BUILDING_COMPLETION;
-	}
-	else if (strcmp(str, "RESOURCE_CAP") == 0)
-	{
-		return RESOURCE_CAP;
-	}
-	else
-	{
-		return END_OF_BO;
-	}
 }
 
 void BOInstruction::reset()
@@ -180,32 +162,26 @@ void BOInstruction::complete()
 
 bool BOInstruction::isCompleted()
 {
-	return completed;
-}
-
-void BOInstruction::setNbUnitsOfType(int newNbUnitsOfType)
-{
-	nbUnitsOfType = newNbUnitsOfType;
-}
-
-int BOInstruction::getNbUnitsOfType()
-{
-	return nbUnitsOfType;
+	return 
+		completed;
 }
 
 bool BOInstruction::isResearch()
 {
-	return researchToMake != TechTypes::None;
+	return 
+		researchToMake != TechTypes::None;
 }
 
 bool BOInstruction::isUpgrade()
 {
-	return upgradeToMake != UpgradeTypes::None;
+	return 
+		upgradeToMake != UpgradeTypes::None;
 }
 
 bool BOInstruction::isEvolution()
 {
-	return unitToBuild != UnitTypes::None &&
+	return 
+		unitToBuild != UnitTypes::None &&
 		(unitToBuild == UnitTypes::Zerg_Lair ||
 		unitToBuild == UnitTypes::Zerg_Hive ||
 		unitToBuild == UnitTypes::Zerg_Sunken_Colony ||
@@ -215,10 +191,42 @@ bool BOInstruction::isEvolution()
 
 bool BOInstruction::isBuilding()
 {
-	return unitToBuild != UnitTypes::None && unitToBuild.isBuilding() &&!isEvolution();
+	return 
+		unitToBuild != UnitTypes::None && 
+		unitToBuild.isBuilding() &&
+		!isEvolution();
 }
 
 bool BOInstruction::isUnit()
 {
-	return unitToBuild != UnitTypes::None && !isResearch() && !isUpgrade() && !isBuilding();
+	return 
+		unitToBuild != UnitTypes::None && 
+		!isResearch() && 
+		!isUpgrade() && 
+		!isBuilding();
+}
+
+BOInstruction::InstructionType BOInstruction::strToType(const char* str)
+{
+	InstructionType type = END_OF_BO;
+
+	if (strcmp(str, "SUPPLY_USED") == 0)
+	{
+		type = SUPPLY_USED;
+	}
+	else if (strcmp(str, "BUILDING_COMPLETION") == 0)
+	{
+		type = BUILDING_COMPLETION;
+	}
+	else if (strcmp(str, "RESOURCE_CAP") == 0)
+	{
+		type = RESOURCE_CAP;
+	}
+	else
+	{
+		type = END_OF_BO;
+	}
+
+	return
+		type;
 }

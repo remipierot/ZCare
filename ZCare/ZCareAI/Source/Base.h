@@ -15,7 +15,10 @@ class Base
 		int lastFrameChecked;			// Last frame when the base was visible
 
 		Base();
-		Base(Base* b);
+
+		Base(
+			Base* b
+		);
 
 		// Compute the position based on each resource (minerals + gas)
 		void computePosition();
@@ -24,10 +27,14 @@ class Base
 		void computeTilePosition();
 
 		// Insert a new mineral inside mineralFields
-		void insertMineral(Resource* newMineral);
+		void insertMineral(
+			Resource* newMineral
+		);
 
 		// Store the given geyser as the one linked to the base
-		void setGeyser(Resource* newGeyser);
+		void setGeyser(
+			Resource* newGeyser
+		);
 
 		// Give the position of the base
 		BWAPI::Position getPosition();

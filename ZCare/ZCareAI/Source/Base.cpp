@@ -118,29 +118,34 @@ void Base::setGeyser(Resource* newGeyser)
 // Give the position of the base
 Position Base::getPosition()
 {
-	return position;
+	return 
+		position;
 }
 
 // Give the tilePosition of the base
 TilePosition Base::getTilePosition()
 {
-	return tilePosition;
+	return 
+		tilePosition;
 }
 
 // Give the list of mineralFields
 set<Resource*> Base::getMineralFields()
 {
-	return mineralFields;
+	return 
+		mineralFields;
 }
 
 // Give the geyser
 Resource* Base::getGeyser()
 {
-	return geyser;
+	return 
+		geyser;
 }
 
 // True if the base has not been checked for a while (exact number set in ToolBox)
 bool Base::hasToBeChecked()
 {
-	return (Broodwar->getFrameCount() - lastFrameChecked) > ToolBox::FRAMES_UNTIL_CHECK_BASE;
+	return 
+		(Broodwar->getFrameCount() - lastFrameChecked) > ToolBox::FRAMES_UNTIL_CHECK_BASE;
 }

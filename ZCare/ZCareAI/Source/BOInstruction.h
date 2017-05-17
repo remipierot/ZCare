@@ -4,123 +4,121 @@
 
 class BOInstruction
 {
-public:
-	enum InstructionType { SUPPLY_USED, BUILDING_COMPLETION, RESOURCE_CAP, END_OF_BO };
+	public:
+		enum InstructionType { SUPPLY_USED, BUILDING_COMPLETION, RESOURCE_CAP, END_OF_BO };
 
-	BOInstruction();
+		BOInstruction();
 
-	BOInstruction(
-		InstructionType newType
-	);
+		BOInstruction(
+			InstructionType newType
+		);
 
-	void setSupplyCount(
-		int newSupplyCount
-	);
+		void setSupplyCount(
+			int newSupplyCount
+		);
 
-	void setMineralCap(
-		int newMineralCap
-	);
+		void setMineralCap(
+			int newMineralCap
+		);
 
-	void setVespeneCap(
-		int newVespeneCap
-	);
+		void setVespeneCap(
+			int newVespeneCap
+		);
 
-	void setBuildingCompletionInfos(
-		int newPercentage,
-		BWAPI::UnitType newBuildingToTrack
-	);
+		void setBuildingCompletionInfos(
+			int newPercentage,
+			BWAPI::UnitType newBuildingToTrack
+		);
 
-	void setActions(
-		BWAPI::UnitType newUnitToBuild,
-		int newNbUnitsToBuild = 1
-	);
+		void setActions(
+			BWAPI::UnitType newUnitToBuild,
+			int newNbUnitsToBuild = 1
+		);
 
-	void setResearch(
-		BWAPI::TechType newResearchToMake
-	);
+		void setResearch(
+			BWAPI::TechType newResearchToMake
+		);
 
-	void setUpgrade(
-		BWAPI::UpgradeType newUpgradeToMake
-	);
+		void setUpgrade(
+			BWAPI::UpgradeType newUpgradeToMake
+		);
 
-	void setNbUnitsOfType(
-		int newNbUnitsOfType
-	);
+		void setBaseIndex(
+			int baseLocationId
+		);
 
-	void setBaseIndex(
-		int baseLocationId
-	);
+		void setNbUnitsOfType(
+			int newNbUnitsOfType
+		);
 
-	InstructionType getType();
+		InstructionType getType();
 
-	int getSupplyCount();
+		int getSupplyCount();
 
-	int getMineralCap();
+		int getMineralCap();
 
-	int getVespeneCap();
+		int getVespeneCap();
 
-	int getNbUnitsOfType();
+		int getBuildingCompletionPercentage();
 
-	int getBuildingCompletionPercentage();
+		BWAPI::UnitType getBuildingToTrack();
 
-	BWAPI::UnitType getBuildingToTrack();
+		int getNbUnitsToBuild();
 
-	int getNbUnitsToBuild();
+		BWAPI::UnitType getUnitToBuild();
 
-	BWAPI::UnitType getUnitToBuild();
+		BWAPI::TilePosition getBuildLocation();
 
-	BWAPI::TilePosition getBuildLocation();
+		BWAPI::TechType getResearch();
 
-	BWAPI::TechType getResearchToMake();
+		BWAPI::UpgradeType getUpgrade();
 
-	BWAPI::UpgradeType getUpgradeToMake();
+		int getBaseIndex();
 
-	int getBaseIndex();
+		int getNbUnitsOfType();
 
-	void decrementNbUnits();
+		void decrementNbUnits();
 
-	const char* typeToStr();
+		void reset();
 
-	static const char* typeToStr(BOInstruction instruction);
+		void complete();
 
-	static InstructionType strToType(const char* str);
+		bool isCompleted();
 
-	void reset();
+		bool isResearch();
 
-	void complete();
+		bool isUpgrade();
 
-	bool isCompleted();
+		bool isEvolution();
 
-	bool isResearch();
+		bool isBuilding();
 
-	bool isUpgrade();
+		bool isUnit();
 
-	bool isEvolution();
+		static InstructionType strToType(
+			const char* str
+		);
 
-	bool isBuilding();
+	private:
+		InstructionType type;
+		bool completed = false;
 
-	bool isUnit();
+		// Conditions to fulfill
+		int supplyCount;
+		int mineralCap;
+		int vespeneCap;
+		int buildingCompletionPercentage;
+		BWAPI::UnitType buildingToTrack;
 
-private:
-	InstructionType type;
-	bool completed = false;
+		// Actions to perform
+		int nbUnitsToBuild;
+		int baseIndex;
+		BWAPI::UnitType unitToBuild;
+		BWAPI::TilePosition buildLocation;
+		BWAPI::TechType researchToMake;
+		BWAPI::UpgradeType upgradeToMake;
 
-	// Conditions to fulfill
-	int supplyCount;
-	int mineralCap;
-	int vespeneCap;
-	int buildingCompletionPercentage;
-	BWAPI::UnitType buildingToTrack;
-
-	// Actions to perform
-	int nbUnitsToBuild;
-	int baseIndex;
-	BWAPI::UnitType unitToBuild;
-	BWAPI::TilePosition buildLocation;
-	BWAPI::TechType researchToMake;
-	BWAPI::UpgradeType upgradeToMake;
-
-	// Additional infos
-	int nbUnitsOfType;
+		// Additional infos
+		int nbUnitsOfType;
 };
 

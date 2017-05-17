@@ -18,5 +18,6 @@ bool ForbiddenPlaces::isPositionForbidden(Position positionToCheck, string mapFi
 		isForbidden |= (positionToCheck.x == ASTRAL_BALANCE_FB_1.x && positionToCheck.y == ASTRAL_BALANCE_FB_1.y);
 	}
 
-	return isForbidden;
+	return 
+		isForbidden;
 }

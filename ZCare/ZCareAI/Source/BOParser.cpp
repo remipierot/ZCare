@@ -6,7 +6,6 @@ using namespace BWAPI;
 
 BOParser::BOParser()
 {
-
 }
 
 BOParser::BOParser(BuildOrder *buildOrder)
@@ -30,7 +29,8 @@ BOParser::BOParser(BuildOrder *buildOrder)
 		for (tinyxml2::XMLElement *elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement())
 		{
 			nbInstruction++;
-			//On crée l'instruction ici
+
+			// Create instruction here
 			for (tinyxml2::XMLElement *elemChild = elem->FirstChildElement(); elemChild != NULL; elemChild = elemChild->NextSiblingElement())
 			{
 				std::string nomElement = elemChild->Value();

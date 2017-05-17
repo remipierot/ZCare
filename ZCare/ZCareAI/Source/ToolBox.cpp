@@ -4,7 +4,7 @@ using namespace std;
 using namespace BWAPI;
 using namespace Filter;
 
-//Use a UnitType combined to its TilePosition to get the Position corresponding to its center
+// Use a UnitType combined to its TilePosition to get the Position corresponding to its center
 Position ToolBox::ConvertTilePosition(const TilePosition tilePosition, const UnitType unitType)
 {
 	return
@@ -17,30 +17,7 @@ Position ToolBox::ConvertTilePosition(const TilePosition tilePosition, const Uni
 		);
 }
 
-//Tell if the given unit is available (not building anything and no pending command on it)
-bool ToolBox::IsWorkerAvailableToBuild(const Unit& unit)
-{
-	return
-		!unit->isConstructing() && 
-		!IsCommandPendingOnUnit(unit);
-}
-
-//Tell if BWAPI already has a command pending to be executed for the specified unit
-bool ToolBox::IsCommandPendingOnUnit(const Unit& unit)
-{
-	return
-		!(unit->getLastCommand().getType() == UnitCommandTypes::None || 
-			Broodwar->getFrameCount() >= (
-				unit->getLastCommandFrame() + (
-					Broodwar->getLatencyFrames() > 2
-					? Broodwar->getLatencyFrames() - (unit->getLastCommandFrame() % 2)
-					: Broodwar->getLatencyFrames()
-				)
-			)
-		);
-}
-
-//Tell if the given TilePosition is a valid one (not invalid, unknown or not set)
+// Tell if the given TilePosition is a valid one (not invalid, unknown or not set)
 bool ToolBox::IsTilePositionValid(const TilePosition tilePosition)
 {
 	return 
@@ -49,28 +26,21 @@ bool ToolBox::IsTilePositionValid(const TilePosition tilePosition)
 		tilePosition != TilePositions::None;
 }
 
-//Tell if the given Position is a valid one (not invalid, unknown or not set)
-bool ToolBox::IsPositionValid(const Position position)
+// Tell if the two wanted circles overlap
+bool ToolBox::IsInCircle(int x1, int y1, int r1, int x2, int y2, int r2)
 {
 	return
-		position != Positions::Invalid &&
-		position != Positions::Unknown &&
-		position != Positions::None;
+		pow((x1 - x2), 2) + pow((y1 - y2),2) <= pow((r1 + r2),2);
 }
 
-
-bool ToolBox::IsInCircle(int posX, int posY, int radius, int posX2, int posY2, int radius2)
-{
-	return
-		pow((posX2 - posX), 2) + pow((posY - posY2),2) <= pow((radius + radius2),2);
-}
-
+// Tell if the two wanted circles overlap
 bool ToolBox::IsInCircle(Position p1, int r1, Position p2, int r2)
 {
 	return
 		IsInCircle(p1.x, p1.y, r1, p2.x, p2.y, r2);
 }
 
+// Tell if the one of the units is an evolution of the other one
 bool ToolBox::areUnitsLinkedByEvolution(const UnitType unit1, const UnitType unit2)
 {
 	bool linkedByEvolution = false;
@@ -96,9 +66,11 @@ bool ToolBox::areUnitsLinkedByEvolution(const UnitType unit1, const UnitType uni
 	//Same unit type
 	linkedByEvolution |= (unit1 == unit2);
 
-	return linkedByEvolution;
+	return 
+		linkedByEvolution;
 }
 
+// Return the UnitType able to make the given research
 UnitType ToolBox::getUnitAbleToResearch(TechType researchToMake)
 {
 	UnitType unit = UnitTypes::None;
@@ -129,9 +101,11 @@ UnitType ToolBox::getUnitAbleToResearch(TechType researchToMake)
 		(defilerMound)				? UnitTypes::Zerg_Defiler_Mound :
 		UnitTypes::None;
 
-	return unit;
+	return 
+		unit;
 }
 
+// Return the UnitType able to make the given upgrade
 UnitType ToolBox::getUnitAbleToUpgrade(UpgradeType upgradeToMake)
 {
 	UnitType unit = UnitTypes::None;
@@ -184,9 +158,11 @@ UnitType ToolBox::getUnitAbleToUpgrade(UpgradeType upgradeToMake)
 		(ultraliskCavern)		? UnitTypes::Zerg_Ultralisk_Cavern	:
 		UnitTypes::None;
 
-	return unit;
+	return 
+		unit;
 }
 
+// Return the previous evolution UnitType of the given UnitType
 UnitType ToolBox::getPreviousEvolution(UnitType currentEvolution)
 {
 	UnitType unit = UnitTypes::None;
@@ -202,5 +178,6 @@ UnitType ToolBox::getPreviousEvolution(UnitType currentEvolution)
 	else if (currentEvolution == UnitTypes::Zerg_Greater_Spire)
 		unit = UnitTypes::Zerg_Spire;
 
-	return unit;
+	return 
+		unit;
 }

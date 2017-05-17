@@ -18,15 +18,6 @@ void WorkerManager::updateWorkers()
 	}
 }
 
-// Create a worker with the given resourceDepot
-void WorkerManager::buildWorker(const BWAPI::Unit resourceDepot)
-{
-	if (resourceDepot->getType().isResourceDepot() && resourceDepot->isIdle())
-	{
-		resourceDepot->train(resourceDepot->getType().getRace().getWorker());
-	}
-}
-
 // Send the workers gathering resources
 void WorkerManager::sendWorkersToWork()
 {
@@ -61,20 +52,8 @@ void WorkerManager::callWorkersBack()
 	}
 }
 
-// Number of workers
-int WorkerManager::workersCount()
-{
-	return workers.size();
-}
-
-// Number of workers currently gathering resources
-int WorkerManager::busyWorkersCount()
-{
-	return busyWorkers.size();
-}
-
 // Return the worker with the lowest hit points
-BWAPI::Unit WorkerManager::getWorkerWithLowestLife()
+Unit WorkerManager::getWorkerWithLowestLife()
 {
 	Unit lowestHPWorker = NULL;
 
@@ -95,11 +74,6 @@ BWAPI::Unit WorkerManager::getWorkerWithLowestLife()
 		}
 	}
 
-	return lowestHPWorker;
-}
-
-// Tell if the given worker is currently gathering resources or not
-bool WorkerManager::isWorkerBusy(const Unit worker)
-{
-	return busyWorkers.find(worker) != busyWorkers.end();
+	return 
+		lowestHPWorker;
 }

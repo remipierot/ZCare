@@ -104,7 +104,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 			//Research
 			else if (nextInstruction->isResearch())
 			{
-				UnitType buildingType = ToolBox::getUnitAbleToResearch(nextInstruction->getResearchToMake());
+				UnitType buildingType = ToolBox::getUnitAbleToResearch(nextInstruction->getResearch());
 
 				if (buildingType != UnitTypes::None)
 				{
@@ -112,14 +112,14 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 					if (building != nullptr)
 					{
-						building->research(nextInstruction->getResearchToMake());
+						building->research(nextInstruction->getResearch());
 					}
 				}
 			}
 			//Upgrade
 			else if (nextInstruction->isUpgrade())
 			{
-				UnitType buildingType = ToolBox::getUnitAbleToUpgrade(nextInstruction->getUpgradeToMake());
+				UnitType buildingType = ToolBox::getUnitAbleToUpgrade(nextInstruction->getUpgrade());
 
 				if (buildingType != UnitTypes::None)
 				{
@@ -127,7 +127,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 					if (building != nullptr)
 					{
-						building->upgrade(nextInstruction->getUpgradeToMake());
+						building->upgrade(nextInstruction->getUpgrade());
 					}
 				}
 			}
@@ -239,11 +239,11 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 		if (nextInstruction->isResearch())
 		{
-			executed = pm->isResearching(nextInstruction->getResearchToMake()) || pm->hasResearched(nextInstruction->getResearchToMake());
+			executed = pm->isResearching(nextInstruction->getResearch()) || pm->hasResearched(nextInstruction->getResearch());
 		}
 		else if (nextInstruction->isUpgrade())
 		{
-			executed = pm->isUpgrading(nextInstruction->getUpgradeToMake()) || pm->hasUpgraded(nextInstruction->getUpgradeToMake());
+			executed = pm->isUpgrading(nextInstruction->getUpgrade()) || pm->hasUpgraded(nextInstruction->getUpgrade());
 		}
 		else if (nextInstruction->isBuilding() || nextInstruction->isEvolution())
 		{
@@ -306,9 +306,9 @@ int BuildOrder::drawDebug(int startingX, int startingY)
 				baseLocationInfo = '@' + to_string(baseIndex) + "TH EXP";
 
 			if (toPrint->isResearch())
-				unitInfo = toPrint->getResearchToMake().c_str();
+				unitInfo = toPrint->getResearch().c_str();
 			else if (toPrint->isUpgrade())
-				unitInfo = toPrint->getUpgradeToMake().c_str();
+				unitInfo = toPrint->getUpgrade().c_str();
 			else
 				unitInfo = toPrint->getUnitToBuild().c_str();
 

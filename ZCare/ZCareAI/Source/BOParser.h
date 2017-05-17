@@ -5,11 +5,13 @@
 
 class BOParser
 {
-public:
-	BOParser();
-	BOParser(BuildOrder *buildOrder);
+	public:
+		BOParser();
+		BOParser(
+			BuildOrder *buildOrder
+		);
 
-private:
-	BuildOrder *bo;
+	private:
+		BuildOrder *bo;	// Build Order to fill on game start
 };
 
