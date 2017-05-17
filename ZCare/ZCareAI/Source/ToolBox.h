@@ -17,12 +17,20 @@ class ToolBox
 
 		// Tell if the two wanted circles overlap
 		static bool IsInCircle(
-			int x1, int y1, int r1, int x2, int y2, int r2
+			int x1, 
+			int y1, 
+			int r1, 
+			int x2, 
+			int y2, 
+			int r2
 		);
 
 		// Tell if the two wanted circles overlap
 		static bool IsInCircle(
-			BWAPI::Position p1, int r1, BWAPI::Position p2, int r2
+			BWAPI::Position p1, 
+			int r1, 
+			BWAPI::Position p2, 
+			int r2
 		);
 
 		// Tell if the one of the units is an evolution of the other one
