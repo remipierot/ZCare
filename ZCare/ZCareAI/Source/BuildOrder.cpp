@@ -2,6 +2,7 @@
 
 using namespace std;
 using namespace BWAPI;
+using namespace Filter;
 
 void BuildOrder::addInstruction(BOInstruction* instruction)
 {
@@ -141,6 +142,11 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				if (builder == nullptr)
 				{
 					builder = wm->getWorkerWithLowestLife();
+
+					if (targetResourceDepot != nullptr)
+					{
+						builder = targetResourceDepot->getClosestUnit(GetType == UnitTypes::Zerg_Drone && Exists, 256);
+					}
 				}
 
 				if (!ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
@@ -181,7 +187,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 						//Specific vespene location
 						if (wantedBuilding == UnitTypes::Zerg_Extractor)
 						{
-							Unit closestVespene = builder->getClosestUnit(Filter::GetType == UnitTypes::Resource_Vespene_Geyser && Filter::Exists);
+							Unit closestVespene = builder->getClosestUnit(GetType == UnitTypes::Resource_Vespene_Geyser && Exists);
 
 							if (closestVespene != nullptr)
 							{
