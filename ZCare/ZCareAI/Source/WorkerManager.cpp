@@ -11,7 +11,7 @@ void WorkerManager::updateWorkers()
 
 	for (auto &u : Broodwar->self()->getUnits())
 	{
-		if (u->getType().isWorker() && !u->isMorphing())
+		if (u->getType().isWorker() && !u->isMorphing() && !u->isConstructing())
 		{
 			workers.insert(u);
 		}

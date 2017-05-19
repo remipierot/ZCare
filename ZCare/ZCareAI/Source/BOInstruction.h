@@ -5,7 +5,12 @@
 class BOInstruction
 {
 	public:
-		enum InstructionType { SUPPLY_USED, BUILDING_COMPLETION, RESOURCE_CAP, END_OF_BO };
+		enum InstructionType { 
+			SUPPLY_USED, 
+			BUILDING_COMPLETION, 
+			RESOURCE_CAP, 
+			END_OF_BO 
+		};
 
 		BOInstruction();
 

@@ -4,20 +4,16 @@
 using namespace std;
 using namespace BWAPI;
 
-BOParser::BOParser()
+BuildOrder BOParser::loadBO(string fileName)
 {
-}
-
-BOParser::BOParser(BuildOrder *buildOrder)
-{
-	bo = buildOrder;
+	BuildOrder bo;
 	const UnitType::set& allUnitTypes = UnitTypes::allUnitTypes();
 
 	char result[MAX_PATH];
 	GetModuleFileName(NULL, result, MAX_PATH);
 
 	tinyxml2::XMLDocument doc;
-	if (doc.LoadFile("bwapi-data/data/buildOrder.xml") != tinyxml2::XML_ERROR_FILE_NOT_FOUND)
+	if (doc.LoadFile(fileName.c_str()) != tinyxml2::XML_ERROR_FILE_NOT_FOUND)
 	{
 		tinyxml2::XMLElement* root = doc.RootElement();
 		tinyxml2::XMLElement* element = root->FirstChildElement();
@@ -69,13 +65,16 @@ BOParser::BOParser(BuildOrder *buildOrder)
 				}
 			}
 
-			bo->addInstruction(tmp);
+			bo.addInstruction(tmp);
 		}
 
-		bo->reset();
+		bo.reset();
 	}
 	else
 	{
-		Broodwar->sendText("Unable to load bwapi-data/data/buildOrder.xml");
+		string s = "Unable to load " + fileName;
+		Broodwar->sendText(s.c_str());
 	}
+
+	return bo;
 }

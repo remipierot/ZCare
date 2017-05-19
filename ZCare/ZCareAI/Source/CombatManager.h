@@ -18,8 +18,7 @@ public:
 
 	void setDiscoveredUnits(std::set<const BWAPI::Unit> *unit);
 
-	void setBase(std::set<Base*> *base);
-	std::set<Base*> *getBase();
+	void setAllBaseLocations(std::set<Base*> newAllBaseLocations);
 
 	void traitementAttack(std::set<BWAPI::Unit> *erase, std::set<const BWAPI::Unit> *unitType, Squad *squad, bool isGrounded);
 	
@@ -27,7 +26,7 @@ public:
 private:
 	std::set<Squad*> squadList;
 	std::set<const BWAPI::Unit> *unitDiscover;
-	std::set<Base*> *baseStruct;
+	std::set<Base*> allBaseLocations;
 	std::set<BWAPI::Unit> *unitToAttack;
 };
 

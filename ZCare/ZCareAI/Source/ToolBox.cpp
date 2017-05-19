@@ -45,11 +45,11 @@ bool ToolBox::areUnitsLinkedByEvolution(const UnitType unit1, const UnitType uni
 {
 	bool linkedByEvolution = false;
 
-	//Spire evolution
+	// Spire evolution
 	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Greater_Spire && unit2 == UnitTypes::Zerg_Spire);
 	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Greater_Spire && unit1 == UnitTypes::Zerg_Spire);
 
-	//Hatchery evolution
+	// Hatchery evolution
 	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Lair && unit2 == UnitTypes::Zerg_Hatchery);
 	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Lair && unit1 == UnitTypes::Zerg_Hatchery);
 	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Hive && unit2 == UnitTypes::Zerg_Hatchery);
@@ -57,13 +57,13 @@ bool ToolBox::areUnitsLinkedByEvolution(const UnitType unit1, const UnitType uni
 	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Hive && unit2 == UnitTypes::Zerg_Lair);
 	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Hive && unit1 == UnitTypes::Zerg_Lair);
 
-	//Creep Colony evolution
+	// Creep Colony evolution
 	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Sunken_Colony && unit2 == UnitTypes::Zerg_Creep_Colony);
 	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Sunken_Colony && unit1 == UnitTypes::Zerg_Creep_Colony);
 	linkedByEvolution |= (unit1 == UnitTypes::Zerg_Spore_Colony && unit2 == UnitTypes::Zerg_Creep_Colony);
 	linkedByEvolution |= (unit2 == UnitTypes::Zerg_Spore_Colony && unit1 == UnitTypes::Zerg_Creep_Colony);
 
-	//Same unit type
+	// Same unit type
 	linkedByEvolution |= (unit1 == unit2);
 
 	return 
@@ -82,15 +82,19 @@ UnitType ToolBox::getUnitAbleToResearch(TechType researchToMake)
 	bool queensNest = false;
 	bool defilerMound = false;
 
+	// Hatchery / Lair / Hive research
 	hatchery |= researchToMake == TechTypes::Burrowing;
 	lair |= hatchery;
 	hive |= hatchery;
 
+	// Hydralisk research
 	hydraliskDen |= researchToMake == TechTypes::Lurker_Aspect;
 
+	// Queen research
 	queensNest |= researchToMake == TechTypes::Spawn_Broodlings;
 	queensNest |= researchToMake == TechTypes::Ensnare;
 
+	// Defiler research
 	defilerMound |= researchToMake == TechTypes::Plague;
 	defilerMound |= researchToMake == TechTypes::Consume;
 
@@ -121,29 +125,37 @@ UnitType ToolBox::getUnitAbleToUpgrade(UpgradeType upgradeToMake)
 	bool defilerMound = false;
 	bool ultraliskCavern = false;
 
+	// Lair / Hive upgrade
 	lair |= upgradeToMake == UpgradeTypes::Ventral_Sacs;
 	lair |= upgradeToMake == UpgradeTypes::Antennae;
 	lair |= upgradeToMake == UpgradeTypes::Pneumatized_Carapace;
 	hive |= lair;
 
+	// Evolution Chamber upgrade
 	evolutionChamber |= upgradeToMake == UpgradeTypes::Zerg_Melee_Attacks;
 	evolutionChamber |= upgradeToMake == UpgradeTypes::Zerg_Missile_Attacks;
 	evolutionChamber |= upgradeToMake == UpgradeTypes::Zerg_Carapace;
 
+	// Zergling upgrade
 	spawningPool |= upgradeToMake == UpgradeTypes::Metabolic_Boost;
 	spawningPool |= upgradeToMake == UpgradeTypes::Adrenal_Glands;
 
+	// Hydralisk upgrade
 	hydraliskDen |= upgradeToMake == UpgradeTypes::Muscular_Augments;
 	hydraliskDen |= upgradeToMake == UpgradeTypes::Grooved_Spines;
 
+	// Queen upgrade
 	queensNest |= upgradeToMake == UpgradeTypes::Gamete_Meiosis;
 
+	// Spire / Greater Spire upgrade
 	spire |= upgradeToMake == UpgradeTypes::Zerg_Flyer_Attacks;
 	spire |= upgradeToMake == UpgradeTypes::Zerg_Flyer_Carapace;
 	greaterSpire |= spire;
 
+	// Defiler upgrade
 	defilerMound |= upgradeToMake == UpgradeTypes::Metasynaptic_Node;
 
+	// Ultralisk upgrade
 	ultraliskCavern |= upgradeToMake == UpgradeTypes::Anabolic_Synthesis;
 	ultraliskCavern |= upgradeToMake == UpgradeTypes::Chitinous_Plating;
 
@@ -180,4 +192,21 @@ UnitType ToolBox::getPreviousEvolution(UnitType currentEvolution)
 
 	return 
 		unit;
+}
+
+// Tell if the given unit is ours or not
+bool ToolBox::isUnitOurs(Unit unit)
+{
+	bool isOurUnit = false;
+
+	for (Unit ourUnit : Broodwar->self()->getUnits())
+	{
+		if (ourUnit == unit)
+		{
+			isOurUnit = true;
+			break;
+		}
+	}
+
+	return isOurUnit;
 }

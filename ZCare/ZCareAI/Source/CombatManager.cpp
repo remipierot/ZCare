@@ -191,9 +191,12 @@ void CombatManager::setDiscoveredUnits(std::set<const Unit> *unit)
 	this->unitDiscover = unit;
 }
 
-void CombatManager::setBase(std::set<Base*> *base)
+void CombatManager::setAllBaseLocations(std::set<Base*> newAllBaseLocations)
 {
-	this->baseStruct = base;
+	for (Base* b : newAllBaseLocations)
+	{
+		allBaseLocations.insert(b);
+	}
 }
 
 void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit> *unitType, Squad *squad, bool isGrounded)
@@ -202,13 +205,11 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 	Unit unitClose = 0;
 	float distanceClose = 0;
 	
-	/*
 	// Units alive to have before starting an attack
-	if (sizeUnit < 6)
+	if (sizeUnit < 30)
 	{
 		return;
 	}
-	*/
 
 	for (Unit unit : *unitType)
 	{
@@ -239,7 +240,7 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 						{
 							if ((distanceAttacker == 0) || (tempDist < 600 && distanceAttacker >= tempDist))
 							{
-								distanceAttacker = tempDist;
+								distanceAttacker = (int)tempDist;
 								unitClose = unitEnemy;
 								attacker = true;
 							}
@@ -279,11 +280,11 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 					Position currentTarget = squad->getPositionObjective();
 					float tmpDist = INFINITY;
 
-					for (Base* b : *baseStruct)
+					for (Base* b : allBaseLocations)
 					{
 						if (!b->isInvalidToGroundUnits && b->hasToBeChecked() && currentTarget.getDistance(b->getPosition()) < tmpDist)
 						{
-							tmpDist = currentTarget.getDistance(b->getPosition());
+							tmpDist = (float)currentTarget.getDistance(b->getPosition());
 							baseToFocusNext = b;
 						}
 					}
@@ -316,9 +317,4 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 		}
 		else erase->insert(unit);
 	}
-}
-
-std::set<Base*> *CombatManager::getBase()
-{
-	return this->baseStruct;
 }

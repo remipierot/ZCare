@@ -32,32 +32,33 @@ void GameManager::update()
 // Load the build order
 void GameManager::initBuildOrder()
 {
-	_BOParser = BOParser(&_BuildOrder);
+	_BuildOrder = BOParser::loadBO("bwapi-data/data/buildOrder.xml");
 	_ProductionManager.updateResourceDepots();
 	fillBases();
 	_ProductionManager.setAllBaseLocations(allPotentialBases);
-	_CombatManager.setBase(&allPotentialBases);
+	_CombatManager.setAllBaseLocations(allPotentialBases);
 }
 
 // Draw the debug of each manager
 void GameManager::drawDebug()
 {
-	//First we handle textual debug on screen space
+	//********** TEXTUAL DEBUG (SCREEN SPACE) **********//
+	// First we handle textual debug on screen space
 	int x = 460;
 	int y = 20;
 	char textColor = ' ';
 
-	//FPS debug info
+	// FPS debug info
 	Broodwar->drawTextScreen(x + 5, y, "%c FPS", ToolBox::WHITE_CHAR);
 	y += 10;
 	Broodwar->drawTextScreen(x + 10, y, "%c %d", ToolBox::BRIGHT_GREEN_CHAR, Broodwar->getFPS());
 	y += 20;
 
-	//Build order debug info
+	// Build order debug info
 	y = _BuildOrder.drawDebug(x + 5, y);
 	y += 20;
 
-	//Bases debug info
+	// Bases debug info
 	Broodwar->drawTextScreen(x + 5, y, "%c BASES", ToolBox::WHITE_CHAR);
 	y += 10;
 	Broodwar->drawTextScreen(x + 10, y, "%c ID - POS - DIST - CHECK", ToolBox::WHITE_CHAR);
@@ -84,8 +85,9 @@ void GameManager::drawDebug()
 
 		y += 10;
 	}
+	//********** END TEXTUAL DEBUG **********//
 
-	//Then we handle textual and visual debug on game space
+	//********** VISUAL DEBUG (GAME SPACE) **********//
 	Position mainBase = _ProductionManager.getResourceDepot(0)->getPosition();
 	for (auto &base : allPotentialBases)
 	{
@@ -111,74 +113,49 @@ void GameManager::drawDebug()
 			(base->isExpansionInteresting) ? " [HAS GAS]" :
 			" [NO GAS]";
 
-		//Draw circle + text to locate the base in game
+		// Draw circle + text to locate the base in game
 		Broodwar->drawTextMap(base->getPosition().x - 23, base->getPosition().y - 45, "%c %s %d", textColor, "Base", base->idBase);
 		Broodwar->drawTextMap(base->getPosition().x - 28, base->getPosition().y - 35, "%c %s", textColor, baseLegend.c_str());
 		Broodwar->drawCircleMap(base->getPosition(), 20, drawColor, true);
 
-		//Draw idBase on each mineral linked to a specific base, only if minerals are visible
+		// Draw idBase on each mineral linked to a specific base, only if minerals are visible
 		for (Resource* posMineral : base->getMineralFields())
 		{
 			Position &mineralPosition = posMineral->resourceUnit->getPosition();
 			Broodwar->drawTextMap(mineralPosition.x, mineralPosition.y, "%c %s", textColor, pchar);
 		}
 
-		//Write vespene on the vespene geyser linked to a specific base, only if geyser is visible
+		// Write vespene on the vespene geyser linked to a specific base, only if geyser is visible
 		if (base->getGeyser() != 0)
 		{
 			Position geyserPosition = base->getGeyser()->resourceUnit->getPosition();
 			Broodwar->drawTextMap(geyserPosition.x - 5, geyserPosition.y, "%c %s", textColor, "Vespene");
 		}
 
-		//Draw lines between current base and the main one
+		// Draw lines between current base and the main one
 		if (base->distanceToMainBase > 200)
 		{
 			Broodwar->drawLineMap(mainBase, base->getPosition(), drawColor);
 		}
 	}
+	//********** END VISUAL DEBUG **********//
 }
 
 // Used to propagate the onUnitEvade BWAPI callback
 void GameManager::onUnitEvade(Unit unit)
 {
-	bool notOurUnit = true;
-	if (!unit->getType().isNeutral())
+	if (!unit->getType().isNeutral() && !ToolBox::isUnitOurs(unit))
 	{
-		for (Unit ourUnit : Broodwar->self()->getUnits())
-		{
-			if (ourUnit == unit)
-			{
-				notOurUnit = false;
-				break;
-			}
-
-		}
-		if (notOurUnit)
-			visibleEnemyUnits.erase(unit);
+		visibleEnemyUnits.erase(unit);
 	}
 }
 
 // Used to propagate the onUnitShow BWAPI callback
 void GameManager::onUnitShow(Unit unit)
 {
-	bool notOurUnit = true;
-	if (!unit->getType().isNeutral())
+	if (!unit->getType().isNeutral() && unit->exists() && !ToolBox::isUnitOurs(unit))
 	{
-		if (unit->exists())
-		{
-			for (Unit ourUnit : Broodwar->self()->getUnits())
-			{
-				if (ourUnit == unit)
-				{
-					notOurUnit = false;
-					break;
-				}
-
-			}
-
-			if (notOurUnit)
-				visibleEnemyUnits.insert(unit);
-		}
+		visibleEnemyUnits.insert(unit);
 	}
 }
 
@@ -197,7 +174,7 @@ void GameManager::onUnitComplete(Unit unit)
 			squad->setModeSquad(Squad::attackMode);
 			Position pos;
 
-			for (Base *base : *_CombatManager.getBase())
+			for (Base *base : allPotentialBases)
 			{
 				if (base->isEnnemyLocation && base->isStartingLocation)
 				{
@@ -228,7 +205,7 @@ void GameManager::onUnitComplete(Unit unit)
 				squad = new Squad(currentSquad);
 				squad->setModeSquad(Squad::attackMode);
 				Position pos;
-				for (Base *base : *_CombatManager.getBase())
+				for (Base *base : allPotentialBases)
 				{
 					if (base->isEnnemyLocation && base->isStartingLocation)
 					{
@@ -353,7 +330,7 @@ void GameManager::fillBases()
 	{
 		base->computePosition();
 		base->computeTilePosition();
-		base->distanceToMainBase = mainBase->getPosition().getDistance(base->getPosition());
+		base->distanceToMainBase = (int)mainBase->getPosition().getDistance(base->getPosition());
 		base->isInvalidToGroundUnits = ForbiddenPlaces::isPositionForbidden(base->getPosition(), Broodwar->mapFileName());
 
 		if (base->isStartingLocation && base->distanceToMainBase > 300)

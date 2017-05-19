@@ -6,12 +6,8 @@
 class BOParser
 {
 	public:
-		BOParser();
-		BOParser(
-			BuildOrder *buildOrder
+		static BuildOrder loadBO(
+			std::string fileName
 		);
-
-	private:
-		BuildOrder *bo;	// Build Order to fill on game start
 };
 

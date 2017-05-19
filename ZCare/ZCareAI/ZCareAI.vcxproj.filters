@@ -1,108 +1,120 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\tinyxml2.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Dll.cpp">
-      <Filter>Final %28DLL%29</Filter>
+      <Filter>DLL</Filter>
     </ClCompile>
     <ClCompile Include="Source\ZCareAI.cpp">
-      <Filter>Final %28DLL%29</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CombatManager.cpp">
-      <Filter>Managers</Filter>
+      <Filter>DLL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ProductionManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WorkerManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Base.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BOInstruction.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ForbiddenPlaces.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Squad.cpp">
-      <Filter>Utils</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\ToolBox.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BOParser.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="Source\CombatManager.cpp">
+      <Filter>Core\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Squad.cpp">
+      <Filter>Core\Combat</Filter>
     </ClCompile>
     <ClCompile Include="Source\BuildOrder.cpp">
-      <Filter>Managers</Filter>
+      <Filter>Core\BuildOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BOParser.cpp">
+      <Filter>Core\BuildOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BOInstruction.cpp">
+      <Filter>Core\BuildOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Base.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ForbiddenPlaces.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProductionManager.cpp">
+      <Filter>Core\Production</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WorkerManager.cpp">
+      <Filter>Core\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\tinyxml2.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\tinyxml2.h">
-      <Filter>External</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ZCareAI.h">
-      <Filter>Final %28DLL%29</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CombatManager.h">
-      <Filter>Managers</Filter>
+      <Filter>DLL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ProductionManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WorkerManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Base.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\BOInstruction.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ForbiddenPlaces.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Resource.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Squad.h">
-      <Filter>Utils</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\ToolBox.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BOParser.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="Source\CombatManager.h">
+      <Filter>Core\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Squad.h">
+      <Filter>Core\Combat</Filter>
     </ClInclude>
     <ClInclude Include="Source\BuildOrder.h">
-      <Filter>Managers</Filter>
+      <Filter>Core\BuildOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BOParser.h">
+      <Filter>Core\BuildOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BOInstruction.h">
+      <Filter>Core\BuildOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Base.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ForbiddenPlaces.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ProductionManager.h">
+      <Filter>Core\Production</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WorkerManager.h">
+      <Filter>Core\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\tinyxml2.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="External">
-      <UniqueIdentifier>{e862a99a-ffa3-41e6-8003-ec1fbf9f4258}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Final %28DLL%29">
-      <UniqueIdentifier>{c17249c3-1c9f-4d7a-bf84-609af59f7e65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers">
-      <UniqueIdentifier>{d0a1ae54-3207-4466-b0a1-93740ef9a50d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{c8610ee8-6d81-4933-b9cb-650a1516e216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{d0a1ae54-3207-4466-b0a1-93740ef9a50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Combat">
+      <UniqueIdentifier>{b4f9c3af-febf-4469-9dfd-4b3372f4bb8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BuildOrder">
+      <UniqueIdentifier>{a25a2d21-2b09-4f52-b765-845cfe3c638d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Base">
+      <UniqueIdentifier>{641e1a4d-c33c-41d9-9f33-2a4b5a737d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Worker">
+      <UniqueIdentifier>{dace11fb-9862-47bc-b75f-395a468eab4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Production">
+      <UniqueIdentifier>{cf64f2b5-c41d-48e0-b569-8e600bb09bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLL">
+      <UniqueIdentifier>{c17249c3-1c9f-4d7a-bf84-609af59f7e65}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

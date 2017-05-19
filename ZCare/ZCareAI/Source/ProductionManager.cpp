@@ -20,14 +20,15 @@ void ProductionManager::updateResourceDepots()
 // Return the wanted base
 Unit ProductionManager::getResourceDepot(unsigned int index)
 {
+	Unit resourceDepot = nullptr;
+
 	if (index < resourceDepots.size())
 	{
-		return resourceDepots[index];
+		resourceDepot = resourceDepots[index];
 	}
-	else
-	{
-		return NULL;
-	}
+
+	return
+		resourceDepot;
 }
 
 // Construct a building at the specified location
@@ -35,16 +36,17 @@ bool ProductionManager::makeBuilding(const UnitType& buildingType, const TilePos
 {
 	bool success = false;
 
-	if (worker != NULL && targetBuildLocation.isValid())
+	if (worker != nullptr && targetBuildLocation.isValid())
 	{
 		success = worker->build(buildingType, targetBuildLocation);
 	}
 
-	return success;
+	return 
+		success;
 }
 
 // Build the wanted unit
-bool ProductionManager::makeUnit(int resourceDepotIndex, const BWAPI::UnitType& unitType)
+bool ProductionManager::makeUnit(int resourceDepotIndex, const UnitType& unitType)
 {
 	Unit resourceDepot = getResourceDepot(resourceDepotIndex);
 	bool success = false;
@@ -54,24 +56,39 @@ bool ProductionManager::makeUnit(int resourceDepotIndex, const BWAPI::UnitType& 
 		success = resourceDepot->train(unitType);
 	}
 
-	return success;
+	return 
+		success;
 }
 
 // Tell if we are about to saturate our supply
 bool ProductionManager::isSupplyAboutToBeFull()
 {
-	return Broodwar->self()->supplyUsed() >= (Broodwar->self()->supplyTotal() - (SUPPLY_FULL_CHECK_THRESHOLD * UnitTypes::Zerg_Drone.supplyRequired()));
+	return 
+		Broodwar->self()->supplyUsed() >= (
+			Broodwar->self()->supplyTotal() - 
+			(SUPPLY_FULL_CHECK_THRESHOLD * UnitTypes::Zerg_Drone.supplyRequired())
+		);
 }
 
 // Tell if we are using all of our supplies or not
 bool ProductionManager::isSupplyFull()
 {
-	return Broodwar->self()->supplyUsed() >= Broodwar->self()->supplyTotal();
+	return 
+		Broodwar->self()->supplyUsed() >= Broodwar->self()->supplyTotal();
 }
 
+// Get number of supply used
 int ProductionManager::realSupplyUsed()
 {
-	return Broodwar->self()->supplyUsed() / 2;
+	return 
+		Broodwar->self()->supplyUsed() / 2;
+}
+
+// Get max supply available
+int ProductionManager::maxSupply()
+{
+	return
+		Broodwar->self()->supplyTotal() / 2;
 }
 
 // Tell if a unit is being built or not
@@ -88,25 +105,29 @@ bool ProductionManager::isUnitBeingCreated(UnitType unitType)
 		}
 	}
 
-	return beingCreated;
+	return 
+		beingCreated;
 }
 
 // Return the closest unit of the given type using the base at the given index
 Unit ProductionManager::getClosestUnit(int resourceDepotIndex, UnitType unitType, int distance)
 {
-	return getResourceDepot(resourceDepotIndex)->getClosestUnit(GetType == unitType && Exists, distance);
+	return 
+		getResourceDepot(resourceDepotIndex)->getClosestUnit(GetType == unitType && Exists, distance);
 }
 
 // Return the quantity of mineral possessed by the player
 int ProductionManager::getMineralCount()
 {
-	return Broodwar->self()->minerals();
+	return 
+		Broodwar->self()->minerals();
 }
 
 // Return the quantity of vespene gas possessed by the player
 int ProductionManager::getVespeneCount()
 {
-	return Broodwar->self()->gas();
+	return 
+		Broodwar->self()->gas();
 }
 
 // Return the closest buildable position for a given building using the position given
@@ -114,9 +135,11 @@ TilePosition ProductionManager::getClosestBuildablePosition(UnitType buildingTyp
 {
 	bool creepNeeded = (buildingType != UnitTypes::Zerg_Hatchery && buildingType != UnitTypes::Zerg_Extractor);
 
-	return Broodwar->getBuildLocation(buildingType, wantedPosition, distance, creepNeeded);
+	return 
+		Broodwar->getBuildLocation(buildingType, wantedPosition, distance, creepNeeded);
 }
 
+// Tell if the player meets the requirements to build/make the given unit
 bool ProductionManager::hasUnitRequirements(UnitType unit)
 {
 	bool requirementsMet = true;
@@ -132,9 +155,11 @@ bool ProductionManager::hasUnitRequirements(UnitType unit)
 		}
 	}
 
-	return 	requirementsMet;
+	return 
+		requirementsMet;
 }
 
+// Tell if the player is building something
 bool ProductionManager::checkForStartedConstruction()
 {
 	bool buildingSomething = false;
@@ -153,13 +178,16 @@ bool ProductionManager::checkForStartedConstruction()
 		}
 	}
 
-	return buildingSomething;
+	return 
+		buildingSomething;
 }
 
+// Tell if the given building has already been built 
 bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 {
 	bool specialCases = (type == UnitTypes::Zerg_Lair || type == UnitTypes::Zerg_Hive || type == UnitTypes::Zerg_Greater_Spire);
 	bool buildingToCount = false;
+	bool isBuilt = false;
 
 	for (auto &b : Broodwar->self()->getUnits())
 	{
@@ -171,36 +199,39 @@ bool ProductionManager::isAlreadyBuilt(UnitType type, bool completed, int count)
 
 			if (count == 0)
 			{
-				return true;
+				isBuilt = true;
+				break;
 			}
 		}
 	}
 
-	return false;
+	return
+		isBuilt;
 }
 
-int ProductionManager::maxSupply()
-{
-	return Broodwar->self()->supplyTotal() / 2;
-}
-
+// Tell if the resourceDepot at the given index is available to train
 bool ProductionManager::canResourceDepotTrain(int index)
 {
 	Unit depot = getResourceDepot(index);
+	bool canTrain = false;
 
-	if (depot != NULL)
+	if (depot != nullptr)
 	{
-		return depot->canTrain();
+		canTrain = depot->canTrain();
 	}
 
-	return false;
+	return 
+		canTrain;
 }
 
+// Get the number of resource depots
 int ProductionManager::getNbResourceDepots()
 {
-	return resourceDepots.size();
+	return 
+		resourceDepots.size();
 }
 
+// Set the location of all potential bases
 void ProductionManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
 {
 	for (Base* b : newAllBaseLocations)
@@ -209,6 +240,7 @@ void ProductionManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
 	}
 }
 
+// Return the expansion corresponding to the given index if ordered by ascending distance from main base
 Base* ProductionManager::getExpansionOrderedByDistance(int index)
 {
 	vector<float> sortedBaseDistances;
@@ -240,9 +272,11 @@ Base* ProductionManager::getExpansionOrderedByDistance(int index)
 		}
 	}
 
-	return expansion;
+	return 
+		expansion;
 }
 
+// Return the expansion that needs to be checked the most
 Base* ProductionManager::getMostNeededExpansionToCheck()
 {
 	vector<float> sortedBaseTimes;
@@ -270,14 +304,17 @@ Base* ProductionManager::getMostNeededExpansionToCheck()
 		}
 	}
 
-	return expansion;
+	return 
+		expansion;
 }
 
-Unit ProductionManager::getBuildingOfType(UnitType wantedBuilding)
+// Return the closest building of the given type from the given position
+Unit ProductionManager::getBuildingOfType(UnitType wantedBuilding, Position targetPosition)
 {
 	Unit building = nullptr;
 	UnitType alternateBuilding0 = UnitTypes::None;
 	UnitType alternateBuilding1 = UnitTypes::None;
+	int resourceDepotIndex = -1;
 
 	if (wantedBuilding == UnitTypes::Zerg_Hatchery)
 	{
@@ -295,51 +332,98 @@ Unit ProductionManager::getBuildingOfType(UnitType wantedBuilding)
 
 	for (int i = 0; i < resourceDepots.size(); i++)
 	{
-		if (wantedBuilding == getResourceDepot(i)->getType())
+		Unit tmpDepot = getResourceDepot(i);
+
+		if ((tmpDepot->isCompleted() || tmpDepot->getType() == UnitTypes::Zerg_Lair || tmpDepot->getType() == UnitTypes::Zerg_Hive) &&
+			ToolBox::IsInCircle(tmpDepot->getPosition(), 10, targetPosition, 300)
+			)
 		{
-			building = getResourceDepot(i);
-		}
-
-		if (building == nullptr)
-		{
-			building = getClosestUnit(i, wantedBuilding);
-
-			if (building == nullptr && alternateBuilding0 != UnitTypes::None)
-			{
-				building = getClosestUnit(i, alternateBuilding0);
-
-				if (building == nullptr && alternateBuilding1 != UnitTypes::None)
-				{
-					building = getClosestUnit(i, alternateBuilding1);
-				}
-			}
-		}
-
-		if (building != nullptr)
-		{
+			resourceDepotIndex = i;
 			break;
 		}
 	}
 
-	return building;
+	if (resourceDepotIndex >= 0)
+	{
+		if (wantedBuilding == getResourceDepot(resourceDepotIndex)->getType())
+		{
+			building = getResourceDepot(resourceDepotIndex);
+		}
+
+		if (building == nullptr)
+		{
+			building = getClosestUnit(resourceDepotIndex, wantedBuilding);
+
+			if (building == nullptr && alternateBuilding0 != UnitTypes::None)
+			{
+				building = getClosestUnit(resourceDepotIndex, alternateBuilding0);
+
+				if (building == nullptr && alternateBuilding1 != UnitTypes::None)
+				{
+					building = getClosestUnit(resourceDepotIndex, alternateBuilding1);
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < resourceDepots.size(); i++)
+		{
+			if (wantedBuilding == getResourceDepot(i)->getType())
+			{
+				building = getResourceDepot(i);
+			}
+
+			if (building == nullptr)
+			{
+				building = getClosestUnit(i, wantedBuilding);
+
+				if (building == nullptr && alternateBuilding0 != UnitTypes::None)
+				{
+					building = getClosestUnit(i, alternateBuilding0);
+
+					if (building == nullptr && alternateBuilding1 != UnitTypes::None)
+					{
+						building = getClosestUnit(i, alternateBuilding1);
+					}
+				}
+			}
+
+			if (building != nullptr)
+			{
+				break;
+			}
+		}
+	}
+
+	return 
+		building;
 }
 
+// Tell if the player is researching the given research
 bool ProductionManager::isResearching(TechType wantedResearch)
 {
-	return Broodwar->self()->isResearching(wantedResearch);
+	return 
+		Broodwar->self()->isResearching(wantedResearch);
 }
 
+// Tell if the player is upgrading the given upgrade
 bool ProductionManager::isUpgrading(UpgradeType wantedUpgrade)
 {
-	return Broodwar->self()->isUpgrading(wantedUpgrade);
+	return 
+		Broodwar->self()->isUpgrading(wantedUpgrade);
 }
 
+// Tell if the player has already researched the given research
 bool ProductionManager::hasResearched(TechType wantedResearch)
 {
-	return Broodwar->self()->hasResearched(wantedResearch);
+	return 
+		Broodwar->self()->hasResearched(wantedResearch);
 }
 
+// Tell if the player has already upgraded the given upgrade
 bool ProductionManager::hasUpgraded(UpgradeType wantedUpgrade)
 {
-	return Broodwar->self()->getUpgradeLevel(wantedUpgrade) == Broodwar->self()->getMaxUpgradeLevel(wantedUpgrade);
+	return 
+		Broodwar->self()->getUpgradeLevel(wantedUpgrade) == Broodwar->self()->getMaxUpgradeLevel(wantedUpgrade);
 }

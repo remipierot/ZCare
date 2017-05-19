@@ -7,23 +7,34 @@
 
 class BuildOrder
 {
-public:
-	void addInstruction(BOInstruction* instruction);
+	public:
+		// Add an instruction to the instruction set
+		void addInstruction(
+			BOInstruction* instruction
+		);
 
-	BOInstruction* getNextInstruction();
+		// Get a reference to the next instruction to execute
+		BOInstruction* getNextInstruction();
 
-	void reset();
+		// Reset the build order (return to the first instruction to execute)
+		void reset();
 
-	bool executeNextInstruction(WorkerManager* wm, ProductionManager* pm);
+		// Execute the next instruction
+		bool executeNextInstruction(
+			WorkerManager* wm, 
+			ProductionManager* pm
+		);
 
-	int drawDebug(int startinX = 10, int startingY = 40);
+		// Draw the debug info of the build order
+		int drawDebug(
+			int startinX = 10, 
+			int startingY = 40
+		);
 
-private:
-	std::vector<BOInstruction*> instructionSet;
-	int currentInstruction = -1;
-	BWAPI::Unit builder;
-	bool builderMovingToSpot;
-	bool builderBuildingToSpot;
-	BWAPI::TilePosition tileBuildLocation;
+	private:
+		std::vector<BOInstruction*> instructionSet;	// List of instructions to execute
+		int currentInstruction = -1;				// Current instruction (last executed)
+		BWAPI::Unit builder;						// Unit used to make buildings when needed
+		BWAPI::TilePosition tileBuildLocation;		// Location where to build
 };
 

@@ -33,7 +33,7 @@ class ToolBox
 			int r2
 		);
 
-		// Tell if the one of the units is an evolution of the other one
+		// Tell if one of the units is an evolution of the other
 		static bool areUnitsLinkedByEvolution(
 			const BWAPI::UnitType unit1,
 			const BWAPI::UnitType unit2
@@ -52,6 +52,11 @@ class ToolBox
 		// Return the previous evolution UnitType of the given UnitType
 		static BWAPI::UnitType getPreviousEvolution(
 			BWAPI::UnitType currentEvolution
+		);
+
+		// Tell if the given unit is ours or not
+		static bool isUnitOurs(
+			BWAPI::Unit unit
 		);
 
 		static const char YELLOW_CHAR = '\x03';										// Prefix to print yellow messages

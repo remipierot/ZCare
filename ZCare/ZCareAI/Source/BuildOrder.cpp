@@ -4,23 +4,27 @@ using namespace std;
 using namespace BWAPI;
 using namespace Filter;
 
+// Add an instruction to the instruction set
 void BuildOrder::addInstruction(BOInstruction* instruction)
 {
 	instructionSet.push_back(instruction);
 }
 
+// Get a reference to the next instruction to execute
 BOInstruction* BuildOrder::getNextInstruction()
 {
+	BOInstruction* boi = new BOInstruction(BOInstruction::END_OF_BO);
+
 	if (currentInstruction + 1 < instructionSet.size())
 	{
-		return instructionSet[currentInstruction + 1];
+		boi = instructionSet[currentInstruction + 1];
 	}
-	else
-	{
-		return new BOInstruction(BOInstruction::END_OF_BO);
-	}
+
+	return 
+		boi;
 }
 
+// Reset the build order (return to the first instruction to execute)
 void BuildOrder::reset()
 {
 	for (auto i : instructionSet)
@@ -30,21 +34,20 @@ void BuildOrder::reset()
 
 	currentInstruction = -1;
 	builder = nullptr;
-	builderBuildingToSpot = false;
-	builderMovingToSpot = false;
 	tileBuildLocation = TilePositions::None;
 }
 
+// Execute the next instruction
 bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm)
 {
 	bool conditionsFulfilled = false;
 	bool executed = false;
 	BOInstruction* nextInstruction = getNextInstruction();
 
-	//Run next instruction only if it is not completed
+	// Run next instruction only if it is not completed
 	if (!nextInstruction->isCompleted())
 	{
-		//Define conditions to fulfill according to instruction type
+		// Define conditions to fulfill according to instruction type
 		switch (nextInstruction->getType())
 		{
 			case BOInstruction::SUPPLY_USED:
@@ -66,7 +69,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				break;
 		}
 
-		//Run nextInstruction only if its conditions are fulfilled
+		// Run nextInstruction only if its conditions are fulfilled
 		if (conditionsFulfilled)
 		{
 			int mineralCount = pm->getMineralCount();
@@ -93,25 +96,25 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 				}
 			}
 
-			//Evolution of buildings
+			// Evolution of buildings
 			if (nextInstruction->isEvolution())
 			{
 				UnitType wantedEvolution = nextInstruction->getUnitToBuild();
-				Unit buildingToEvolve = pm->getBuildingOfType(ToolBox::getPreviousEvolution(wantedEvolution));
+				Unit buildingToEvolve = pm->getBuildingOfType(ToolBox::getPreviousEvolution(wantedEvolution), targetPosition);
 
 				if (buildingToEvolve != nullptr)
 				{
 					buildingToEvolve->morph(wantedEvolution);
 				}
 			}
-			//Research
+			// Research
 			else if (nextInstruction->isResearch())
 			{
 				UnitType buildingType = ToolBox::getUnitAbleToResearch(nextInstruction->getResearch());
 
 				if (buildingType != UnitTypes::None)
 				{
-					Unit building = pm->getBuildingOfType(buildingType);
+					Unit building = pm->getBuildingOfType(buildingType, targetPosition);
 
 					if (building != nullptr)
 					{
@@ -119,14 +122,14 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					}
 				}
 			}
-			//Upgrade
+			// Upgrade
 			else if (nextInstruction->isUpgrade())
 			{
 				UnitType buildingType = ToolBox::getUnitAbleToUpgrade(nextInstruction->getUpgrade());
 
 				if (buildingType != UnitTypes::None)
 				{
-					Unit building = pm->getBuildingOfType(buildingType);
+					Unit building = pm->getBuildingOfType(buildingType, targetPosition);
 
 					if (building != nullptr)
 					{
@@ -134,7 +137,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					}
 				}
 			}
-			//Make building
+			// Make building
 			else if (nextInstruction->isBuilding())
 			{
 				UnitType wantedBuilding = nextInstruction->getUnitToBuild();
@@ -145,7 +148,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 					if (targetResourceDepot != nullptr)
 					{
-						builder = targetResourceDepot->getClosestUnit(GetType == UnitTypes::Zerg_Drone && Exists, 256);
+						builder = targetResourceDepot->getClosestUnit(GetType == UnitTypes::Zerg_Drone && Exists && !IsConstructing && !IsMorphing, 256);
 					}
 				}
 
@@ -158,50 +161,46 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 
 					builder->move(targetPosition);
 					builder->rightClick(targetPosition);
-					builderMovingToSpot = true;
 				}
 
 				Broodwar->drawCircleMap(targetPosition, 300, Colors::Cyan);
 				Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Red, true);
 
-				//Make building if having enough ressources
+				// Make building if having enough ressources
 				if (mineralCount >= wantedBuilding.mineralPrice() && vespeneCount >= wantedBuilding.gasPrice())
 				{
-					//if (ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
-					//{
-						if (tileBuildLocation == TilePositions::None)
+					if (tileBuildLocation == TilePositions::None)
+					{
+						tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 15);
+
+						if (!ToolBox::IsTilePositionValid(tileBuildLocation))
 						{
-							tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 15);
+							tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 30);
 
 							if (!ToolBox::IsTilePositionValid(tileBuildLocation))
 							{
-								tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 30);
-
-								if (!ToolBox::IsTilePositionValid(tileBuildLocation))
-								{
-									tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition);
-								}
+								tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition);
 							}
 						}
+					}
 
-						//Specific vespene location
-						if (wantedBuilding == UnitTypes::Zerg_Extractor)
+					// Specific vespene location
+					if (wantedBuilding == UnitTypes::Zerg_Extractor && ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
+					{
+						Unit closestVespene = builder->getClosestUnit(GetType == UnitTypes::Resource_Vespene_Geyser && Exists);
+
+						if (closestVespene != nullptr)
 						{
-							Unit closestVespene = builder->getClosestUnit(GetType == UnitTypes::Resource_Vespene_Geyser && Exists);
-
-							if (closestVespene != nullptr)
-							{
-								tileBuildLocation = closestVespene->getTilePosition();
-							}
+							tileBuildLocation = closestVespene->getTilePosition();
 						}
+					}
 
-						pm->makeBuilding(wantedBuilding, tileBuildLocation, builder);
-						Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Green, true);
-						builderBuildingToSpot = true;
-					//}
+					pm->makeBuilding(wantedBuilding, tileBuildLocation, builder);
+					Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Green, true);
+					Broodwar->drawLineMap(builder->getPosition(), ToolBox::ConvertTilePosition(tileBuildLocation, wantedBuilding), Colors::Green);
 				}
 			}
-			//Make unit
+			// Make unit
 			else if (nextInstruction->isUnit())
 			{
 				UnitType wantedUnit = nextInstruction->getUnitToBuild();
@@ -277,16 +276,16 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 		{
 			nextInstruction->complete();
 			builder = nullptr;
-			builderBuildingToSpot = false;
-			builderMovingToSpot = false;
 			tileBuildLocation = TilePositions::None;
 			currentInstruction++;
 		}
 	}
 	
-	return executed;
+	return 
+		executed;
 }
 
+// Draw the debug info of the build order
 int BuildOrder::drawDebug(int startingX, int startingY)
 {
 	BOInstruction* toPrint = NULL;
@@ -295,7 +294,7 @@ int BuildOrder::drawDebug(int startingX, int startingY)
 	string unitInfo = "";
 	int y = 0;
 
-	Broodwar->drawTextScreen(startingX, startingY, "%c BO", ToolBox::WHITE_CHAR);
+	Broodwar->drawTextScreen(startingX, startingY, "%c Build Order", ToolBox::WHITE_CHAR);
 
 	for (int i = (currentInstruction + 1); i < (currentInstruction + 6); i++)
 	{
@@ -345,5 +344,6 @@ int BuildOrder::drawDebug(int startingX, int startingY)
 		}
 	}
 
-	return y;
+	return 
+		y;
 }
