@@ -61,7 +61,7 @@ int CombatManager::numberOfSquad()
 }
 
 // Get the set of squads
-std::set<Squad*> CombatManager::getSquadList()
+set<Squad*> CombatManager::getSquadList()
 {
 	return 
 		this->squads;

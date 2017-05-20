@@ -1,5 +1,8 @@
 #include "Squad.h"
 
+using namespace BWAPI;
+using namespace std;
+
 Squad::Squad(int squad):
 	id(squad),
 	capacity(20),
@@ -10,7 +13,7 @@ Squad::Squad(int squad):
 	
 }
 
-Squad::Squad(std::set<const BWAPI::Unit> groundUnits, std::set<const BWAPI::Unit> aerialUnits)
+Squad::Squad(set<const Unit> groundUnits, set<const Unit> aerialUnits)
 {
 	this->aerialUnits = aerialUnits;
 	this->groundUnits = groundUnits;
@@ -24,32 +27,32 @@ Squad::~Squad()
 }
 
 // Make a non aggressive move to the position or unit given
-void Squad::neutralMove(BWAPI::PositionOrUnit target)
+void Squad::neutralMove(PositionOrUnit target)
 {
-	BWAPI::Position lPosition;
+	Position lPosition;
 	if (target.isUnit())
 		lPosition = ToolBox::ConvertTilePosition(target.getUnit()->getTilePosition(), target.getUnit()->getBuildType());
 	else lPosition = target.getPosition();
 
-	for (BWAPI::Unit unitT : groundUnits)
+	for (Unit unitT : groundUnits)
 	{
 		unitT->move(lPosition);
 	}
-	for (BWAPI::Unit unitA : aerialUnits)
+	for (Unit unitA : aerialUnits)
 	{
 		unitA->move(lPosition);
 	}
 }
 
 // Make an aggressive move (will attack on sight) to the position or unit given
-void Squad::aggressiveMove(BWAPI::PositionOrUnit target)
+void Squad::aggressiveMove(PositionOrUnit target)
 {
-	for (BWAPI::Unit unitT : groundUnits)
+	for (Unit unitT : groundUnits)
 	{
 		if (!unitT->isAttacking())
 			unitT->attack(target);
 	}
-	for (BWAPI::Unit unitA : aerialUnits)
+	for (Unit unitA : aerialUnits)
 	{
 		if (!unitA->isAttacking())
 			unitA->attack(target);
@@ -57,7 +60,7 @@ void Squad::aggressiveMove(BWAPI::PositionOrUnit target)
 }
 
 // Insert a unit into the squad
-bool Squad::insertUnit(BWAPI::Unit unit)
+bool Squad::insertUnit(Unit unit)
 {
 	bool unitInserted = false;
 
@@ -96,14 +99,14 @@ int Squad::getSquadCapacity()
 }
 
 // Get the set of ground units
-std::set<const BWAPI::Unit>* Squad::getGroundUnits()
+set<const Unit>* Squad::getGroundUnits()
 {
 	return 
 		&this->groundUnits;
 }
 
 // Get the set of flying units
-std::set<const BWAPI::Unit>* Squad::getAerialUnits()
+set<const Unit>* Squad::getAerialUnits()
 {
 	return 
 		&this->aerialUnits;
@@ -116,7 +119,7 @@ void Squad::setMode(SquadMode mode)
 }
 
 // Set the target location
-void Squad::setTargetLocation(BWAPI::Position position)
+void Squad::setTargetLocation(Position position)
 {
 	this->targetLocation = position;
 }
@@ -129,7 +132,7 @@ Squad::SquadMode Squad::getMode()
 }
 
 // Get the target location
-BWAPI::Position Squad::getTargetLocation()
+Position Squad::getTargetLocation()
 {
 	return 
 		this->targetLocation;
