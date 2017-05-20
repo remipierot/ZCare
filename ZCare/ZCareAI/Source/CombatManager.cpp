@@ -5,193 +5,108 @@ using namespace BWAPI;
 using namespace Filter;
 
 CombatManager::CombatManager():
-	unitToAttack(new std::set<Unit>()),
-	unitDiscover(new std::set<const Unit>())
+	discoveredUnits(new std::set<const Unit>())
 {
 	
 }
 
+// Manage squads (send them to attack, make them patrol, defend)
 void CombatManager::update()
 {
-	bool isUnderAttack = false;
-	this->unitToAttack->clear();
-	for (Unit unit : Broodwar->self()->getUnits())
+	for (Squad* squad : squads)
 	{
-		if (unit->isUnderAttack())
+		switch (squad->getMode())
 		{
-			isUnderAttack = true;
-			Unit target = unit->getOrderTarget();
-			if (target!=0)
-				this->unitToAttack->insert(target);
-		}	
-	}
-
-	for (Unit unit: *unitToAttack)
-	{
-		Broodwar->drawCircleMap(unit->getPosition(), 20, Color(255, 0, 0));
-	}
-
-	for (Squad* squad : squadList)
-	{
-		if (squad->getModeSquad() == Squad::defenseMode)
-		{
-			modeDefense(squad);
-		}
-		else if (squad->getModeSquad() == Squad::attackMode)
-		{
-			modeAttack(squad);
+			case Squad::ATTACK :
+				aggressiveMode(squad);
+				break;
+			case Squad::PATROL :
+				patrolMode(squad);
+				break;
+			default :
+				defensiveMode(squad);
+				break;
 		}
 	}
 }
 
+// Add a new squad to the squad set
 void CombatManager::addSquad(Squad* squad)
 {
-	this->squadList.insert(squad);
+	this->squads.insert(squad);
 }
 
-Squad* CombatManager::findSquad(int idSquad)
+// Get the squad with the given id
+Squad* CombatManager::findSquad(int id)
 {
 	Squad *squadResult = 0;
-	for (Squad* squad : squadList)
+	for (Squad* squad : squads)
 	{
-		if (squad->getIdSquad() == idSquad)
+		if (squad->getSquadId() == id)
 		{
 			squadResult = squad;
 			break;
 		}
 	}
-	return squadResult;
+
+	return 
+		squadResult;
 }
 
-int CombatManager::squadNumber()
+// Get the number of squads
+int CombatManager::numberOfSquad()
 {
-	return this->squadList.size();
+	return 
+		this->squads.size();
 }
 
+// Get the set of squads
 std::set<Squad*> CombatManager::getSquadList()
 {
-	return this->squadList;
+	return 
+		this->squads;
 }
 
-void CombatManager::modeDefense(Squad* squad)
+// Make the given squad defend its position
+void CombatManager::defensiveMode(Squad* squad)
+{
+	//TODO
+}
+
+// Make the given squad attack its target 
+void CombatManager::aggressiveMode(Squad* squad)
 {
 	std::set<Unit> unitToErase;
-	for (Unit terrainUnit : *squad->getTerrainUnit())
-	{
-		if (terrainUnit->exists())
-		{
-			float distanceClose = 0;
-			Unit unitClose = 0;
-			for (Unit ennemy : *unitToAttack)
-			{
-				float tempDist = (float)ennemy->getPosition().getDistance(terrainUnit->getPosition());
-				if (tempDist < 300)
-				{
-					if (unitClose == 0)
-					{
-						distanceClose = tempDist;
-						unitClose = ennemy;
-					}
-					else
-					{
-						if (distanceClose > tempDist)
-						{
-							distanceClose = tempDist;
-							unitClose = ennemy;
-						}
-					}
-				}
-				
-			
-				if (unitClose != 0)
-				{
-					terrainUnit->attack(unitClose);
-					Color color(0, 0, 255);
-					Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
-					Broodwar->drawLineMap(unitClose->getPosition(), terrainUnit->getPosition(), color);
-				}
-			}
-		}
-		else unitToErase.insert(terrainUnit);
-	}
-
-	for (Unit aerialUnit : *squad->getAerialUnit())
-	{
-		if (aerialUnit->exists())
-		{
-			float distanceClose = 0;
-			Unit unitClose = 0;
-			for (Unit ennemy : *unitToAttack)
-			{
-				float tempDist = (float)ennemy->getPosition().getDistance(aerialUnit->getPosition());
-				if (tempDist < 600)
-				{
-					if (unitClose == 0)
-					{
-						distanceClose = tempDist;
-						unitClose = ennemy;
-					}
-					else
-					{
-						if (distanceClose > tempDist)
-						{
-							distanceClose = tempDist;
-							unitClose = ennemy;
-						}
-					}
-
-					if (unitClose != 0)
-					{
-						aerialUnit->attack(unitClose);
-						Color color(0, 25, 0);
-						Broodwar->drawCircleMap(unitClose->getPosition(), 30, color, true);
-						Broodwar->drawLineMap(unitClose->getPosition(), aerialUnit->getPosition(), color);
-					}
-				}
-				
-			}
-		}
-		else unitToErase.insert(aerialUnit);
-	}
+	attackingLogic(&unitToErase, squad->getGroundUnits(), squad, true);
+	attackingLogic(&unitToErase, squad->getAerialUnits(), squad, false);
 
 	for (Unit unitErase : unitToErase)
 	{
 		if (unitErase->isFlying())
 		{
-			squad->getAerialUnit()->erase(unitErase);
+			squad->getAerialUnits()->erase(unitErase);
 		}
 		else
 		{
-			squad->getTerrainUnit()->erase(unitErase);
+			squad->getGroundUnits()->erase(unitErase);
 		}
 	}
 }
 
-void CombatManager::modeAttack(Squad* squad)
+// Make the given squad patrol on its given path
+void CombatManager::patrolMode(Squad* squad)
 {
-	std::set<Unit> unitToErase;
-	traitementAttack(&unitToErase, squad->getTerrainUnit(),squad, true);
-	traitementAttack(&unitToErase, squad->getAerialUnit(),squad, false);
-
-	for (Unit unitErase : unitToErase)
-	{
-		if (unitErase->isFlying())
-		{
-			squad->getAerialUnit()->erase(unitErase);
-		}
-		else
-		{
-			squad->getTerrainUnit()->erase(unitErase);
-		}
-	}
+	//TODO
 }
 
-void CombatManager::setDiscoveredUnits(std::set<const Unit> *unit)
+// Store the set of discovered units
+void CombatManager::setDiscoveredUnits(set<const Unit> *units)
 {
-	this->unitDiscover = unit;
+	this->discoveredUnits = units;
 }
 
-void CombatManager::setAllBaseLocations(std::set<Base*> newAllBaseLocations)
+// Store the set of all the base locations
+void CombatManager::setAllBaseLocations(set<Base*> newAllBaseLocations)
 {
 	for (Base* b : newAllBaseLocations)
 	{
@@ -199,18 +114,13 @@ void CombatManager::setAllBaseLocations(std::set<Base*> newAllBaseLocations)
 	}
 }
 
-void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit> *unitType, Squad *squad, bool isGrounded)
+// Make the given squad attack its target (used by aggressiveMode)
+void CombatManager::attackingLogic(set<Unit> *erase, set<const Unit> *unitType, Squad *squad, bool isGrounded)
 {
 	int sizeUnit = unitType->size();
 	Unit unitClose = 0;
 	float distanceClose = 0;
 	
-	// Units alive to have before starting an attack
-	if (sizeUnit < 30)
-	{
-		return;
-	}
-
 	for (Unit unit : *unitType)
 	{
 		if (unit->exists())
@@ -225,7 +135,7 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 				bool attacker = false;
 				int distanceAttacker = 0;
 
-				for (Unit unitEnemy : *unitDiscover)
+				for (Unit unitEnemy : *discoveredUnits)
 				{
 					if (unitEnemy->getType() != UnitTypes::Resource_Vespene_Geyser &&
 						unitEnemy->getType() != UnitTypes::Zerg_Larva && 
@@ -264,20 +174,17 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 
 				if (unitClose != 0)
 				{
+					squad->setTargetLocation(unitClose->getPosition());
 					unit->attack(unitClose);
-					Color color(0, 0, 255);
-					Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
-					Broodwar->drawLineMap(unitClose->getPosition(), unit->getPosition(), color);
 				}
-				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0 && !ToolBox::IsInCircle(squad->getPositionObjective(), 100, unit->getPosition(), 10))
+				else if (squad->getTargetLocation().x != 0 && squad->getTargetLocation().y != 0 && !ToolBox::IsInCircle(squad->getTargetLocation(), 100, unit->getPosition(), 10))
 				{
-					unit->attack(squad->getPositionObjective());
-					Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
+					unit->attack(squad->getTargetLocation());
 				}
-				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
+				else if (squad->getTargetLocation().x != 0 && squad->getTargetLocation().y != 0)
 				{
 					Base* baseToFocusNext = nullptr;
-					Position currentTarget = squad->getPositionObjective();
+					Position currentTarget = squad->getTargetLocation();
 					float tmpDist = INFINITY;
 
 					for (Base* b : allBaseLocations)
@@ -291,7 +198,7 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 
 					if (baseToFocusNext != nullptr)
 					{
-						squad->setPositionObjective(baseToFocusNext->getPosition());
+						squad->setTargetLocation(baseToFocusNext->getPosition());
 					}
 				}
 			}
@@ -303,18 +210,41 @@ void CombatManager::traitementAttack(std::set<Unit> *erase, std::set<const Unit>
 			{
 				if (unitClose != 0)
 				{
+					squad->setTargetLocation(unitClose->getPosition());
 					unit->attack(unitClose);
-					Color color(0, 0, 255);
-					Broodwar->drawCircleMap(unitClose->getPosition(), 15, color, true);
-					Broodwar->drawLineMap(unitClose->getPosition(), unit->getPosition(), color);
 				}
-				else if (squad->getPositionObjective().x != 0 && squad->getPositionObjective().y != 0)
+				else if (squad->getTargetLocation().x != 0 && squad->getTargetLocation().y != 0)
 				{
-					unit->attack(squad->getPositionObjective());
-					Broodwar->drawLineMap(squad->getPositionObjective(), unit->getPosition(), Color(255, 0, 0));
+					unit->attack(squad->getTargetLocation());
 				}
 			}
 		}
 		else erase->insert(unit);
+	}
+}
+
+// Draw the debug info of the combat manager
+void CombatManager::drawDebug()
+{
+	Position targetLocation;
+
+	for (Squad* squad : squads)
+	{
+		if (squad->getMode() == Squad::ATTACK)
+		{
+			targetLocation = squad->getTargetLocation();
+
+			for (Unit grounded : *squad->getGroundUnits())
+			{
+				Broodwar->drawCircleMap(targetLocation, 15, Colors::Teal, true);
+				Broodwar->drawLineMap(grounded->getPosition(), targetLocation, Colors::Teal);
+			}
+
+			for (Unit flying : *squad->getAerialUnits())
+			{
+				Broodwar->drawCircleMap(targetLocation, 15, Colors::Teal, true);
+				Broodwar->drawLineMap(flying->getPosition(), targetLocation, Colors::Teal);
+			}
+		}
 	}
 }

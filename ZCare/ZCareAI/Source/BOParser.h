@@ -6,6 +6,7 @@
 class BOParser
 {
 	public:
+		// Return the BO loaded with the given path
 		static BuildOrder loadBO(
 			std::string fileName
 		);

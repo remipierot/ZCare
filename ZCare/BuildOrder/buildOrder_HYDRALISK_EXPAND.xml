@@ -1,0 +1,1080 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<!-- POP MAX = 9 -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>4</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>5</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>6</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>7</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>8</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>13</SupplyCount>
+		<Actions>Zerg_Spawning_Pool</Actions>
+		<UnitsOfType>1</UnitsOfType>
+		<Location>0</Location>
+	</Instruction>
+
+	<!-- POP MAX = 18 -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>9</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<!-- HATCH @1ST EXP -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>9</SupplyCount>
+		<Actions>Zerg_Hatchery</Actions>
+		<UnitsOfType>2</UnitsOfType>
+		<Location>1</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>8</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>9</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>10</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<!-- HATCH @2ND EXP -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>11</SupplyCount>
+		<Actions>Zerg_Hatchery</Actions>
+		<UnitsOfType>3</UnitsOfType>
+		<Location>2</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>10</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>11</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>12</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<!-- HATCH @3RD EXP -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>13</SupplyCount>
+		<Actions>Zerg_Hatchery</Actions>
+		<UnitsOfType>4</UnitsOfType>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>12</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>13</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>14</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>1</Location>
+	</Instruction>
+
+	<!-- EXTRACTOR @2ND EXP -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>15</SupplyCount>
+		<Actions>Zerg_Extractor</Actions>
+		<UnitsOfType>1</UnitsOfType>
+		<Location>2</Location>
+	</Instruction>
+
+	<!-- EXTRACTOR @3RD EXP -->
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>14</SupplyCount>
+		<Actions>Zerg_Extractor</Actions>
+		<UnitsOfType>2</UnitsOfType>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>14</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>15</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+		<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>16</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>2</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>17</SupplyCount>
+		<Actions>Zerg_Drone</Actions>
+		<Location>2</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk_Den</Actions>
+		<UnitsOfType>1</UnitsOfType>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Overlord</Actions>
+		<Location>0</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+
+	<Instruction>
+		<Type>SUPPLY_USED</Type>
+		<SupplyCount>18</SupplyCount>
+		<Actions>Zerg_Hydralisk</Actions>
+		<Location>3</Location>
+	</Instruction>
+</root>

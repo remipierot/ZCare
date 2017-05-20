@@ -5,7 +5,7 @@ using namespace BWAPI;
 
 Base::Base()
 {
-	idBase = 0;
+	id = 0;
 	geyser = 0;
 	isExpansionInteresting = false;
 	isStartingLocation = false;
@@ -19,7 +19,7 @@ Base::Base()
 
 Base::Base(Base* b)
 {
-	idBase = b->idBase;
+	id = b->id;
 	geyser = b->geyser;
 
 	for (Resource* mineral : b->mineralFields)

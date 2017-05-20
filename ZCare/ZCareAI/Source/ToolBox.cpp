@@ -208,5 +208,6 @@ bool ToolBox::isUnitOurs(Unit unit)
 		}
 	}
 
-	return isOurUnit;
+	return 
+		isOurUnit;
 }

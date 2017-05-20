@@ -27,7 +27,7 @@ class BuildOrder
 
 		// Draw the debug info of the build order
 		int drawDebug(
-			int startinX = 10, 
+			int startingX = 10, 
 			int startingY = 40
 		);
 
@@ -36,5 +36,6 @@ class BuildOrder
 		int currentInstruction = -1;				// Current instruction (last executed)
 		BWAPI::Unit builder;						// Unit used to make buildings when needed
 		BWAPI::TilePosition tileBuildLocation;		// Location where to build
+		BWAPI::Position earlyTargetBuildLocation;	// Approximate build location before having the resources needed to build
 };
 

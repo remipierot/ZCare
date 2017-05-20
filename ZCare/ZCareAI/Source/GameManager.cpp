@@ -76,7 +76,7 @@ void GameManager::drawDebug()
 			y,
 			"%c %d - [%d, %d] - %d - %d",
 			textColor,
-			base->idBase,
+			base->id,
 			base->getPosition().x,
 			base->getPosition().y,
 			base->distanceToMainBase,
@@ -89,6 +89,9 @@ void GameManager::drawDebug()
 
 	//********** VISUAL DEBUG (GAME SPACE) **********//
 	Position mainBase = _ProductionManager.getResourceDepot(0)->getPosition();
+
+	_CombatManager.drawDebug();
+
 	for (auto &base : allPotentialBases)
 	{
 		Color drawColor(0, 0, 0);
@@ -105,7 +108,7 @@ void GameManager::drawDebug()
 			(base->isExpansionInteresting) ? Colors::Green :
 			Colors::Orange;
 
-		string s = to_string(base->idBase);
+		string s = to_string(base->id);
 		char const *pchar = s.c_str();
 		string baseLegend = (base->isEnnemyLocation) ? " [ENEMY]" :
 			(base->isStartingLocation) ? " [START]" :
@@ -114,7 +117,7 @@ void GameManager::drawDebug()
 			" [NO GAS]";
 
 		// Draw circle + text to locate the base in game
-		Broodwar->drawTextMap(base->getPosition().x - 23, base->getPosition().y - 45, "%c %s %d", textColor, "Base", base->idBase);
+		Broodwar->drawTextMap(base->getPosition().x - 23, base->getPosition().y - 45, "%c %s %d", textColor, "Base", base->id);
 		Broodwar->drawTextMap(base->getPosition().x - 28, base->getPosition().y - 35, "%c %s", textColor, baseLegend.c_str());
 		Broodwar->drawCircleMap(base->getPosition(), 20, drawColor, true);
 
@@ -165,13 +168,13 @@ void GameManager::onUnitComplete(Unit unit)
 	UnitType type = unit->getType();
 	if (!type.isWorker() && !type.isBuilding() && unit->canAttack())
 	{
-		int squadNumber = _CombatManager.squadNumber();
+		int numberOfSquad = _CombatManager.numberOfSquad();
 		Squad* squad = 0;
-		if (squadNumber == 0)
+		if (numberOfSquad == 0)
 		{
-			squadNumber = 1;
-			squad = new Squad(squadNumber);
-			squad->setModeSquad(Squad::attackMode);
+			numberOfSquad = 1;
+			squad = new Squad(numberOfSquad);
+			squad->setMode(Squad::ATTACK);
 			Position pos;
 
 			for (Base *base : allPotentialBases)
@@ -182,7 +185,7 @@ void GameManager::onUnitComplete(Unit unit)
 					break;
 				}
 			}
-			squad->setPositionObjective(pos);
+			squad->setTargetLocation(pos);
 			_CombatManager.addSquad(squad);
 		}
 
@@ -203,7 +206,7 @@ void GameManager::onUnitComplete(Unit unit)
 			else
 			{
 				squad = new Squad(currentSquad);
-				squad->setModeSquad(Squad::attackMode);
+				squad->setMode(Squad::ATTACK);
 				Position pos;
 				for (Base *base : allPotentialBases)
 				{
@@ -213,7 +216,7 @@ void GameManager::onUnitComplete(Unit unit)
 						break;
 					}
 				}
-				squad->setPositionObjective(pos);
+				squad->setTargetLocation(pos);
 				_CombatManager.addSquad(squad);
 			}
 		}
@@ -224,7 +227,7 @@ void GameManager::onUnitComplete(Unit unit)
 void GameManager::fillBases()
 {
 	bool isInCircle = false;
-	int idBase = 1;
+	int id = 1;
 	Base *base;
 	Unit mainBase = _ProductionManager.getResourceDepot(0);
 	set<Resource*> mineralHelper;
@@ -253,11 +256,11 @@ void GameManager::fillBases()
 		if (mineral->idParent == -1)
 		{
 			base = new Base();
-			base->idBase = idBase;
+			base->id = id;
 
 			Position mineralPosition = mineral->resourceUnit->getPosition();
 			base->insertMineral(mineral);
-			mineral->idParent = idBase;
+			mineral->idParent = id;
 
 			// Check if mineral is attached to one of the starting locations
 			for (const Position startPos : allStartLocations)
@@ -282,14 +285,14 @@ void GameManager::fillBases()
 					{
 						if (linkedMineral->idParent == -1)
 						{
-							linkedMineral->idParent = idBase;
+							linkedMineral->idParent = id;
 							base->insertMineral(linkedMineral);
 						}
 					}
 				}
 			}
 
-			idBase++;
+			id++;
 			allPotentialBases.insert(base);
 		}
 	}

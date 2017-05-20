@@ -1,22 +1,21 @@
 #include "Squad.h"
 
-
 Squad::Squad(int squad):
-	idSquad(squad),
-	numberUnitMax(20),
-	currentNumberUnit(0),
-	modeSquad(attackMode),
-	positionObjective(0,0)
+	id(squad),
+	capacity(20),
+	currentSize(0),
+	mode(ATTACK),
+	targetLocation(0, 0)
 {
 	
 }
 
-Squad::Squad(std::set<const BWAPI::Unit> terrainUnit, std::set<const BWAPI::Unit> aerialUnit)
+Squad::Squad(std::set<const BWAPI::Unit> groundUnits, std::set<const BWAPI::Unit> aerialUnits)
 {
-	this->aerialUnit = aerialUnit;
-	this->terrainUnit = terrainUnit;
-	currentNumberUnit = numberUnit();
-	modeSquad = attackMode;
+	this->aerialUnits = aerialUnits;
+	this->groundUnits = groundUnits;
+	currentSize = getSquadSize();
+	mode = ATTACK;
 }
 
 Squad::~Squad()
@@ -24,94 +23,114 @@ Squad::~Squad()
 
 }
 
-void Squad::moveToLocation(BWAPI::PositionOrUnit target)
+// Make a non aggressive move to the position or unit given
+void Squad::neutralMove(BWAPI::PositionOrUnit target)
 {
 	BWAPI::Position lPosition;
 	if (target.isUnit())
 		lPosition = ToolBox::ConvertTilePosition(target.getUnit()->getTilePosition(), target.getUnit()->getBuildType());
 	else lPosition = target.getPosition();
 
-	for (BWAPI::Unit unitT : terrainUnit)
+	for (BWAPI::Unit unitT : groundUnits)
 	{
 		unitT->move(lPosition);
 	}
-	for (BWAPI::Unit unitA : aerialUnit)
+	for (BWAPI::Unit unitA : aerialUnits)
 	{
 		unitA->move(lPosition);
 	}
 }
 
-
-void Squad::attackOrMove(BWAPI::PositionOrUnit target)
+// Make an aggressive move (will attack on sight) to the position or unit given
+void Squad::aggressiveMove(BWAPI::PositionOrUnit target)
 {
-	for (BWAPI::Unit unitT : terrainUnit)
+	for (BWAPI::Unit unitT : groundUnits)
 	{
 		if (!unitT->isAttacking())
 			unitT->attack(target);
 	}
-	for (BWAPI::Unit unitA : aerialUnit)
+	for (BWAPI::Unit unitA : aerialUnits)
 	{
 		if (!unitA->isAttacking())
 			unitA->attack(target);
 	}
 }
 
-
+// Insert a unit into the squad
 bool Squad::insertUnit(BWAPI::Unit unit)
 {
-	if (this->numberUnitMax != currentNumberUnit)
+	bool unitInserted = false;
+
+	if (this->capacity != currentSize)
 	{
 		if (unit->isFlying())
-			aerialUnit.insert(unit);
-		else terrainUnit.insert(unit);
-		currentNumberUnit += 1;
-		return true;
+			aerialUnits.insert(unit);
+		else groundUnits.insert(unit);
+		currentSize += 1;
+		unitInserted = true;
 	}
-	else return false;
 
+	return 
+		unitInserted;
 }
 
-int Squad::numberUnit()
+// Get the size of the squad
+int Squad::getSquadSize()
 {
-	return terrainUnit.size() + aerialUnit.size();
+	return 
+		groundUnits.size() + aerialUnits.size();
 }
 
-int Squad::getNumberUnitMax()
+// Get the squad id
+int Squad::getSquadId()
 {
-	return numberUnitMax;
+	return 
+		this->id;
 }
 
-int Squad::getIdSquad()
+// Get the squad maximum capacity
+int Squad::getSquadCapacity()
 {
-	return this->idSquad;
+	return 
+		capacity;
 }
 
-std::set<const BWAPI::Unit>* Squad::getTerrainUnit()
+// Get the set of ground units
+std::set<const BWAPI::Unit>* Squad::getGroundUnits()
 {
-	return &this->terrainUnit;
+	return 
+		&this->groundUnits;
 }
 
-std::set<const BWAPI::Unit>* Squad::getAerialUnit()
+// Get the set of flying units
+std::set<const BWAPI::Unit>* Squad::getAerialUnits()
 {
-	return &this->aerialUnit;
+	return 
+		&this->aerialUnits;
 }
 
-void Squad::setModeSquad(SquadMode mode)
+// Set the mode of the squad
+void Squad::setMode(SquadMode mode)
 {
-	this->modeSquad = mode;
+	this->mode = mode;
 }
 
-void Squad::setPositionObjective(BWAPI::Position position)
+// Set the target location
+void Squad::setTargetLocation(BWAPI::Position position)
 {
-	this->positionObjective = position;
+	this->targetLocation = position;
 }
 
-BWAPI::Position Squad::getPositionObjective()
+// Get the mode
+Squad::SquadMode Squad::getMode()
 {
-	return this->positionObjective;
+	return 
+		this->mode;
 }
 
-Squad::SquadMode Squad::getModeSquad()
+// Get the target location
+BWAPI::Position Squad::getTargetLocation()
 {
-	return this->modeSquad;
+	return 
+		this->targetLocation;
 }

@@ -4,9 +4,10 @@
 using namespace std;
 using namespace BWAPI;
 
+// Return the BO loaded with the given path
 BuildOrder BOParser::loadBO(string fileName)
 {
-	BuildOrder bo;
+	BuildOrder buildOrder;
 	const UnitType::set& allUnitTypes = UnitTypes::allUnitTypes();
 
 	char result[MAX_PATH];
@@ -20,12 +21,9 @@ BuildOrder BOParser::loadBO(string fileName)
 		tinyxml2::XMLElement* sauvegarde = root->LastChildElement();
 
 		BOInstruction* tmp;
-		int nbInstruction = 0;
 
 		for (tinyxml2::XMLElement *elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement())
 		{
-			nbInstruction++;
-
 			// Create instruction here
 			for (tinyxml2::XMLElement *elemChild = elem->FirstChildElement(); elemChild != NULL; elemChild = elemChild->NextSiblingElement())
 			{
@@ -37,7 +35,7 @@ BuildOrder BOParser::loadBO(string fileName)
 					tmp = new BOInstruction(BOInstruction::strToType(text));
 					tmp->setResearch(TechTypes::None);
 					tmp->setUpgrade(UpgradeTypes::None);
-					tmp->setActions(UnitTypes::None, 0);
+					tmp->setUnit(UnitTypes::None, 0);
 				}
 				else if (nomElement == "SupplyCount")
 				{
@@ -45,11 +43,7 @@ BuildOrder BOParser::loadBO(string fileName)
 				}
 				else if (nomElement == "Actions")
 				{
-					tmp->setActions(UnitType::getType(text));
-				}
-				else if (nomElement == "UnitsOfType")
-				{
-					tmp->setNbUnitsOfType(atoi(text));
+					tmp->setUnit(UnitType::getType(text));
 				}
 				else if (nomElement == "Location")
 				{
@@ -65,10 +59,10 @@ BuildOrder BOParser::loadBO(string fileName)
 				}
 			}
 
-			bo.addInstruction(tmp);
+			buildOrder.addInstruction(tmp);
 		}
 
-		bo.reset();
+		buildOrder.reset();
 	}
 	else
 	{
@@ -76,5 +70,6 @@ BuildOrder BOParser::loadBO(string fileName)
 		Broodwar->sendText(s.c_str());
 	}
 
-	return bo;
+	return 
+		buildOrder;
 }

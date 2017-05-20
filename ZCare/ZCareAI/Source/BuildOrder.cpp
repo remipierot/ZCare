@@ -34,6 +34,7 @@ void BuildOrder::reset()
 
 	currentInstruction = -1;
 	builder = nullptr;
+	earlyTargetBuildLocation = Positions::Invalid;
 	tileBuildLocation = TilePositions::None;
 }
 
@@ -152,6 +153,11 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					}
 				}
 
+				if (earlyTargetBuildLocation == Positions::Invalid)
+				{
+					earlyTargetBuildLocation = targetPosition;
+				}
+
 				if (!ToolBox::IsInCircle(targetPosition, 300, builder->getPosition(), 10))
 				{
 					if (builder->isGatheringGas() || builder->isGatheringMinerals())
@@ -163,12 +169,11 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 					builder->rightClick(targetPosition);
 				}
 
-				Broodwar->drawCircleMap(targetPosition, 300, Colors::Cyan);
-				Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Red, true);
-
 				// Make building if having enough ressources
-				if (mineralCount >= wantedBuilding.mineralPrice() && vespeneCount >= wantedBuilding.gasPrice())
+				if (mineralCount >= wantedBuilding.mineralPrice() && vespeneCount >= wantedBuilding.gasPrice() && pm->hasUnitRequirements(wantedBuilding))
 				{
+					Position buildLocation(0, 0);
+					
 					if (tileBuildLocation == TilePositions::None)
 					{
 						tileBuildLocation = pm->getClosestBuildablePosition(wantedBuilding, targetTilePosition, 15);
@@ -195,9 +200,18 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 						}
 					}
 
-					pm->makeBuilding(wantedBuilding, tileBuildLocation, builder);
-					Broodwar->drawCircleMap(builder->getPosition(), 10, Colors::Green, true);
-					Broodwar->drawLineMap(builder->getPosition(), ToolBox::ConvertTilePosition(tileBuildLocation, wantedBuilding), Colors::Green);
+					buildLocation = ToolBox::ConvertTilePosition(tileBuildLocation, wantedBuilding);
+
+					if (ToolBox::IsInCircle(buildLocation, 100, builder->getPosition(), 10))
+					{
+						pm->makeBuilding(wantedBuilding, tileBuildLocation, builder);
+					}
+					else
+					{
+						builder->move(buildLocation);
+						builder->rightClick(buildLocation);
+					}
+					
 				}
 			}
 			// Make unit
@@ -276,6 +290,7 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 		{
 			nextInstruction->complete();
 			builder = nullptr;
+			earlyTargetBuildLocation = Positions::Invalid;
 			tileBuildLocation = TilePositions::None;
 			currentInstruction++;
 		}
@@ -288,12 +303,14 @@ bool BuildOrder::executeNextInstruction(WorkerManager* wm, ProductionManager* pm
 // Draw the debug info of the build order
 int BuildOrder::drawDebug(int startingX, int startingY)
 {
-	BOInstruction* toPrint = NULL;
+	BOInstruction* toPrint = nullptr;
+	BOInstruction* next = getNextInstruction();
 	char color = ' ';
 	string baseLocationInfo = "";
 	string unitInfo = "";
 	int y = 0;
 
+	//********** TEXTUAL DEBUG (SCREEN SPACE) **********//
 	Broodwar->drawTextScreen(startingX, startingY, "%c Build Order", ToolBox::WHITE_CHAR);
 
 	for (int i = (currentInstruction + 1); i < (currentInstruction + 6); i++)
@@ -305,10 +322,10 @@ int BuildOrder::drawDebug(int startingX, int startingY)
 		}
 		else
 		{
-			toPrint = NULL;
+			toPrint = nullptr;
 		}
 
-		if (toPrint != NULL)
+		if (toPrint != nullptr)
 		{
 			int baseIndex = toPrint->getBaseIndex();
 			
@@ -343,6 +360,43 @@ int BuildOrder::drawDebug(int startingX, int startingY)
 			);
 		}
 	}
+	//********** END TEXTUAL DEBUG **********//
+
+	//********** VISUAL DEBUG (GAME SPACE) **********//
+	if (builder != nullptr && next->isBuilding())
+	{
+		Color drawColor;
+		Position lineEnd;
+		bool resourcesOkay =
+			Broodwar->self()->minerals() >= next->getUnitToBuild().mineralPrice() &&
+			Broodwar->self()->gas() >= next->getUnitToBuild().gasPrice();
+
+		if (!resourcesOkay)
+		{
+			drawColor = Colors::Red;
+		}
+		else if (resourcesOkay && !builder->isConstructing())
+		{
+			drawColor = Colors::Orange;
+		}
+		else if (resourcesOkay && builder->isConstructing())
+		{
+			drawColor = Colors::Green;
+		}
+
+		if (tileBuildLocation != TilePositions::None)
+		{
+			lineEnd = ToolBox::ConvertTilePosition(tileBuildLocation, getNextInstruction()->getUnitToBuild());
+		}
+		else if (earlyTargetBuildLocation != Positions::Invalid)
+		{
+			lineEnd = earlyTargetBuildLocation;
+		}
+
+		Broodwar->drawCircleMap(builder->getPosition(), 10, drawColor, true);
+		Broodwar->drawLineMap(builder->getPosition(), lineEnd, drawColor);
+	}
+	//********** END VISUAL DEBUG **********//
 
 	return 
 		y;

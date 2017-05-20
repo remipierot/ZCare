@@ -6,7 +6,7 @@
 class Base
 {
 	public:
-		int idBase;						// ID to identify the base
+		int id;							// ID to identify the base
 		bool isExpansionInteresting;	// True if the base has minerals AND gas
 		bool isStartingLocation;		// True if it is one of the starting locations given by BWAPI
 		bool isEnnemyLocation;			// True if it can be an enemy starting location
